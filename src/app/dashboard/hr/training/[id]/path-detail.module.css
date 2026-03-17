@@ -1,0 +1,263 @@
+.header {
+  padding: 2rem;
+  background: white;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.backBtn:hover {
+  color: var(--primary);
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.pathInfo {
+  flex: 1;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 800px;
+}
+
+.progressCircleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progressCircle {
+  width: 120px;
+  height: 120px;
+}
+
+.circularChart {
+  display: block;
+  margin: 10px auto;
+  max-width: 100%;
+  max-height: 250px;
+}
+
+.circleBg {
+  fill: none;
+  stroke: #f1f5f9;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  stroke: var(--primary);
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.percentage {
+  fill: var(--text-primary);
+  font-size: 0.5rem;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+}
+
+.stagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stageItem {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.stageHeader {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  cursor: pointer;
+}
+
+.stageHeader:hover {
+  background: #f8fafc;
+}
+
+.stageStatus {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: var(--text-light);
+}
+
+.doneIcon {
+  color: #10b981;
+  width: 32px;
+  height: 32px;
+}
+
+.stageInfo {
+  flex: 1;
+}
+
+.stageInfo h3 {
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.stageInfo p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.stageMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-light);
+}
+
+.tasksList {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.taskItem {
+  padding: 1rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid transparent;
+}
+
+.taskDone {
+  background: #f0fdf4;
+  border-color: #dcfce7;
+}
+
+.taskTypeIcon {
+  color: var(--primary);
+}
+
+.taskInfo {
+  flex: 1;
+}
+
+.taskInfo h4 {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.taskType {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.completeBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.completeBtn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.completedBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #10b981;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* Sidebar */
+.sidebarCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  position: sticky;
+  top: 2rem;
+}
+
+.nextTaskCard {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--grad-sidebar);
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.zapIcon {
+  color: #fbbf24;
+}
+
+.loading {
+  padding: 5rem;
+  text-align: center;
+  color: var(--text-secondary);
+}

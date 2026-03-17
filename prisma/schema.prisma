@@ -1,0 +1,510 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Role is handled as String in User model for SQLite compatibility
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("CANDIDATE") // Using string for SQLite compatibility if needed, but Prisma supports enum polyfills or we can just use String. Wait, SQLite does NOT support enums in Prisma.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  candidateProfile CandidateProfile?
+  employeeProfile  EmployeeProfile?
+  probationsEvaluated ProbationEvaluation[]
+}
+
+model CandidateProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  firstName   String
+  lastName    String
+  phone       String?
+  address     String?
+  birthDate   DateTime?
+  education   String?
+  experience  Int?     // in months
+  shiftReady  Boolean  @default(false)
+  computerSkill String?
+  cvUrl       String?
+  source      String?  
+  region      String?
+  status      String   @default("NEW") // enum CandidateStatus
+  score       Int      @default(0)
+
+  applications Application[]
+  interviews   Interview[]
+  reserves     Reserve[]
+  testResults  TestResult[]
+  trainingAssignments TrainingAssignment[]
+}
+
+model Vacancy {
+  id          String   @id @default(uuid())
+  title       String
+  department  String
+  description String
+  requirements String?
+  salaryRange String?
+  salaryMin   Int?
+  salaryMax   Int?
+  shift       String?  // day, night, flex
+  status      String   @default("PENDING_APPROVAL") // enum VacancyStatus
+  positionId  String?
+  position    Position? @relation(fields: [positionId], references: [id])
+  createdBy   String   
+  approvedBy  String?  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  applications Application[]
+}
+
+model Application {
+  id          String   @id @default(uuid())
+  candidateId String
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  vacancyId   String
+  vacancy     Vacancy  @relation(fields: [vacancyId], references: [id])
+  stage          String   @default("APPLIED") // enum ApplicationStage
+  screeningScore Int?
+  interviewScore Int?
+  examScore      Int?
+  finalScore     Int?
+  trainingCompleted Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  interviews  Interview[]
+}
+
+model Interview {
+  id            String   @id @default(uuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id])
+  candidateId   String
+  candidate     CandidateProfile @relation(fields: [candidateId], references: [id])
+  interviewerId String   
+  scheduledAt   DateTime
+  communicationScore Int?
+  disciplineScore    Int?
+  motivationScore    Int?
+  flexibilityScore   Int?
+  readinessScore     Int?
+  totalScore         Int?
+  result             String? // enum InterviewResult
+  notes              String?
+  createdAt     DateTime @default(now())
+}
+
+model TrainingTrack {
+  id          String   @id @default(uuid())
+  title       String   
+  roleTarget  String
+  modules     TrainingModule[]
+}
+
+model TrainingModule {
+  id              String   @id @default(uuid())
+  trackId         String
+  track           TrainingTrack @relation(fields: [trackId], references: [id])
+  title           String
+  description     String?
+  contentUrl      String?
+  type            String   // enum TrainingType
+  assignments     TrainingAssignment[]
+}
+
+model TrainingAssignment {
+  id              String   @id @default(uuid())
+  moduleId        String
+  module          TrainingModule @relation(fields: [moduleId], references: [id])
+  candidateId     String?
+  candidate       CandidateProfile? @relation(fields: [candidateId], references: [id])
+  employeeId      String?
+  employee        EmployeeProfile?  @relation(fields: [employeeId], references: [id])
+  status          String   @default("ASSIGNED") // enum AssignmentStatus
+  score           Int?
+  completedAt     DateTime?
+}
+
+model Test {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  isActive    Boolean  @default(true)
+  type        String   // enum TestType
+  questions   Question[]
+  results     TestResult[]
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  testId      String
+  test        Test     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  text        String
+  type        String   // "single", "multiple"
+  options     String   // JSON array of strings
+  correctIdx  String   // JSON array of correct indices
+}
+
+model TestResult {
+  id          String   @id @default(uuid())
+  testId      String
+  test        Test     @relation(fields: [testId], references: [id])
+  candidateId String?
+  candidate   CandidateProfile? @relation(fields: [candidateId], references: [id])
+  employeeId  String?
+  employee    EmployeeProfile?  @relation(fields: [employeeId], references: [id])
+  score       Int
+  status      String   // enum TestResultStatus
+  takenAt     DateTime @default(now())
+}
+
+model Reserve {
+  id          String   @id @default(uuid())
+  candidateId String
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  targetRole  String
+  branch      String?
+  readiness   Int      
+  addedAt     DateTime @default(now())
+}
+
+model EmployeeProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  firstName   String
+  lastName    String
+  hireDate    DateTime
+  department  String
+  position    String   // Keep for legacy/string search
+  positionId  String?
+  positionRef Position? @relation(fields: [positionId], references: [id])
+  salary      Float?
+  
+  // Mentorship
+  mentorId    String?  
+  mentor      EmployeeProfile? @relation("EmployeeMentorship", fields: [mentorId], references: [id])
+  mentees     EmployeeProfile[] @relation("EmployeeMentorship")
+  
+  // Career Tracking
+  careerLevelId String?
+  careerLevel   CareerLevel? @relation(fields: [careerLevelId], references: [id])
+  careerPathId  String?
+  careerPath    CareerPath? @relation(fields: [careerPathId], references: [id])
+  careerProgress Int @default(0) // Percentage of requirements met
+  
+  targetMilestoneId String?
+  targetMilestone   CareerMilestone? @relation("EmployeeMilestone", fields: [targetMilestoneId], references: [id])
+
+  milestoneProgress EmployeeMilestoneProgress[]
+  skillProgress     EmployeeSkillProgress[]
+
+  probationEnd    DateTime?
+  status      String   @default("ONBOARDING") // enum EmployeeStatus
+
+  assignments TrainingAssignment[]
+  testResults TestResult[]
+  probations  ProbationEvaluation[]
+  kpis        KPIEntry[]
+  onboardingTasks OnboardingTask[]
+  meetings        Meeting[]
+  lessonAssignments LessonAssignment[]
+  careerProfile     EmployeeCareerProfile?
+  talentPool        TalentPool?
+  successions       SuccessionPlan[] @relation("EmployeeSuccession")
+}
+
+model Position {
+  id                    String   @id @default(uuid())
+  title                 String
+  department            String
+  grade                 Int
+  reportsTo             String?  // ID of parent position
+  rolePurpose           String
+  responsibilities      String   // JSON array of strings
+  kpi                   String   // JSON array of {name, target}
+  requiredSkills        String   // JSON array of Skill objects
+  requiredKnowledge     String   // JSON array of strings
+  requiredCertificates  String   // JSON array of strings
+  minExperience         Int
+  behavioralCompetencies String  // JSON array of strings
+  leadershipCompetencies String  // JSON array of strings
+  nextPositions         String   // JSON array of Position IDs
+  lateralMoves          String   // JSON array of Position IDs
+  trainingRoadmap       String   // JSON array of {title, url}
+  assessmentRequirements String  // JSON array of strings
+  status                String   @default("active") // "active", "completed", "highPotential"
+  isCritical            Boolean  @default(false)
+  promotionRequirements String   // JSON for conditions
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  employees        EmployeeProfile[]
+  vacancies        Vacancy[]
+  onboardingTasks  OnboardingTask[]
+  probations       ProbationEvaluation[]
+  kpis             KPI[]
+  successionPlans  SuccessionPlan[] @relation("PositionSuccession")
+}
+
+model CareerHealth {
+  id               String   @id @default("default")
+  readiness        Int      @default(74)
+  coverage         Int      @default(65)
+  talentPool       Int      @default(18)
+  filledRoles      Int      @default(4)
+  totalRoles       Int      @default(6)
+  nowReady         Int      @default(12)
+  ready6m          Int      @default(8)
+  ready1y          Int      @default(5)
+  rating           String   @default("B+")
+  lastUpdated      DateTime @default(now())
+}
+
+model EmployeeCareerProfile {
+  id               String   @id @default(uuid())
+  employeeId       String   @unique
+  employee         EmployeeProfile @relation(fields: [employeeId], references: [id])
+  currentPositionId String?
+  aspirationId     String?  // target position ID
+  skills           String   // actual skills JSON [{name, level, source}]
+  assessments      String   // results JSON
+  kpiHistory       String   // JSON array of monthly scores
+  trainingHistory  String   // JSON for completed courses
+  certificates     String   // JSON array of strings
+  performanceRating Float?
+  potentialRating  String?  // "Low" | "Medium" | "High"
+  readiness        String?  // readiness scores JSON per target role
+  promotionEligible Boolean @default(false)
+  successorFor     String   // JSON array of critical position IDs
+  developmentPlanId String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model DevelopmentPlan {
+  id            String   @id @default(uuid())
+  employeeId    String
+  objectives    String
+  actionItems   String   // JSON [{task, due, status}]
+  training      String   // JSON [{courseId, title, completed}]
+  projectAssignment String?
+  mentorId      String?
+  checkpoints   String   // JSON [{date, notes, completed}]
+  status        String   // "active" | "completed" | "overdue"
+  startDate     DateTime
+  endDate       DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model TalentPool {
+  id           String   @id @default(uuid())
+  employeeId   String   @unique
+  employee     EmployeeProfile @relation(fields: [employeeId], references: [id])
+  readiness    String   // "ready_now" | "ready_6m" | "ready_1y+" | "long_term"
+  addedBy      String   // userId
+  notes        String?
+  createdAt    DateTime @default(now())
+}
+
+model SuccessionPlan {
+  id               String   @id @default(uuid())
+  criticalPositionId String // Position ID
+  position         Position @relation("PositionSuccession", fields: [criticalPositionId], references: [id])
+  successorId      String   // Employee ID
+  successor        EmployeeProfile @relation("EmployeeSuccession", fields: [successorId], references: [id])
+  readiness        String   // "ready_now" | "ready_6m" | "ready_1y+"
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model OnboardingTask {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED
+  dueDate     DateTime?
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id])
+  positionId  String?
+  position    Position? @relation(fields: [positionId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model ProbationEvaluation {
+  id          String   @id @default(uuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id])
+  evaluatorId String
+  evaluator   User     @relation(fields: [evaluatorId], references: [id])
+  periodDays  Int      
+  startDate   DateTime?
+  endDate     DateTime?
+  disciplineScore Int
+  learningScore   Int
+  qualityScore    Int
+  comments        String?
+  result          String   // enum ProbationResult
+  positionId      String?
+  position        Position? @relation(fields: [positionId], references: [id])
+  evaluatedAt     DateTime @default(now())
+}
+
+model KPI {
+  id          String   @id @default(uuid())
+  name        String
+  unit        String
+  targetValue Float
+  description String?
+  employeeId  String?  // If assigned to a specific employee
+  positionId  String?
+  position    Position? @relation(fields: [positionId], references: [id])
+  entries     KPIEntry[]
+}
+
+model KPIEntry {
+  id          String   @id @default(uuid())
+  kpiId       String
+  kpi         KPI      @relation(fields: [kpiId], references: [id])
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id])
+  periodDate  DateTime 
+  value       Float
+  rating      String?  
+}
+
+model CareerPath {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  level       Int      @default(1)
+  
+  nextPathId  String?
+  nextPath    CareerPath?  @relation("PathHierarchy", fields: [nextPathId], references: [id])
+  previousPaths CareerPath[] @relation("PathHierarchy")
+  
+  milestones  CareerMilestone[]
+  skills      CareerSkill[]
+  employees   EmployeeProfile[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CareerMilestone {
+  id          String   @id @default(uuid())
+  pathId      String
+  path        CareerPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  name        String   
+  description String?
+  order       Int      @default(0)
+  
+  // Link back to employee for progress tracking if needed
+  employeeProfiles EmployeeProfile[] @relation("EmployeeMilestone")
+  progress         EmployeeMilestoneProgress[]
+}
+
+model EmployeeMilestoneProgress {
+  id          String   @id @default(uuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  milestoneId String
+  milestone   CareerMilestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([employeeId, milestoneId])
+}
+
+model CareerSkill {
+  id          String   @id @default(uuid())
+  pathId      String
+  path        CareerPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  level       String?   // Junior, Middle, Senior or 1-5
+  progress    EmployeeSkillProgress[]
+}
+
+model EmployeeSkillProgress {
+  id          String   @id @default(uuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  skillId     String
+  skill       CareerSkill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([employeeId, skillId])
+}
+
+model CareerLevel {
+  id          String   @id @default(uuid())
+  role        String
+  levelName   String   
+  requirements String  
+  order       Int      @default(0)
+
+  employees   EmployeeProfile[]
+}
+
+model Meeting {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  dateTime    DateTime
+  joinUrl     String?
+  employeeId  String?
+  employee    EmployeeProfile? @relation(fields: [employeeId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  titleRu     String
+  titleUz     String
+  descRu      String?
+  descUz      String?
+  videoUrl    String?
+  fileContent String?  // URL or base64
+  fileName    String?  // Name of attached file
+  assignmentRu String?
+  assignmentUz String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    String?
+
+  assignments LessonAssignment[]
+}
+
+model LessonAssignment {
+  id          String   @id @default(uuid())
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id])
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id])
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, SUBMITTED, CHECKED, OVERDUE
+  dueDate     DateTime?
+  submittedAt DateTime?
+  score       Int?
+  submissionText String?
+  fileUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

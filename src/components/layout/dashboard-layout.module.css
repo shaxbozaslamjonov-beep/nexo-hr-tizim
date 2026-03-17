@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+}
+
+.mainCollapsed {
+  margin-left: 64px;
+}
+
+.content {
+  padding: 1.5rem;
+  padding-top: calc(var(--header-height) + 1.5rem);
+  min-height: calc(100vh - var(--header-height));
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+  }
+}
