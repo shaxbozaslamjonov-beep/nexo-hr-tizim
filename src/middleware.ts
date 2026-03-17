@@ -17,7 +17,10 @@ const roleAccessMap: Record<string, string[]> = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith('/_next') || pathname.startsWith('/favicon.ico'));
+  const isPublicRoute = publicRoutes.includes(pathname) || 
+    pathname.startsWith('/_next') || 
+    pathname.startsWith('/api/public') ||
+    pathname === '/favicon.ico';
 
   if (isPublicRoute) {
     return NextResponse.next();
