@@ -9,7 +9,8 @@ export type Action =
   | 'manage_employees'
   | 'manage_candidates'
   | 'manage_settings'
-  | 'view_analytics';
+  | 'view_analytics'
+  | 'use_ai_assistant';
 
 const PERMISSIONS: Record<UserRole, Action[]> = {
   ADMIN: [
@@ -21,6 +22,7 @@ const PERMISSIONS: Record<UserRole, Action[]> = {
     'manage_candidates',
     'manage_settings',
     'view_analytics',
+    'use_ai_assistant',
   ],
   DIRECTOR: [
     'view_hr_dashboard',
@@ -30,6 +32,7 @@ const PERMISSIONS: Record<UserRole, Action[]> = {
     'manage_employees',
     'manage_candidates',
     'view_analytics',
+    'use_ai_assistant',
   ],
   HR_MANAGER: [
     'view_hr_dashboard',
@@ -37,6 +40,7 @@ const PERMISSIONS: Record<UserRole, Action[]> = {
     'manage_vacancies',
     'manage_candidates',
     'view_analytics',
+    'use_ai_assistant',
   ],
   DEPARTMENT_HEAD: [
     'view_hr_dashboard',

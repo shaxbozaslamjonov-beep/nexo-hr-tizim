@@ -27,7 +27,8 @@ import {
   ChevronRight,
   Briefcase,
   Calendar,
-  Database
+  Database,
+  Bot
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './sidebar.module.css';
@@ -61,6 +62,7 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
 
   const isHrSide = can(role, 'view_hr_dashboard');
   const isCandidate = role?.toUpperCase() === 'CANDIDATE';
+  const canUseAi = can(role, 'use_ai_assistant');
 
   const settingsHref = isCandidate
     ? '/dashboard/candidate/profile'
@@ -100,6 +102,9 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
       items: [
         { label: 'Dashboard', href: '/dashboard/hr', icon: Home, translationKey: 'dashboard' },
         { label: 'Analytics', href: '/dashboard/hr/analytics', icon: BarChart2, translationKey: 'analytics.title' },
+        ...(canUseAi ? [
+          { label: 'AI Assistant', href: '/dashboard/hr/ai-assistant', icon: Bot, translationKey: 'aiAssistant.title' }
+        ] : []),
       ],
     },
     {

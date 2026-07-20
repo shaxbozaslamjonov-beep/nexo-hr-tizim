@@ -91,18 +91,18 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [ ] Barcha `dashboard/hr/*` sahifalarida qattiq kodlangan inline style'larni (`style={{...}}`) komponentlashtirish — hozircha har sahifa o'zining uzun inline style blokini takrorlaydi, bu katta miqyosda dizaynni yangilashni qiyinlashtiradi
 - [ ] Yangi landing/login vizual tizimini (rang, shrift, motion) `dashboard/hr` ichkarisiga ham asta-sekin tarqatish — katta hajmli ish, bosqichma-bosqich (avval eng ko'p ochiladigan sahifalar: Dashboard, Vakansiyalar, Nomzodlar)
 
-### 6.3 AI agent — jarayonlarni nazorat qilish uchun (DeepSeek API)
-- [ ] **Talab qilinadi**: `DEEPSEEK_API_KEY` muhit o'zgaruvchisi hali loyihada yo'q — ishga tushirishdan oldin kalit kerak bo'ladi (boshqa loyihangizda — Tolib Xolva ERP'da — DeepSeek allaqachon ishlatilgani ko'rindi, xohlasangiz o'sha yondashuvni shu yerda ham takrorlash mumkin)
-- [ ] Yangi `src/lib/ai/deepseek.ts` — DeepSeek chat completion API'ga so'rov yuboruvchi markazlashgan klient
-- [ ] "Jarayonlarni nazorat qilish" degani nimani anglatishi aniqlashtirilishi kerak — masalan:
-  - Vakansiya/ariza/suhbat statistikasini kunlik/haftalik tahlil qilib, anomaliya (masalan kutilmagan rad etish darajasi oshishi) haqida ogohlantirish
-  - Muddati o'tgan ariza/suhbat/probatsiya bosqichlarini avtomatik aniqlab, adminlarga eslatma berish
-- [ ] Bu funksiya fon jarayoni (cron/scheduled job) sifatidami yoki admin so'rov berganda ishlaydigan tarzdami — aniqlashtirish kerak
+### 6.3 AI agent — jarayonlarni nazorat qilish uchun (DeepSeek API) ✅ ASOSIY QISM BAJARILDI
+- [x] `DEEPSEEK_API_KEY` `.env` fayliga qo'shildi (git'ga tushmaydi, `.gitignore`da)
+- [x] Yangi [`src/lib/ai/deepseek.ts`](src/lib/ai/deepseek.ts) — DeepSeek chat completion API klienti
+- [x] Yangi [`src/lib/ai/context.ts`](src/lib/ai/context.ts) — Prisma'dan haqiqiy HR pipeline ma'lumotlarini (vakansiyalar/arizalar/nomzodlar statusi, yaqin suhbatlar, 7 kundan ortiq harakatsiz arizalar) yig'ib, AI uchun kontekst tayyorlaydi — bu AI javoblarining haqiqiy ma'lumotlarga asoslanishini ta'minlaydi
+- [x] "Ikkalasi ham" (chat + fon nazorati) qarori bo'yicha: hozircha **on-demand** (admin tugma bosganda) ishlaydigan tarzda amalga oshirildi — [`/api/ai/monitor`](src/app/api/ai/monitor/route.ts) endpointi joriy pipeline'ni tahlil qilib, aniq muammolarni (masalan tasdiqlanmagan vakansiyalar, harakatsiz arizalar) topadi
+- [ ] **To'liq avtomatik fon jarayoni** (masalan kunlik Vercel Cron orqali, natijasi adminlarga bildirishnoma sifatida yetib borishi) hali qo'shilmadi — sabab: loyihada haqiqiy bildirishnoma tizimi yo'q (Header'dagi qo'ng'iroq belgisi hozircha qattiq kodlangan "3" raqami, real backend'ga ulanmagan). Avval bildirishnoma tizimini haqiqiy qilish kerak, aks holda AI kunlik tekshiruv natijasini hech kim ko'rmaydi.
 
-### 6.4 Adminlar uchun alohida AI yordamchi sahifasi
-- [ ] Yangi `/dashboard/hr/ai-assistant` sahifasi — admin savol beradi (masalan "bu oyda eng ko'p rad etilgan vakansiya qaysi?"), AI real ma'lumotlar (Prisma'dan olingan) asosida javob beradi
-- [ ] RBAC: `manage_settings` yoki yangi `use_ai_assistant` permission bilan cheklanishi kerak (barcha xodimlarga emas)
-- [ ] Suhbat tarixini saqlash kerakmi — agar ha, yangi Prisma modeli talab qiladi (migratsiya)
+### 6.4 Adminlar uchun alohida AI yordamchi sahifasi ✅ BAJARILDI
+- [x] Yangi [`/dashboard/hr/ai-assistant`](src/app/dashboard/hr/ai-assistant/page.tsx) sahifasi — chat interfeysi + "Jarayon nazorati" paneli (Tekshirishni boshlash tugmasi)
+- [x] RBAC: yangi `use_ai_assistant` permission qo'shildi (`ADMIN`, `DIRECTOR`, `HR_MANAGER` uchun; `DEPARTMENT_HEAD`ga berilmadi), sahifa va API'lar shu bilan cheklangan, sidebar'da ham shu ruxsatga ega bo'lmaganlarga link ko'rinmaydi
+- [x] Brauzerda to'liq tekshirildi: real savol so'rab ("hozir nechta ochiq vakansiya bor?") to'g'ri javob oldi (2 ta — DB bilan mos), "Tekshirishni boshlash" tugmasi real muammolarni topib berdi (1 ta PENDING_APPROVAL vakansiya, suhbat rejalashtirilmagan nomzodlar), noaniq savolga ("qaysi vakansiyaga eng ko'p ariza tushgan") AI to'g'ri ravishda "bu ma'lumot yo'q" deb javob berdi — o'ylab topmadi
+- [ ] Suhbat tarixi hozircha saqlanmaydi (faqat joriy sessiya davomida xotirada) — agar doimiy saqlash kerak bo'lsa, yangi Prisma modeli va migratsiya talab qiladi
 
 ### 6.5 Oddiy foydalanuvchilar (xodim/nomzod) uchun support AI
 - [ ] Yangi kichik chat-widget komponenti — `dashboard/employee` va `dashboard/candidate` ichida ko'rinadi

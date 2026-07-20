@@ -39,6 +39,8 @@ export default function HRRootLayout({
       crumbs.push({ label: t('probation') });
     } else if (segments.includes('career-maps')) {
       crumbs.push({ label: t('careerPaths') });
+    } else if (segments.includes('ai-assistant')) {
+      crumbs.push({ label: t('aiAssistant.title') });
     }
 
     return crumbs;

@@ -1,6 +1,17 @@
 export const translations = {
   ru: {
     dashboard: 'Дашборд',
+    aiAssistant: {
+      title: 'AI Ассистент',
+      subtitle: 'Задайте вопрос о найме, кандидатах или вакансиях',
+      emptyHint: 'Например: "Сколько вакансий сейчас на рассмотрении?" или "Какие заявки требуют внимания?"',
+      placeholder: 'Задайте вопрос…',
+      thinking: 'Анализирую данные…',
+      monitorTitle: 'Контроль процессов',
+      monitorDesc: 'ИИ проверит текущий HR pipeline на аномалии, застрявшие заявки и соответствие процессам.',
+      runCheck: 'Запустить проверку',
+      checking: 'Проверка…',
+    },
     analytics: {
       title: 'Аналитика',
       description: 'Управляйте путями развития, этапами и навыками.',
@@ -642,6 +653,17 @@ export const translations = {
   },
   uz: {
     dashboard: 'Asosiy panel',
+    aiAssistant: {
+      title: 'AI Yordamchi',
+      subtitle: "Ishga qabul, nomzodlar yoki vakansiyalar haqida savol bering",
+      emptyHint: 'Masalan: "Hozir nechta vakansiya ko\'rib chiqilmoqda?" yoki "Qaysi arizalar e\'tibor talab qiladi?"',
+      placeholder: 'Savolingizni yozing…',
+      thinking: "Ma'lumotlar tahlil qilinmoqda…",
+      monitorTitle: 'Jarayon nazorati',
+      monitorDesc: "AI joriy HR pipeline'ni anomaliyalar, harakatsiz arizalar va jarayonlarga muvofiqlik bo'yicha tekshiradi.",
+      runCheck: 'Tekshirishni boshlash',
+      checking: 'Tekshirilmoqda…',
+    },
     analytics: {
       title: 'Analitika',
       description: "Rivojlanish yo'llari, bosqichlar va ko'nikmalarni boshqaring.",
