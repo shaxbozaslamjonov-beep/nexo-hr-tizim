@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './landing.module.css';
 
@@ -38,6 +39,8 @@ export function LandingPage() {
   const { t } = useLanguage();
   const [vacancies, setVacancies] = useState<PublicVacancy[]>([]);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState('');
+  const [department, setDepartment] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/public/vacancies')
@@ -45,6 +48,20 @@ export function LandingPage() {
       .then((data) => setVacancies(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
   }, []);
+
+  const departments = useMemo(
+    () => Array.from(new Set(vacancies.map((v) => v.department))).sort(),
+    [vacancies]
+  );
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return vacancies.filter((v) => {
+      const matchesQuery = !q || v.title.toLowerCase().includes(q) || v.department.toLowerCase().includes(q);
+      const matchesDept = !department || v.department === department;
+      return matchesQuery && matchesDept;
+    });
+  }, [vacancies, query, department]);
 
   return (
     <div className={styles.page}>
@@ -96,32 +113,69 @@ export function LandingPage() {
           <span className={styles.sectionTick} />
           <h2 className={styles.sectionTitle}>{t('landing.vacancies')}</h2>
         </div>
+
+        {!loading && vacancies.length > 0 && (
+          <div className={styles.filterBar}>
+            <div className={styles.searchWrap}>
+              <Search size={17} className={styles.searchIcon} />
+              <input
+                className={styles.searchInput}
+                placeholder={t('landing.searchPlaceholder')}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+            <div className={styles.deptChips}>
+              <button
+                className={`${styles.chip} ${department === null ? styles.chipActive : ''}`}
+                onClick={() => setDepartment(null)}
+              >
+                {t('landing.allDepartments')}
+              </button>
+              {departments.map((d) => (
+                <button
+                  key={d}
+                  className={`${styles.chip} ${department === d ? styles.chipActive : ''}`}
+                  onClick={() => setDepartment(d)}
+                >
+                  {d}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {loading ? null : vacancies.length === 0 ? (
           <div className={styles.empty}>{t('landing.noVacancies')}</div>
+        ) : filtered.length === 0 ? (
+          <div className={styles.empty}>{t('landing.noResults')}</div>
         ) : (
           <div className={styles.grid}>
-            {vacancies.map((v, i) => (
-              <motion.div
-                className={styles.card}
-                key={v.id}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.3 }}
-              >
-                <div className={styles.cardTitle}>{v.title}</div>
-                <div className={styles.cardMeta}>
-                  <span className={styles.tag}>{v.department}</span>
-                  {v.salaryRange && <span className={`${styles.tag} ${styles.tagAccent}`}>{v.salaryRange}</span>}
-                  {v.shift && <span className={styles.tag}>{v.shift}</span>}
-                </div>
-                <p className={styles.cardDesc}>{v.description}</p>
-                <Link href={`/apply?vacancy=${v.id}`} className={styles.applyBtn}>
-                  {t('landing.apply')} →
-                </Link>
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {filtered.map((v, i) => (
+                <motion.div
+                  className={styles.card}
+                  key={v.id}
+                  layout
+                  custom={i}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="show"
+                  exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
+                >
+                  <div className={styles.cardTitle}>{v.title}</div>
+                  <div className={styles.cardMeta}>
+                    <span className={styles.tag}>{v.department}</span>
+                    {v.salaryRange && <span className={`${styles.tag} ${styles.tagAccent}`}>{v.salaryRange}</span>}
+                    {v.shift && <span className={styles.tag}>{v.shift}</span>}
+                  </div>
+                  <p className={styles.cardDesc}>{v.description}</p>
+                  <Link href={`/apply?vacancy=${v.id}`} className={styles.applyBtn}>
+                    {t('landing.apply')} →
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </section>

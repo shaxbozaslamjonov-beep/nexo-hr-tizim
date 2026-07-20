@@ -203,6 +203,73 @@
   color: #14181F;
 }
 
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.searchWrap {
+  position: relative;
+  max-width: 380px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9AA3B2;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.7rem 1rem 0.7rem 2.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 24, 31, 0.12);
+  background: #FFFFFF;
+  font-size: 0.9rem;
+  color: #14181F;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #F5A623;
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15);
+}
+
+.deptChips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 24, 31, 0.12);
+  background: transparent;
+  color: #5B6472;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  border-color: rgba(245, 166, 35, 0.4);
+  color: #14181F;
+}
+
+.chipActive {
+  background: #14181F;
+  border-color: #14181F;
+  color: #F7F5EF;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

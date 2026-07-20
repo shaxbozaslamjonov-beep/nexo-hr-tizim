@@ -383,6 +383,9 @@ export const translations = {
       vacancies: 'Открытые вакансии',
       apply: 'Подать заявку',
       noVacancies: 'Пока нет открытых вакансий',
+      noResults: 'Ничего не найдено по этому запросу',
+      searchPlaceholder: 'Поиск по должности или отделу…',
+      allDepartments: 'Все отделы',
       login: 'Войти в систему',
     },
     candidateDashboard: {
@@ -970,6 +973,9 @@ export const translations = {
       vacancies: 'Ochiq vakansiyalar',
       apply: 'Ariza topshirish',
       noVacancies: 'Hozircha ochiq vakansiyalar mavjud emas',
+      noResults: 'Ushbu so\'rov bo\'yicha hech narsa topilmadi',
+      searchPlaceholder: 'Lavozim yoki bo\'lim bo\'yicha qidirish…',
+      allDepartments: 'Barcha bo\'limlar',
       login: 'Tizimga kirish',
     },
     candidateDashboard: {

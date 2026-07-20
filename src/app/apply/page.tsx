@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { springSnappy } from '@/lib/motion';
 import styles from './apply.module.css';
 
 function ApplyForm() {
@@ -88,9 +89,10 @@ function ApplyForm() {
     const statusLabel = t(`apply.success.status.${result.screening?.status}`) || result.screening?.status;
     
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
+        transition={springSnappy}
         className={styles.page}
       >
         <div className={styles.header}>
@@ -160,10 +162,10 @@ function ApplyForm() {
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
-              initial={{ x: 20, opacity: 0 }}
+              initial={{ x: 28, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -20, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              exit={{ x: -28, opacity: 0 }}
+              transition={springSnappy}
             >
               {error && <div className={styles.error}>{error}</div>}
 
