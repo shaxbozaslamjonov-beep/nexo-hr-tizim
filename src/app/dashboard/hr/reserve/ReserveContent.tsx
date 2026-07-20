@@ -49,7 +49,7 @@ export function ReserveContent() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
           {reserves.map((r) => (
             <div key={r.id} style={{
-              background: 'white',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius-lg)',
               padding: '1.5rem',
@@ -70,7 +70,7 @@ export function ReserveContent() {
               </div>
               <div style={{ marginBottom: '1.25rem' }}>
                 <p style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>Readiness Level</p>
-                <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ width: `${r.readiness}%`, height: '100%', background: 'var(--success)' }} />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.25rem', fontSize: '0.75rem', color: '#94a3b8' }}>

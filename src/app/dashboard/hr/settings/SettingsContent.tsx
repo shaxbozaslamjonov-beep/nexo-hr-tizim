@@ -239,7 +239,7 @@ function AccountTab() {
           </div>
         </div>
 
-        <div style={{ height: '1px', background: '#f1f5f9', margin: '3rem 0' }} />
+        <div style={{ height: '1px', background: 'var(--bg-muted)', margin: '3rem 0' }} />
 
         <div className={styles.settingRow}>
            <div className={styles.settingInfo}>
@@ -510,7 +510,7 @@ function DataTab() {
         </div>
 
         <div className={styles.formGrid}>
-          <div className={styles.card} style={{ border: '1px solid #e2e8f0', boxShadow: 'none' }}>
+          <div className={styles.card} style={{ border: '1px solid var(--border)', boxShadow: 'none' }}>
             <h3 style={{ fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Download size={20} color="var(--primary)" />
               {t('settings.data.exportTitle')}
@@ -521,7 +521,7 @@ function DataTab() {
             <button className={styles.btnSecondary} onClick={() => handleAction('Export')} style={{ width: '100%' }}>Export All</button>
           </div>
 
-          <div className={styles.card} style={{ border: '1px solid #e2e8f0', boxShadow: 'none' }}>
+          <div className={styles.card} style={{ border: '1px solid var(--border)', boxShadow: 'none' }}>
             <h3 style={{ fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Upload size={20} color="#8b5cf6" />
               {t('settings.data.importTitle')}
@@ -533,7 +533,7 @@ function DataTab() {
           </div>
         </div>
 
-        <div style={{ height: '1px', background: '#f1f5f9', margin: '3rem 0' }} />
+        <div style={{ height: '1px', background: 'var(--bg-muted)', margin: '3rem 0' }} />
 
         <div style={{ background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '2rem', borderRadius: '20px' }}>
           <h3 style={{ fontWeight: 800, color: 'var(--error)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

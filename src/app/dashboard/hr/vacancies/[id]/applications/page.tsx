@@ -62,7 +62,7 @@ export default function VacancyApplicationsPage({ params }: { params: Promise<{ 
 
       <div style={{ display: 'grid', gap: '1rem' }}>
         {candidates.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '24px', border: '1px dashed var(--border)' }}>
+          <div style={{ textAlign: 'center', padding: '4rem', background: 'var(--surface)', borderRadius: '24px', border: '1px dashed var(--border)' }}>
             <Users size={48} style={{ opacity: 0.2, marginBottom: '1rem' }} />
             <h3 style={{ color: 'var(--text-secondary)' }}>{t('noCandidates')}</h3>
           </div>
@@ -75,7 +75,7 @@ export default function VacancyApplicationsPage({ params }: { params: Promise<{ 
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
                 style={{
-                  background: 'white',
+                  background: 'var(--surface)',
                   borderRadius: '16px',
                   padding: '1.25rem',
                   border: '1px solid var(--border)',
@@ -128,7 +128,7 @@ export default function VacancyApplicationsPage({ params }: { params: Promise<{ 
                       height: '40px', 
                       borderRadius: '10px', 
                       border: '1px solid var(--border)', 
-                      background: 'white',
+                      background: 'var(--surface)',
                       color: 'var(--text-secondary)',
                       display: 'flex',
                       alignItems: 'center',

@@ -20,12 +20,12 @@ export default function ProfilePage() {
             <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'var(--grad-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', fontWeight: 800, color: 'white' }}>
               SA
             </div>
-            <button style={{ position: 'absolute', bottom: '0', right: '0', width: '36px', height: '36px', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+            <button style={{ position: 'absolute', bottom: '0', right: '0', width: '36px', height: '36px', borderRadius: '50%', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
               <Camera size={18} color="#64748b" />
             </button>
           </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.25rem' }}>Super Admin</h2>
-          <p style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>HR Lead Specialist</p>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Super Admin</h2>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>HR Lead Specialist</p>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.9rem' }}>
@@ -44,20 +44,20 @@ export default function ProfilePage() {
           <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.5rem' }}>Личные данные</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Имя</label>
-              <input type="text" defaultValue="Super" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: '#f8fafc' }} />
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Имя</label>
+              <input type="text" defaultValue="Super" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: 'var(--background)' }} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Фамилия</label>
-              <input type="text" defaultValue="Admin" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: '#f8fafc' }} />
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Фамилия</label>
+              <input type="text" defaultValue="Admin" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: 'var(--background)' }} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Email</label>
-              <input type="email" defaultValue="admin@nexohr.uz" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: '#f8fafc' }} />
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Email</label>
+              <input type="email" defaultValue="admin@nexohr.uz" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: 'var(--background)' }} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Телефон</label>
-              <input type="text" defaultValue="+998 90 123 45 67" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: '#f8fafc' }} />
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Телефон</label>
+              <input type="text" defaultValue="+998 90 123 45 67" className={styles.searchInput} style={{ width: '100%', maxWidth: 'none', background: 'var(--background)' }} />
             </div>
           </div>
 
@@ -66,10 +66,10 @@ export default function ProfilePage() {
             Безопасность
           </h3>
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: 'white', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
               Сменить пароль
             </button>
-            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: 'white', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
               Двухфакторная аутентификация
             </button>
           </div>

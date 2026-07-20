@@ -428,12 +428,12 @@ export function TestsContent() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              style={{ background: 'white', padding: '2rem', borderRadius: '16px', width: '90%', maxWidth: '800px' }}
+              style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '16px', width: '90%', maxWidth: '800px' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800 }}>{currentTest.title} - Analytics</h2>
-                <button onClick={() => setAnalyticsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: '#64748b' }}>&times;</button>
+                <button onClick={() => setAnalyticsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: 'var(--text-secondary)' }}>&times;</button>
               </div>
 
               {loadingAnalytics ? (
@@ -441,23 +441,23 @@ export function TestsContent() {
               ) : analyticsData ? (
                 <div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
-                    <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
+                    <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
                       <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0ea5e9' }}>{analyticsData.totalAttempts}</div>
-                      <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem' }}>Total Attempts</div>
+                      <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Total Attempts</div>
                     </div>
-                    <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
+                    <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
                       <div style={{ fontSize: '2rem', fontWeight: 800, color: '#f59e0b' }}>{analyticsData.averageScore}%</div>
-                      <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem' }}>Average Score</div>
+                      <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Average Score</div>
                     </div>
-                    <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
+                    <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
                       <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{analyticsData.successRate}%</div>
-                      <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem' }}>Success Rate</div>
+                      <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Success Rate</div>
                     </div>
                   </div>
 
                   {analyticsData.distribution && analyticsData.distribution.length > 0 && (
                     <div style={{ height: '300px' }}>
-                      <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#1e293b' }}>Score Distribution</h3>
+                      <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Score Distribution</h3>
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={analyticsData.distribution}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
@@ -471,7 +471,7 @@ export function TestsContent() {
                   )}
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', color: '#64748b' }}>No data available</div>
+                <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>No data available</div>
               )}
             </motion.div>
           </div>

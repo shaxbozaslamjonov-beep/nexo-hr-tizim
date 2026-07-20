@@ -172,7 +172,7 @@ export function InterviewsContent() {
               className={styles.gridView}
             >
               {filteredInterviews.length === 0 ? (
-                <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '5rem', background: 'white', borderRadius: '24px' }}>
+                <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '5rem', background: 'var(--surface)', borderRadius: '24px' }}>
                   <CalendarIcon size={64} color="#e2e8f0" style={{ marginBottom: '1rem' }} />
                   <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>No interviews found</p>
                 </div>

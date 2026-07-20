@@ -23,7 +23,7 @@ export default async function EmployeeProfilePage() {
       <div style={{ padding: '1rem', maxWidth: '800px' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '2rem' }}>Information Portal</h1>
         
-        <div style={{ background: 'white', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)', overflow: 'hidden' }}>
           <div style={{ height: '120px', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }} />
           <div style={{ padding: '2rem', position: 'relative' }}>
             <div style={{ 
@@ -33,7 +33,7 @@ export default async function EmployeeProfilePage() {
               width: '96px', 
               height: '96px', 
               borderRadius: '24px', 
-              background: '#f1f5f9', 
+              background: 'var(--bg-muted)', 
               border: '4px solid white',
               display: 'flex',
               alignItems: 'center',
@@ -45,7 +45,7 @@ export default async function EmployeeProfilePage() {
             </div>
             <div style={{ marginLeft: '112px', marginBottom: '2rem' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{profile?.firstName} {profile?.lastName}</h2>
-              <p style={{ color: '#64748b' }}>{profile?.position} • {profile?.department}</p>
+              <p style={{ color: 'var(--text-secondary)' }}>{profile?.position} • {profile?.department}</p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>

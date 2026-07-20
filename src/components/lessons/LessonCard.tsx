@@ -84,10 +84,10 @@ export function LessonCard({ lesson }: LessonCardProps) {
 
       {isPreviewOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: 'white', borderRadius: '16px', width: '90%', maxWidth: '800px', maxHeight: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '16px', width: '90%', maxWidth: '800px', maxHeight: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             <div style={{ padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0' }}>
               <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700 }}>{title} - Preview</h3>
-              <button onClick={() => setIsPreviewOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }}>
+              <button onClick={() => setIsPreviewOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}>
                 <X size={24} />
               </button>
             </div>
@@ -104,7 +104,7 @@ export function LessonCard({ lesson }: LessonCardProps) {
                   ) : previewContent.type === 'pdf' ? (
                     <iframe src={typeof previewContent.content === 'string' ? previewContent.content : ''} style={{ width: '100%', height: '500px', border: 'none', borderRadius: '8px' }} />
                   ) : (
-                    <div style={{ padding: '2rem', background: '#f8fafc', borderRadius: '12px', fontSize: '1.1rem', lineHeight: 1.6 }}>
+                    <div style={{ padding: '2rem', background: 'var(--background)', borderRadius: '12px', fontSize: '1.1rem', lineHeight: 1.6 }}>
                       {typeof previewContent.content === 'string' ? previewContent.content : 'No content available'}
                     </div>
                   )}

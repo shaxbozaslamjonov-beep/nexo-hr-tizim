@@ -52,7 +52,7 @@ export function CareerHealthCard() {
 
   if (loading && !data) {
     return (
-      <div style={{ background: 'white', borderRadius: '16px', padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', border: '1px solid #f1f5f9' }}>
+      <div style={{ background: 'var(--surface)', borderRadius: '16px', padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', border: '1px solid #f1f5f9' }}>
         <Loader2 className="animate-spin text-primary" size={32} />
       </div>
     );
@@ -73,7 +73,7 @@ export function CareerHealthCard() {
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '20px',
       padding: '1.5rem',
       border: '1px solid #f1f5f9',
@@ -85,25 +85,25 @@ export function CareerHealthCard() {
           <div style={{ padding: '0.5rem', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '10px' }}>
             <Target size={18} color="#6366f1" />
           </div>
-          <h2 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+          <h2 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
             {t('careerMaps.careerHealth.title') || 'KARYERA HOLATI'}
           </h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: '#f8fafc', padding: '0.4rem 0.8rem', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-             <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#64748b' }}>HOLAT:</span>
+          <div style={{ background: 'var(--background)', padding: '0.4rem 0.8rem', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+             <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)' }}>HOLAT:</span>
              <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#6366f1' }}>{data?.rating}</span>
           </div>
           {isAdmin && (
             <button 
               onClick={() => setIsEditModalOpen(true)}
               style={{
-                background: 'white',
-                border: '1px solid #e2e8f0',
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
                 borderRadius: '8px',
                 padding: '0.4rem',
                 cursor: 'pointer',
-                color: '#64748b',
+                color: 'var(--text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
                 transition: 'all 0.2s',
@@ -126,8 +126,8 @@ export function CareerHealthCard() {
       }}>
         {mainMetrics.map((metric, idx) => (
           <div key={idx} style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
             padding: '1.5rem',
             borderRadius: '12px',
             position: 'relative',
@@ -141,7 +141,7 @@ export function CareerHealthCard() {
                  <metric.icon size={14} color={metric.color} />
                </div>
             </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>
               {metric.value}
             </div>
           </div>
@@ -153,17 +153,17 @@ export function CareerHealthCard() {
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
         gap: '1.5rem',
-        background: '#f8fafc',
+        background: 'var(--background)',
         padding: '1.5rem',
         borderRadius: '16px',
         border: '1px solid #f1f5f9'
       }}>
         {readinessLevels.map((level, idx) => (
           <div key={idx} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.02em' }}>
+            <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.02em' }}>
               {level.label}
             </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#1e293b' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-primary)' }}>
               {level.value}
             </div>
           </div>

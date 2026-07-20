@@ -125,7 +125,7 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
                 padding: '0.6rem 1.25rem', 
                 borderRadius: '12px', 
                 border: '1px solid var(--border)', 
-                background: 'white',
+                background: 'var(--surface)',
                 color: 'var(--text-primary)',
                 fontWeight: 700,
                 display: 'flex',
@@ -157,7 +157,7 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        style={{ background: 'white', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}
+        style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
           <div>
@@ -211,13 +211,13 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
             </div>
 
             {interviews.length === 0 ? (
-              <div style={{ padding: '2rem', textAlign: 'center', background: '#f8fafc', borderRadius: '16px', color: '#94a3b8' }}>
+              <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--background)', borderRadius: '16px', color: '#94a3b8' }}>
                 No interviews scheduled for this vacancy yet
               </div>
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
                 {interviews.map(i => (
-                  <div key={i.id} style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '16px', border: '1px solid transparent', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/interviews/${i.id}`)}>
+                  <div key={i.id} style={{ background: 'var(--background)', padding: '1.25rem', borderRadius: '16px', border: '1px solid transparent', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/interviews/${i.id}`)}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                       <span style={{ fontWeight: 800 }}>{i.candidateName}</span>
                       <span className={`badge badge-${i.status.toLowerCase()}`}>{i.status}</span>
@@ -254,25 +254,25 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
                 ) : analyticsData && (
                   <div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
-                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #e2e8f0' }}>
+                      <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
                         <Eye size={24} color="#6366f1" style={{ marginBottom: '0.5rem' }} />
-                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>{analyticsData.views}</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Ko'rishlar</div>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.views}</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Ko'rishlar</div>
                       </div>
-                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #e2e8f0' }}>
+                      <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
                         <FileText size={24} color="#10b981" style={{ marginBottom: '0.5rem' }} />
-                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>{analyticsData.applicationsCount}</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Arizalar</div>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.applicationsCount}</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Arizalar</div>
                       </div>
-                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid #e2e8f0' }}>
+                      <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
                         <Clock size={24} color="#f59e0b" style={{ marginBottom: '0.5rem' }} />
-                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>{analyticsData.avgTimeToFill} Kun</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>O'rtacha vaqt</div>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.avgTimeToFill} Kun</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>O'rtacha vaqt</div>
                       </div>
                     </div>
 
-                    <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '2rem', borderRadius: '16px', height: '350px' }}>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1e293b', marginBottom: '1.5rem' }}>Nomzodlar Funnel Diagrammasi</h3>
+                    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', padding: '2rem', borderRadius: '16px', height: '350px' }}>
+                      <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>Nomzodlar Funnel Diagrammasi</h3>
                       <ResponsiveContainer width="100%" height="80%">
                         <BarChart data={analyticsData.funnelData} layout="vertical" margin={{ top: 0, right: 0, left: 30, bottom: 0 }}>
                           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />

@@ -98,9 +98,9 @@ export function TabsNavigation({ handleAction, children }: { handleAction: () =>
             </div>
           ) : (
             <div style={{
-              background: 'white',
+              background: 'var(--surface)',
               borderRadius: '20px',
-              border: '1px solid #e2e8f0',
+              border: '1px solid var(--border)',
               padding: '3rem',
               boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)',
               minHeight: '550px',

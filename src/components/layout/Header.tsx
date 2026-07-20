@@ -1,9 +1,10 @@
 'use client';
 
-import { Search, Bell, Globe, Command } from 'lucide-react';
+import { Search, Bell, Globe, Command, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSearch } from '@/contexts/SearchContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import styles from './header.module.css';
 
 interface HeaderProps {
@@ -15,6 +16,7 @@ interface HeaderProps {
 export function Header({ breadcrumbs = [], collapsed, userName, hideSearch = false }: HeaderProps & { hideSearch?: boolean }) {
   const { language, setLanguage, t } = useLanguage();
   const { searchQuery, setSearchQuery } = useSearch();
+  const { theme, toggleTheme } = useTheme();
 
   const initials = userName
     .split(' ')
@@ -61,6 +63,14 @@ export function Header({ breadcrumbs = [], collapsed, userName, hideSearch = fal
             RU
           </button>
         </div>
+
+        <button
+          className={styles.iconBtn}
+          onClick={toggleTheme}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
 
         <button className={styles.iconBtn}>
           <Bell size={20} />

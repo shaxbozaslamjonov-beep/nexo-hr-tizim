@@ -103,7 +103,7 @@ export default function EditVacancyPage({ params }: { params: Promise<{ id: stri
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         style={{ 
-          background: 'white', 
+          background: 'var(--surface)', 
           borderRadius: '24px', 
           boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
           padding: '2.5rem',
@@ -253,7 +253,7 @@ export default function EditVacancyPage({ params }: { params: Promise<{ id: stri
                   padding: '0.85rem 2rem',
                   borderRadius: '14px',
                   border: '1px solid var(--border)',
-                  background: 'white',
+                  background: 'var(--surface)',
                   color: 'var(--text-secondary)',
                   fontWeight: 700,
                   cursor: 'pointer',
@@ -304,7 +304,7 @@ const inputStyle: React.CSSProperties = {
   padding: '0.85rem 1rem 0.85rem 2.75rem',
   borderRadius: '14px',
   border: '1px solid var(--border)',
-  background: '#f8fafc',
+  background: 'var(--background)',
   fontSize: '0.95rem',
   fontWeight: 500,
   outline: 'none',
@@ -317,7 +317,7 @@ const textareaStyle: React.CSSProperties = {
   padding: '1rem',
   borderRadius: '14px',
   border: '1px solid var(--border)',
-  background: '#f8fafc',
+  background: 'var(--background)',
   fontSize: '0.95rem',
   fontWeight: 500,
   outline: 'none',

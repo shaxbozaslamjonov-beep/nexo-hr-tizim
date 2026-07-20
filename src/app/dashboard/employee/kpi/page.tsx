@@ -27,7 +27,7 @@ export default async function EmployeeKPIPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.25rem' }}>
           {profile?.kpis.map((entry) => (
             <div key={entry.id} style={{
-              background: 'white',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius-lg)',
               padding: '1.25rem',
@@ -35,12 +35,12 @@ export default async function EmployeeKPIPage() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>{entry.kpi.name}</span>
-                <span style={{ fontSize: '0.8125rem', color: '#64748b' }}>Target: {entry.kpi.targetValue}{entry.kpi.unit}</span>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Target: {entry.kpi.targetValue}{entry.kpi.unit}</span>
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 800, color: entry.value >= entry.kpi.targetValue ? 'var(--success)' : 'var(--danger)', marginBottom: '0.5rem' }}>
                 {entry.value}{entry.kpi.unit}
               </div>
-              <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden' }}>
                 <div style={{ 
                   height: '100%', 
                   width: `${Math.min((entry.value / entry.kpi.targetValue) * 100, 100)}%`, 

@@ -204,7 +204,7 @@ export default function EmployeeProfilePage() {
             {/* Left Column - User Info */}
             <div className={styles.formContainer} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2rem', height: 'fit-content' }}>
               <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: '#1e293b', fontWeight: 800 }}>
+                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: 'var(--text-primary)', fontWeight: 800 }}>
                   {employee.user.firstName[0]}{employee.user.lastName[0]}
                 </div>
                 <h1 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '0.5rem' }}>

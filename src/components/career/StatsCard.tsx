@@ -15,7 +15,7 @@ interface StatsCardProps {
 export function StatsCard({ title, value, subtitle, progress, progressLabel, footer, trend }: StatsCardProps) {
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '16px',
       padding: '1.25rem',
       border: '1px solid #f1f5f9',
@@ -48,7 +48,7 @@ export function StatsCard({ title, value, subtitle, progress, progressLabel, foo
       </div>
 
       {/* Value */}
-      <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1e293b', lineHeight: 1, marginBottom: '0.25rem' }}>{value}</div>
+      <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1, marginBottom: '0.25rem' }}>{value}</div>
       {subtitle && <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500, marginBottom: '0.5rem' }}>{subtitle}</div>}
 
       {/* Progress */}
@@ -58,7 +58,7 @@ export function StatsCard({ title, value, subtitle, progress, progressLabel, foo
             <span style={{ color: '#94a3b8' }}>{progressLabel || 'Progress'}</span>
             <span style={{ color: '#6366f1', fontWeight: 700 }}>{progress}%</span>
           </div>
-          <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
+          <div style={{ height: '6px', background: 'var(--bg-muted)', borderRadius: '3px', overflow: 'hidden' }}>
             <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(90deg, #6366f1 0%, #a855f7 100%)', borderRadius: '3px' }} />
           </div>
         </div>

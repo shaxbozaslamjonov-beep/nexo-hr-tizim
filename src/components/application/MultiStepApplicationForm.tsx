@@ -106,7 +106,7 @@ export default function MultiStepApplicationForm({ vacancyId, onSuccess, onCance
   ];
 
   return (
-    <div style={{ background: 'white', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', maxWidth: '800px', margin: '0 auto' }}>
       {/* Step Indicator */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3rem', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '15px', left: '0', right: '0', height: '2px', background: 'var(--border)', zIndex: 0 }} />
@@ -233,7 +233,7 @@ export default function MultiStepApplicationForm({ vacancyId, onSuccess, onCance
           {step === 3 && (
             <div style={{ display: 'grid', gap: '1.5rem' }}>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>{t('applications.form.documents')}</h3>
-              <div style={{ display: 'grid', gap: '1rem', padding: '1.5rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid var(--border)' }}>
+              <div style={{ display: 'grid', gap: '1rem', padding: '1.5rem', background: 'var(--background)', borderRadius: '16px', border: '1px solid var(--border)' }}>
                 {(['passport', 'diploma', 'medicalClearance', 'workRecord'] as const).map(doc => (
                   <label key={doc} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
                     <input 
@@ -262,7 +262,7 @@ export default function MultiStepApplicationForm({ vacancyId, onSuccess, onCance
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>{t('applications.form.summary')}</h3>
                 <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>Please review your details before submitting</p>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', padding: '1.5rem', background: '#f8fafc', borderRadius: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', padding: '1.5rem', background: 'var(--background)', borderRadius: '16px' }}>
                 <div>
                   <p style={summaryLabelStyle}>{t('applications.form.firstName')} & {t('applications.form.lastName')}</p>
                   <p style={summaryValueStyle}>{formData.firstName} {formData.lastName}</p>
@@ -322,7 +322,7 @@ const inputStyle: React.CSSProperties = {
   padding: '0.75rem 1rem',
   borderRadius: '12px',
   border: '1px solid var(--border)',
-  background: '#f8fafc',
+  background: 'var(--background)',
   fontSize: '0.95rem',
   outline: 'none',
   width: '100%'
@@ -352,7 +352,7 @@ const primaryButtonStyle: React.CSSProperties = {
 const secondaryButtonStyle: React.CSSProperties = {
   padding: '0.75rem 2rem',
   borderRadius: '12px',
-  background: 'white',
+  background: 'var(--surface)',
   color: 'var(--text-secondary)',
   fontWeight: 700,
   border: '1px solid var(--border)',

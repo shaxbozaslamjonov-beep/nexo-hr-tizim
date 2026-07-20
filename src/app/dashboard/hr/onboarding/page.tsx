@@ -321,9 +321,9 @@ export default function OnboardingPage() {
             <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(120, 75, 160, 0.3)' }}>
               <Rocket size={24} color="white" />
             </div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>{t('onboarding')}</h1>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{t('onboarding')}</h1>
           </div>
-          <p style={{ color: '#64748b', fontSize: '1.1rem' }}>{t('onboardingPage.welcome')}</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>{t('onboardingPage.welcome')}</p>
           
           {isAdmin && (
             <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -331,7 +331,7 @@ export default function OnboardingPage() {
               <select 
                 value={selectedEmployeeId} 
                 onChange={(e) => setSelectedEmployeeId(e.target.value)}
-                style={{ padding: '0.6rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', background: 'white', outline: 'none', minWidth: '250px', fontWeight: 600 }}
+                style={{ padding: '0.6rem 1rem', borderRadius: '10px', border: '1px solid var(--border)', background: 'var(--surface)', outline: 'none', minWidth: '250px', fontWeight: 600 }}
               >
                 {employees.map(emp => (
                   <option key={emp.id} value={emp.id}>{emp.firstName} {emp.lastName} ({emp.positionRef?.title || emp.position})</option>
@@ -369,7 +369,7 @@ export default function OnboardingPage() {
 
           {/* Progress (moved slightly or kept alongside) */}
           <div style={{ textAlign: 'right', minWidth: '150px' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
               {t('onboardingPage.progress')}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'flex-end' }}>
@@ -380,7 +380,7 @@ export default function OnboardingPage() {
                   style={{ height: '100%', background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)' }}
                 />
               </div>
-              <span style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b' }}>{Math.round(progress)}%</span>
+              <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{Math.round(progress)}%</span>
             </div>
           </div>
         </div>
@@ -389,7 +389,7 @@ export default function OnboardingPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2.5rem' }}>
         {/* Left: Task list */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div style={{ background: 'white', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             {/* Header with filters */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>
                <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>{t('onboardingPage.checklist')}</h2>
@@ -408,7 +408,7 @@ export default function OnboardingPage() {
                   placeholder={(t('onboardingPage.search') as string) || 'Search tasks...'} 
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  style={{ padding: '0.4rem 0.75rem 0.4rem 2rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.85rem', width: '200px' }} 
+                  style={{ padding: '0.4rem 0.75rem 0.4rem 2rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', fontSize: '0.85rem', width: '200px' }} 
                 />
               </div>
             </div>
@@ -493,8 +493,8 @@ export default function OnboardingPage() {
         {/* Right: Mentor + Meeting */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Mentor Card */}
-          <div style={{ background: 'white', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {t('onboardingPage.mentor')}
             </h2>
             {mentor ? (
@@ -504,14 +504,14 @@ export default function OnboardingPage() {
                     <UserCircle size={36} color="#4f46e5" />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1e293b', margin: 0 }}>{mentor.firstName} {mentor.lastName}</h3>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{mentor.firstName} {mentor.lastName}</h3>
                     <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>{mentor.position}</p>
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   <a 
                     href={mentor.email ? `mailto:${mentor.email}` : '#'} 
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', width: '100%', padding: '0.75rem 1rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', color: '#475569', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', transition: 'all 0.2s' }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', width: '100%', padding: '0.75rem 1rem', background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '12px', color: '#475569', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', transition: 'all 0.2s' }}
                     onMouseOver={e => { e.currentTarget.style.background = '#e0e7ff'; e.currentTarget.style.borderColor = '#4f46e5'; }}
                     onMouseOut={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
                   >
@@ -539,7 +539,7 @@ export default function OnboardingPage() {
                     href={meeting.joinUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'white', color: '#FF6A88', border: 'none', padding: '0.6rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'none', transition: 'transform 0.2s' }}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--surface)', color: '#FF6A88', border: 'none', padding: '0.6rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'none', transition: 'transform 0.2s' }}
                     onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
                     onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
                   >
@@ -567,7 +567,7 @@ export default function OnboardingPage() {
              <motion.div
                initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
                onClick={e => e.stopPropagation()}
-               style={{ background: 'white', padding: '2rem', borderRadius: '24px', width: '90%', maxWidth: '500px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}
+               style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '24px', width: '90%', maxWidth: '500px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}
              >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>
@@ -581,15 +581,15 @@ export default function OnboardingPage() {
                 <form onSubmit={saveTask} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                    <div>
                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.title')} *</label>
-                     <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="e.g. Set up laptop" />
+                     <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="e.g. Set up laptop" />
                    </div>
                    <div>
                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.description')}</label>
-                     <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none', minHeight: '80px', fontFamily: 'inherit', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="Detailed instructions..." />
+                     <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', minHeight: '80px', fontFamily: 'inherit', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="Detailed instructions..." />
                    </div>
                    <div>
                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.dueDate')}</label>
-                     <input type="date" value={formData.dueDate} onChange={e => setFormData({...formData, dueDate: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none' }} />
+                     <input type="date" value={formData.dueDate} onChange={e => setFormData({...formData, dueDate: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none' }} />
                    </div>
 
                    {isAdmin && (
@@ -599,7 +599,7 @@ export default function OnboardingPage() {
                          required
                          value={formData.employeeId} 
                          onChange={e => setFormData({...formData, employeeId: e.target.value})}
-                         style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none', background: 'white' }}
+                         style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', background: 'var(--surface)' }}
                        >
                          <option value="">Select Employee</option>
                          {employees.map(emp => (
@@ -615,7 +615,7 @@ export default function OnboardingPage() {
                        <select 
                          value={formData.positionId} 
                          onChange={e => setFormData({...formData, positionId: e.target.value})}
-                         style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', outline: 'none', background: 'white' }}
+                         style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', background: 'var(--surface)' }}
                        >
                          <option value="">General Task</option>
                          {positions.map(pos => (

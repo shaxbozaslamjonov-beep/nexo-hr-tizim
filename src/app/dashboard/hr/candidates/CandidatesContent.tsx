@@ -297,7 +297,7 @@ export function CandidatesContent() {
         </div>
 
         <div className={styles.exportDropdown}>
-           <button className={styles.actionBtn} style={{ background: 'white', color: 'var(--text-primary)' }}>
+           <button className={styles.actionBtn} style={{ background: 'var(--surface)', color: 'var(--text-primary)' }}>
               <Download size={18} />
               {t('candidates.export')}
            </button>
@@ -447,7 +447,7 @@ export function CandidatesContent() {
                     Status <ChevronDown size={14} />
                   </button>
                   {/* Simplistic Status Dropup */}
-                  <div style={{ position: 'absolute', bottom: '100%', left: 0, background: 'white', borderRadius: '12px', padding: '0.5rem', width: '150px', boxShadow: '0 -10px 20px rgba(0,0,0,0.1)', display: 'none' }}>
+                  <div style={{ position: 'absolute', bottom: '100%', left: 0, background: 'var(--surface)', borderRadius: '12px', padding: '0.5rem', width: '150px', boxShadow: '0 -10px 20px rgba(0,0,0,0.1)', display: 'none' }}>
                     {STATUS_OPTIONS.map(s => <button key={s} onClick={() => handleBulkStatusUpdate(s)} className={styles.dropdownItem}>{s}</button>)}
                   </div>
                </div>

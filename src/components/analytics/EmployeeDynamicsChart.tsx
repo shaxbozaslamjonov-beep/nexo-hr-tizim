@@ -82,7 +82,7 @@ export function EmployeeDynamicsChart({ data }: EmployeeDynamicsChartProps) {
             <Tooltip 
               contentStyle={{ borderRadius: '24px', border: 'none', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)', padding: '16px' }}
               itemStyle={{ fontSize: '14px', fontWeight: 800, textTransform: 'uppercase' }}
-              labelStyle={{ color: '#1e293b', marginBottom: '12px', fontWeight: 900, fontSize: '16px' }}
+              labelStyle={{ color: 'var(--text-primary)', marginBottom: '12px', fontWeight: 900, fontSize: '16px' }}
             />
             <Legend verticalAlign="top" height={48} iconType="circle" wrapperStyle={{ fontSize: '12px', fontWeight: 800, paddingBottom: '30px', textTransform: 'uppercase', letterSpacing: '0.05em' }}/>
             <Area 

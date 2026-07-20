@@ -66,11 +66,11 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '0.75rem',
   borderRadius: '8px',
-  border: '1px solid #e2e8f0',
+  border: '1px solid var(--border)',
   outline: 'none',
   fontFamily: 'inherit',
   fontSize: '0.95rem',
-  background: 'white',
+  background: 'var(--surface)',
   boxSizing: 'border-box',
 };
 
@@ -197,7 +197,7 @@ export default function ProbationPage() {
       case 'PASSED':   return { color: '#10b981', bg: '#ecfdf5', icon: <CheckCircle size={14} />, label: 'Passed' };
       case 'EXTENDED': return { color: '#f59e0b', bg: '#fffbeb', icon: <AlertCircle size={14} />, label: 'Extended' };
       case 'FAILED':   return { color: '#ef4444', bg: '#fef2f2', icon: <XCircle size={14} />, label: 'Failed' };
-      default:         return { color: '#64748b', bg: '#f8fafc', icon: null, label: result };
+      default:         return { color: 'var(--text-secondary)', bg: '#f8fafc', icon: null, label: result };
     }
   };
 
@@ -233,9 +233,9 @@ export default function ProbationPage() {
             <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(247, 107, 28, 0.3)' }}>
               <Timer size={24} color="white" />
             </div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>{t('probation')}</h1>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{t('probation')}</h1>
           </div>
-          <p style={{ color: '#64748b', fontSize: '1.1rem' }}>Manage and review employee trial period evaluations.</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Manage and review employee trial period evaluations.</p>
         </div>
 
         {isAdmin && (
@@ -256,13 +256,13 @@ export default function ProbationPage() {
             { label: 'Extended', value: evaluations.filter(e => e.result === 'EXTENDED').length, color: '#f59e0b', bg: '#fffbeb' },
             { label: 'Failed', value: evaluations.filter(e => e.result === 'FAILED').length, color: '#ef4444', bg: '#fef2f2' },
           ].map((stat) => (
-            <div key={stat.label} style={{ background: 'white', borderRadius: '20px', padding: '1.5rem', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <div key={stat.label} style={{ background: 'var(--surface)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: stat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontSize: '1.4rem', fontWeight: 900, color: stat.color }}>{stat.value}</span>
               </div>
               <div>
                 <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b' }}>evaluations</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>evaluations</div>
               </div>
             </div>
           ))}
@@ -270,16 +270,16 @@ export default function ProbationPage() {
       )}
 
       {/* ── Evaluations list ── */}
-      <div style={{ background: 'white', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+      <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           Recent Evaluations
-          <span style={{ fontSize: '0.8rem', fontWeight: 500, background: '#f1f5f9', color: '#64748b', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>{evaluations.length} total</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 500, background: 'var(--bg-muted)', color: 'var(--text-secondary)', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>{evaluations.length} total</span>
         </h2>
 
         {loading ? (
           <div style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>Loading records...</div>
         ) : evaluations.length === 0 ? (
-          <div style={{ padding: '4rem', textAlign: 'center', background: '#f8fafc', borderRadius: '20px', border: '2px dashed #e2e8f0' }}>
+          <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--background)', borderRadius: '20px', border: '2px dashed #e2e8f0' }}>
             <AlertCircle size={48} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
             <p style={{ color: '#94a3b8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>No evaluations recorded yet.</p>
             {isAdmin && (
@@ -303,13 +303,13 @@ export default function ProbationPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     whileHover={{ scale: 1.005, boxShadow: '0 10px 20px -5px rgba(0,0,0,0.06)' }}
-                    style={{ padding: '1.5rem', borderRadius: '20px', background: 'white', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}
+                    style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--surface)', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}
                   >
                     {/* Employee avatar */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '200px', flex: '1 1 200px' }}>
-                      <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👤</div>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--bg-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👤</div>
                       <div>
-                        <h4 style={{ margin: 0, fontWeight: 700, color: '#1e293b' }}>
+                        <h4 style={{ margin: 0, fontWeight: 700, color: 'var(--text-primary)' }}>
                           {ev.employee?.firstName || 'Unknown'} {ev.employee?.lastName || ''}
                         </h4>
                         <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#94a3b8' }}>
@@ -324,11 +324,11 @@ export default function ProbationPage() {
                         <span>Average Score</span>
                         <span>{avg.toFixed(1)} / 5.0</span>
                       </div>
-                      <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                      <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden' }}>
                         <div style={{ width: `${(avg / 5) * 100}%`, height: '100%', background: avg > 4 ? '#10b981' : avg > 3 ? '#f59e0b' : '#ef4444', borderRadius: '4px', transition: 'width 0.5s ease' }} />
                       </div>
                       {ev.comments && (
-                        <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.5rem', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '280px' }}>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginTop: '0.5rem', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '280px' }}>
                           "{ev.comments}"
                         </p>
                       )}
@@ -389,7 +389,7 @@ export default function ProbationPage() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              style={{ background: 'white', padding: '2rem', borderRadius: '24px', width: '100%', maxWidth: '580px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', maxHeight: '90vh', overflowY: 'auto' }}
+              style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '24px', width: '100%', maxWidth: '580px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', maxHeight: '90vh', overflowY: 'auto' }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <div>
@@ -487,7 +487,7 @@ export default function ProbationPage() {
                 </div>
 
                 {/* Score sliders */}
-                <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div style={{ background: 'var(--background)', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                   <ScoreSlider label="Discipline" field="disciplineScore" />
                   <ScoreSlider label="Learning Speed" field="learningScore" />
                   <ScoreSlider label="Work Quality" field="qualityScore" />

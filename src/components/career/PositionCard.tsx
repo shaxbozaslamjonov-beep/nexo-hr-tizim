@@ -31,7 +31,7 @@ export function PositionCard({
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '20px',
       padding: '1.5rem',
       border: '1px solid #f1f5f9',
@@ -60,9 +60,9 @@ export function PositionCard({
             <Briefcase size={20} />
           </div>
           <div style={{ minWidth: 0 }}>
-            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: '#1e293b', lineHeight: 1.3 }}>{title}</h3>
+            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3 }}>{title}</h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.7rem', fontWeight: 600, background: '#f1f5f9', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#475569' }}>
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, background: 'var(--bg-muted)', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#475569' }}>
                 {t('careerMaps.positionCard.grade')} {grade}
               </span>
               <span style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1' }}></span>
@@ -99,10 +99,10 @@ export function PositionCard({
       {/* Readiness Progress */}
       <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem', marginTop: 'auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#64748b' }}>{t('careerMaps.positionCard.readiness')}</span>
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)' }}>{t('careerMaps.positionCard.readiness')}</span>
           <span style={{ fontSize: '0.75rem', fontWeight: 800, color: barColor }}>{readiness}%</span>
         </div>
-        <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
+        <div style={{ height: '6px', background: 'var(--bg-muted)', borderRadius: '3px', overflow: 'hidden' }}>
           <div style={{ width: `${readiness}%`, height: '100%', background: barColor, borderRadius: '3px', transition: 'width 0.4s ease' }} />
         </div>
       </div>

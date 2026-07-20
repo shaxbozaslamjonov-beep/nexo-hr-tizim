@@ -141,7 +141,7 @@ export default function VacanciesPage() {
         flexWrap: 'wrap'
       }}>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          {['ALL', 'OPEN', 'PENDING', 'CLOSED'].map((status) => (
+          {['ALL', 'OPEN', 'PENDING', 'PENDING_APPROVAL', 'CLOSED'].map((status) => (
             <button
               key={status}
               onClick={() => handleFilter(status)}
@@ -184,7 +184,7 @@ export default function VacanciesPage() {
               padding: '0.75rem 1rem 0.75rem 2.75rem',
               borderRadius: '14px',
               border: '1px solid var(--border)',
-              background: 'white',
+              background: 'var(--surface)',
               fontSize: '0.9rem',
               fontWeight: 500,
               boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
@@ -205,7 +205,7 @@ export default function VacanciesPage() {
             <p style={{ marginTop: '1rem' }}>{t('loading')}</p>
           </div>
         ) : filteredVacancies.length === 0 ? (
-          <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '24px', border: '1px dashed var(--border)' }}>
+          <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '4rem', background: 'var(--surface)', borderRadius: '24px', border: '1px dashed var(--border)' }}>
             <div style={{ marginBottom: '1rem', opacity: 0.3 }}>
               <Briefcase size={64} />
             </div>
@@ -245,7 +245,7 @@ export default function VacanciesPage() {
                            position: 'absolute',
                            top: '100%',
                            right: 0,
-                           background: 'white',
+                           background: 'var(--surface)',
                            borderRadius: '12px',
                            boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
                            border: '1px solid var(--border)',

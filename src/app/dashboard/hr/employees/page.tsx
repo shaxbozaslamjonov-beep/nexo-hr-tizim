@@ -115,7 +115,7 @@ export default function EmployeesPage() {
                 style={{ gridColumn: '1 / -1', padding: '6rem', textAlign: 'center' }}
               >
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', color: 'var(--text-light)' }}>
-                  <div style={{ width: '80px', height: '80px', background: '#f8fafc', borderRadius: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ width: '80px', height: '80px', background: 'var(--background)', borderRadius: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Users size={40} />
                   </div>
                   <div>
@@ -157,7 +157,7 @@ export default function EmployeesPage() {
                    </div>
                    <div className={styles.badges}>
                      <span className="badge badge-passed" style={{ fontSize: '0.7rem' }}>Active</span>
-                     <span className="badge" style={{ fontSize: '0.7rem', background: '#f1f5f9', color: '#64748b' }}>Full-time</span>
+                     <span className="badge" style={{ fontSize: '0.7rem', background: 'var(--bg-muted)', color: 'var(--text-secondary)' }}>Full-time</span>
                    </div>
                 </div>
                 

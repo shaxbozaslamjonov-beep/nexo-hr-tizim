@@ -544,7 +544,7 @@ export function HRDashboardContent() {
                 </div>
              ) : (
                testResults.map((res, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid transparent', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/tests/results?userId=${res.testId}`)}>
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'var(--background)', borderRadius: '16px', border: '1px solid transparent', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/tests/results?userId=${res.testId}`)}>
                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 800 }}>{res.name?.[0] || '?'}</div>
                         <div>

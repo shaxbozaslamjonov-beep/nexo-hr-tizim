@@ -109,7 +109,7 @@ function ApplyForm() {
               <div className={styles.scoreValue}>{result.screening?.totalScore} / 100</div>
               <div className={styles.scoreStatus}>{statusLabel}</div>
             </div>
-            <p style={{ fontSize: '0.9375rem', color: '#64748b', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
               {t('apply.success.nextStep')}
             </p>
           </div>
@@ -246,7 +246,7 @@ function ApplyForm() {
               {step === 2 && (
                 <>
                   <div className={styles.sectionTitle}>📄 {t('apply.steps.documents')}</div>
-                  <p style={{ fontSize: '0.9375rem', color: '#64748b', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                  <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
                     Please confirm that you have the following documents ready to present on request:
                   </p>
                   {['Passport / National ID', 'Diploma or Certificate', 'Medical Clearance', 'Work Record Book'].map((doc) => (
@@ -257,7 +257,7 @@ function ApplyForm() {
                   ))}
                   <div className={styles.checkRow} style={{ marginTop: '1.5rem', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.1)' }}>
                     <input type="checkbox" id="docsConfirm" checked={form.hasRequiredDocs} onChange={(e) => update('hasRequiredDocs', e.target.checked)} />
-                    <label htmlFor="docsConfirm" className={styles.checkLabel} style={{ fontWeight: 600, color: '#1e293b' }}>
+                    <label htmlFor="docsConfirm" className={styles.checkLabel} style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                       {t('apply.fields.docsConfirm')}
                     </label>
                   </div>
@@ -268,7 +268,7 @@ function ApplyForm() {
               {step === 3 && (
                 <>
                   <div className={styles.sectionTitle}>✅ {t('apply.steps.confirm')}</div>
-                  <div style={{ background: 'rgba(248, 250, 252, 0.8)', borderRadius: '1.25rem', padding: '1.5rem', marginBottom: '1.5rem', border: '1px solid #e2e8f0' }}>
+                  <div style={{ background: 'rgba(248, 250, 252, 0.8)', borderRadius: '1.25rem', padding: '1.5rem', marginBottom: '1.5rem', border: '1px solid var(--border)' }}>
                     {[
                       [t('apply.fields.firstName'), `${form.firstName} ${form.lastName}`],
                       [t('apply.fields.email'), form.email],
@@ -281,8 +281,8 @@ function ApplyForm() {
                       [t('apply.fields.source'), form.source],
                     ].map(([label, val]) => (
                       <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem 0', borderBottom: '1px solid rgba(226, 232, 240, 0.6)', fontSize: '0.9375rem' }}>
-                        <span style={{ color: '#64748b', fontWeight: 500 }}>{label}</span>
-                        <span style={{ fontWeight: 700, color: '#1e293b' }}>{val}</span>
+                        <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>
+                        <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{val}</span>
                       </div>
                     ))}
                   </div>

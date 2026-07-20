@@ -14,7 +14,7 @@ export default async function EmployeeDashboardPage() {
     >
       <div style={{ padding: '1rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Welcome back! 👋</h1>
-        <p style={{ color: '#64748b', marginBottom: '2rem' }}>Here is your personal workspace.</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Here is your personal workspace.</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.25rem' }}>
           {[
             { icon: '🏆', title: 'My KPI', desc: 'Track your performance indicators', href: '/dashboard/employee/kpi' },
@@ -41,7 +41,7 @@ export default async function EmployeeDashboardPage() {
             >
               <span style={{ fontSize: '2rem' }}>{item.icon}</span>
               <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>{item.title}</span>
-              <span style={{ fontSize: '0.8125rem', color: '#64748b' }}>{item.desc}</span>
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>{item.desc}</span>
             </a>
           ))}
         </div>

@@ -200,7 +200,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} style={{ ...detailCardStyle, background: '#f8fafc' }}>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} style={{ ...detailCardStyle, background: 'var(--background)' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '1rem' }}>Application Info</h3>
             <div style={{ display: 'grid', gap: '0.75rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -224,7 +224,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
 }
 
 const detailCardStyle: React.CSSProperties = {
-  background: 'white',
+  background: 'var(--surface)',
   borderRadius: '24px',
   padding: '2rem',
   boxShadow: '0 4px 20px rgba(0,0,0,0.05)',

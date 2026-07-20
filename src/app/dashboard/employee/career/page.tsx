@@ -26,7 +26,7 @@ export default async function EmployeeCareerPage() {
     >
       <div style={{ padding: '1rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>My Career Progression</h1>
-        <p style={{ color: '#64748b', marginBottom: '2rem' }}>Trace your journey from Junior to Expert levels.</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Trace your journey from Junior to Expert levels.</p>
 
         <div style={{ position: 'relative', paddingLeft: '2rem' }}>
           <div style={{ position: 'absolute', left: '7px', top: '0', bottom: '0', width: '2px', background: 'var(--border)' }} />
@@ -57,7 +57,7 @@ export default async function EmployeeCareerPage() {
                     <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--primary)', background: 'rgba(59, 130, 246, 0.1)', padding: '0.125rem 0.5rem', borderRadius: '4px' }}>Current Level</span>
                   )}
                 </div>
-                <p style={{ fontSize: '0.875rem', color: '#64748b' }}>{level.requirements}</p>
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{level.requirements}</p>
               </div>
             </div>
           ))}

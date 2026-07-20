@@ -32,7 +32,7 @@
 .searchInput {
   width: 100%;
   padding: 0.75rem 3rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   font-size: 0.9rem;
@@ -40,7 +40,7 @@
 }
 
 .searchInput:focus {
-  background: white;
+  background: var(--surface);
   border-color: var(--primary);
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
@@ -49,7 +49,7 @@
   position: absolute;
   right: 0.75rem;
   padding: 0.25rem 0.5rem;
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 0.7rem;
@@ -68,7 +68,7 @@
 .langSwitch {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg);
   border: 1px solid var(--border);
   padding: 0.25rem;
   border-radius: 10px;
@@ -87,7 +87,7 @@
 }
 
 .langActive {
-  background: white;
+  background: var(--surface);
   color: var(--primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -106,7 +106,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text-secondary);

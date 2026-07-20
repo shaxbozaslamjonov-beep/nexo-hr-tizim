@@ -30,6 +30,7 @@ export const translations = {
         ALL: 'Все',
         OPEN: 'Открытые',
         PENDING: 'В ожидании',
+        PENDING_APPROVAL: 'Ожидает одобрения',
         CLOSED: 'Закрытые'
       },
       candidates: 'Кандидаты',
@@ -638,6 +639,7 @@ export const translations = {
         ALL: "Barchasi",
         OPEN: "Ochiq",
         PENDING: "Kutilmoqda",
+        PENDING_APPROVAL: "Tasdiqlash kutilmoqda",
         CLOSED: "Yopiq"
       },
       candidates: "Nomzodlar",

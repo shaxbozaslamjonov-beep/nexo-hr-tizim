@@ -132,9 +132,9 @@ export default function AdvancedCareerMapPage() {
             <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(102,126,234,0.3)' }}>
               <Map size={24} color="white" />
             </div>
-            <h1 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#1e293b', margin: 0, letterSpacing: '-0.02em' }}>{t('careerMaps.pageTitle')}</h1>
+            <h1 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>{t('careerMaps.pageTitle')}</h1>
           </div>
-          <p style={{ color: '#64748b', fontSize: '1rem', margin: 0, fontWeight: 500 }}>{t('careerMaps.subtitle')}</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', margin: 0, fontWeight: 500 }}>{t('careerMaps.subtitle')}</p>
         </div>
       </div>
 
@@ -150,7 +150,7 @@ export default function AdvancedCareerMapPage() {
 
       {/* ── Cohesive Row: Filters, Search, Create ── */}
       <div style={{ 
-        background: 'white', 
+        background: 'var(--surface)', 
         borderRadius: '20px', 
         border: '1px solid #f1f5f9', 
         padding: '1rem',
@@ -158,7 +158,7 @@ export default function AdvancedCareerMapPage() {
         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)'
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.4rem', padding: '0.35rem', background: '#f8fafc', borderRadius: '14px', border: '1px solid #f1f5f9' }}>
+          <div style={{ display: 'flex', gap: '0.4rem', padding: '0.35rem', background: 'var(--background)', borderRadius: '14px', border: '1px solid #f1f5f9' }}>
             {filters.map((filter) => (
               <button
                 key={filter.id}
@@ -195,7 +195,7 @@ export default function AdvancedCareerMapPage() {
                 style={{
                   width: '100%', padding: '0.7rem 1rem 0.7rem 2.75rem',
                   borderRadius: '12px', border: '1px solid #edf2f7', fontSize: '0.85rem',
-                  outline: 'none', background: '#ffffff', fontFamily: 'inherit',
+                  outline: 'none', background: 'var(--surface)', fontFamily: 'inherit',
                   boxShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.02)',
                   transition: 'border-color 0.2s',
                 }}
@@ -242,16 +242,16 @@ export default function AdvancedCareerMapPage() {
           ) : filteredPositions.length === 0 ? (
             <div style={{
               gridColumn: '1 / -1', padding: '6rem', textAlign: 'center',
-              background: 'white', borderRadius: '32px', border: '2px dashed #e2e8f0',
+              background: 'var(--surface)', borderRadius: '32px', border: '2px dashed #e2e8f0',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem',
               boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
             }}>
-              <div style={{ padding: '1.5rem', borderRadius: '24px', background: '#f8fafc', color: '#cbd5e1' }}>
+              <div style={{ padding: '1.5rem', borderRadius: '24px', background: 'var(--background)', color: '#cbd5e1' }}>
                 <Search size={48} />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem' }}>Hech narsa topilmadi</h3>
-                <p style={{ color: '#64748b', fontSize: '0.95rem', fontWeight: 500, maxWidth: '300px', margin: '0 auto' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Hech narsa topilmadi</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 500, maxWidth: '300px', margin: '0 auto' }}>
                   Sizning qidiruvingizga mos keladigan lavozimlar mavjud emas.
                 </p>
               </div>

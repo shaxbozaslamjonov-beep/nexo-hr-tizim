@@ -96,7 +96,7 @@ export default function LessonsPage() {
                 animate={{ opacity: 1 }}
                 className={styles.emptyState}
               >
-                <div style={{ width: '80px', height: '80px', background: '#f8fafc', borderRadius: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '80px', height: '80px', background: 'var(--background)', borderRadius: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <BookOpen size={40} color="#94a3b8" />
                 </div>
                 <div>

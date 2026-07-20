@@ -23,12 +23,12 @@ export default async function EmployeeTrainingPage() {
     >
       <div style={{ padding: '1rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>My Training Portfolio</h1>
-        <p style={{ color: '#64748b', marginBottom: '2rem' }}>Complete your assigned modules to advance your career.</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Complete your assigned modules to advance your career.</p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {assignments.map((a) => (
             <div key={a.id} style={{
-              background: 'white',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius-lg)',
               padding: '1.25rem',
@@ -39,12 +39,12 @@ export default async function EmployeeTrainingPage() {
               boxShadow: 'var(--shadow-sm)'
             }}>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-muted)', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
                   {a.module.type === 'VIDEO' ? '🎬' : a.module.type === 'QUIZ' ? '📝' : '📄'}
                 </div>
                 <div>
                   <h3 style={{ fontWeight: 600, color: 'var(--foreground)' }}>{a.module.title}</h3>
-                  <p style={{ fontSize: '0.8125rem', color: '#64748b' }}>{a.module.track.title}</p>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>{a.module.track.title}</p>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

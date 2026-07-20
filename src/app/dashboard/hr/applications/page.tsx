@@ -139,7 +139,7 @@ export default function ApplicationsPage() {
         {loading ? (
           <div style={{ textAlign: 'center', padding: '4rem' }}>{t('loading')}</div>
         ) : filteredApps.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '5rem', background: 'white', borderRadius: '24px', border: '1px dashed var(--border)' }}>
+          <div style={{ textAlign: 'center', padding: '5rem', background: 'var(--surface)', borderRadius: '24px', border: '1px dashed var(--border)' }}>
             <Inbox size={64} style={{ opacity: 0.1, marginBottom: '1.5rem' }} />
             <h3 style={{ color: 'var(--text-secondary)' }}>No applications found</h3>
           </div>
@@ -209,7 +209,7 @@ const searchInputStyle: React.CSSProperties = {
   padding: '0.75rem 1rem 0.75rem 2.75rem',
   borderRadius: '14px',
   border: '1px solid var(--border)',
-  background: 'white',
+  background: 'var(--surface)',
   fontSize: '0.9rem',
   fontWeight: 500,
   minWidth: '300px',
@@ -218,7 +218,7 @@ const searchInputStyle: React.CSSProperties = {
 };
 
 const cardStyle: React.CSSProperties = {
-  background: 'white',
+  background: 'var(--surface)',
   borderRadius: '20px',
   padding: '1.25rem 1.5rem',
   border: '1px solid var(--border)',
@@ -247,7 +247,7 @@ const actionButtonStyle: React.CSSProperties = {
   height: '42px',
   borderRadius: '12px',
   border: '1px solid var(--border)',
-  background: 'white',
+  background: 'var(--surface)',
   color: 'var(--text-secondary)',
   display: 'flex',
   alignItems: 'center',

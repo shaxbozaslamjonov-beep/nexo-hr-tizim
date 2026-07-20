@@ -17,11 +17,11 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '0.75rem',
   borderRadius: '8px',
-  border: '1px solid #e2e8f0',
+  border: '1px solid var(--border)',
   outline: 'none',
   fontFamily: 'inherit',
   fontSize: '0.9rem',
-  background: '#f8fafc',
+  background: 'var(--background)',
   transition: 'border-color 0.2s',
 };
 
@@ -29,7 +29,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: '0.75rem',
   fontWeight: 700,
-  color: '#64748b',
+  color: 'var(--text-secondary)',
   marginBottom: '0.4rem',
   textTransform: 'uppercase',
   letterSpacing: '0.04em',
@@ -117,7 +117,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             style={{
               position: 'relative',
-              background: 'white',
+              background: 'var(--surface)',
               borderRadius: '20px',
               width: '100%',
               maxWidth: '600px',
@@ -129,7 +129,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
             }}
           >
             <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                 {t('careerMaps.careerHealth.editTitle') || 'Karyera holatini tahrirlash'}
               </h2>
               <button 
@@ -273,9 +273,9 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
                   style={{
                     padding: '0.6rem 1.25rem',
                     borderRadius: '10px',
-                    border: '1px solid #e2e8f0',
-                    background: 'white',
-                    color: '#64748b',
+                    border: '1px solid var(--border)',
+                    background: 'var(--surface)',
+                    color: 'var(--text-secondary)',
                     fontWeight: 600,
                     cursor: 'pointer',
                     fontSize: '0.85rem',

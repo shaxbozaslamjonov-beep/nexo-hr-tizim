@@ -154,7 +154,7 @@ export default function CandidateDetailPage() {
            <Link 
             href={`/dashboard/hr/candidates/${candidate.id}/edit`} 
             className={`${styles.actionBtn}`} 
-            style={{ width: 'auto', background: 'white' }}
+            style={{ width: 'auto', background: 'var(--surface)' }}
            >
               <Edit2 size={16} />
               {t('edit')}
@@ -272,7 +272,7 @@ export default function CandidateDetailPage() {
                   )}
                 </div>
 
-                <div style={{ margin: '3rem 0', height: '1px', background: '#f1f5f9' }} />
+                <div style={{ margin: '3rem 0', height: '1px', background: 'var(--bg-muted)' }} />
 
                 <h3 className={styles.sectionTitle}>
                   <Briefcase size={22} color="#8b5cf6" />
@@ -446,7 +446,7 @@ export default function CandidateDetailPage() {
                     <XIcon size={20} />
                   </button>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{ background: 'var(--background)', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--grad-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.75rem' }}>
                     {candidate.firstName[0]}{candidate.lastName[0]}
                    </div>
@@ -455,7 +455,7 @@ export default function CandidateDetailPage() {
                 <textarea 
                   className="input-premium"
                   placeholder={t('candidatesModule.messageModal.placeholder')}
-                  style={{ height: '180px', marginBottom: '1.5rem', background: 'white' }}
+                  style={{ height: '180px', marginBottom: '1.5rem', background: 'var(--surface)' }}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />

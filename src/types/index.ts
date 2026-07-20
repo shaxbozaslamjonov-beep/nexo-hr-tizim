@@ -166,7 +166,7 @@ export interface Vacancy {
   positionRef?: { id: string, title: string };
 }
 
-export type VacancyStatus = 'OPEN' | 'PENDING' | 'CLOSED';
+export type VacancyStatus = 'OPEN' | 'PENDING' | 'PENDING_APPROVAL' | 'CLOSED';
 
 export interface TestQuestion {
   id: string;

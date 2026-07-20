@@ -177,7 +177,7 @@ export function ReservePoolContent() {
                           <span className={styles.cardSource}>{r.source}</span>
                         </div>
                         
-                        <p style={{ fontSize: '0.8rem', color: '#64748b', margin: '0.5rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0.5rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                           {r.notes}
                         </p>
 
