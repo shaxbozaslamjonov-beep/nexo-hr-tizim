@@ -181,7 +181,7 @@ export function LandingPage() {
       </section>
 
       <footer className={styles.footer}>
-        © {new Date().getFullYear()} NEXO_HR // ALL_SYSTEMS_OPERATIONAL
+        © {new Date().getFullYear()} Nexo HR — {t('landing.footerTagline')}
       </footer>
     </div>
   );

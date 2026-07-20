@@ -386,6 +386,7 @@ export const translations = {
       noResults: 'Ничего не найдено по этому запросу',
       searchPlaceholder: 'Поиск по должности или отделу…',
       allDepartments: 'Все отделы',
+      footerTagline: 'платформа управления персоналом',
       login: 'Войти в систему',
     },
     candidateDashboard: {
@@ -976,6 +977,7 @@ export const translations = {
       noResults: 'Ushbu so\'rov bo\'yicha hech narsa topilmadi',
       searchPlaceholder: 'Lavozim yoki bo\'lim bo\'yicha qidirish…',
       allDepartments: 'Barcha bo\'limlar',
+      footerTagline: 'xodimlarni boshqarish platformasi',
       login: 'Tizimga kirish',
     },
     candidateDashboard: {

@@ -76,6 +76,52 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [ ] **Rol boshqaruvi UI (`Settings → Users`)** — **muhim topilma**: bu bo'lim to'liq soxta (mock) ma'lumotlar bilan ishlaydi — `adminUserService.ts` haqiqiy Prisma User jadvaliga emas, balki brauzer `localStorage`ga yozadi/o'qiydi. Bundan tashqari UI `firstName`, `lastName`, `isActive`, `lastLogin` maydonlarini kutadi, lekin haqiqiy `User` modelida ular **umuman yo'q** (faqat `id`, `email`, `password`, `role` bor). Buni to'g'ri ishlatish uchun avval Prisma schema'ga yangi ustunlar qo'shish (migratsiya) va ism manbasini aniqlash (CandidateProfile/EmployeeProfile'dan) kerak bo'ladi — bu database migratsiyasi talab qiladigan qaror bo'lgani uchun tasdiqlashsiz amalga oshirilmadi.
 - [ ] **Nomzod uchun profil to'ldirish foizi** — kichik, past ustuvorlikdagi vazifa, keyingi safar qo'shish mumkin
 
+## 6-bosqich: Login dizayni, ichki interfeys tartibga solish va AI integratsiyasi
+
+> Ishlab chiqilgan reja, tasdiqlashni kutmoqda. Har bir kichik bo'lim mustaqil bajarilishi mumkin.
+
+### 6.1 Login sahifasi dizaynini yangilash
+- [ ] Hozirgi `login/page.tsx` — generic siyoh-pushti gradient fon, landing sahifadagi yangi industrial-professional uslub (to'q ko'k + safety-amber, Space Grotesk) bilan **mos kelmaydi**. Login sahifasini xuddi shu vizual tizimga moslashtirish kerak — foydalanuvchi landing'dan login'ga o'tganda uslub uzilib qolmasligi uchun
+- [ ] Framer Motion bilan silliq kirish animatsiyasi (`src/lib/motion.ts` dagi umumiy tizimdan foydalanib)
+- [ ] `register` va `login/forgot` (hozircha yo'q, o'lik havola — alohida aniqlash kerak) sahifalari ham shu uslubga moslansin
+
+### 6.2 Ichki interfeys (dashboard) tartibga solish va menyu qulaylashtirish
+- [ ] `Sidebar.tsx` dagi HR menyusi hozircha 6 ta bo'lim, ko'p sathli (Rekrutment → 5 pastki band, Rivojlanish → 2, Xodimlar → 5, Darslar → 1-3) — real foydalanish oqimiga qarab guruhlashni qayta ko'rib chiqish (masalan tez-tez ishlatiladigan amallarni tepaga chiqarish, kam ishlatiladiganlarni "Ko'proq" ostiga yig'ish)
+- [ ] Global qidiruv (`Header.tsx` dagi "Поиск по платформе") — hozir qanday ishlashini tekshirish, natijalar sahifasi/dropdown yo'q bo'lsa qo'shish
+- [ ] Barcha `dashboard/hr/*` sahifalarida qattiq kodlangan inline style'larni (`style={{...}}`) komponentlashtirish — hozircha har sahifa o'zining uzun inline style blokini takrorlaydi, bu katta miqyosda dizaynni yangilashni qiyinlashtiradi
+- [ ] Yangi landing/login vizual tizimini (rang, shrift, motion) `dashboard/hr` ichkarisiga ham asta-sekin tarqatish — katta hajmli ish, bosqichma-bosqich (avval eng ko'p ochiladigan sahifalar: Dashboard, Vakansiyalar, Nomzodlar)
+
+### 6.3 AI agent — jarayonlarni nazorat qilish uchun (DeepSeek API)
+- [ ] **Talab qilinadi**: `DEEPSEEK_API_KEY` muhit o'zgaruvchisi hali loyihada yo'q — ishga tushirishdan oldin kalit kerak bo'ladi (boshqa loyihangizda — Tolib Xolva ERP'da — DeepSeek allaqachon ishlatilgani ko'rindi, xohlasangiz o'sha yondashuvni shu yerda ham takrorlash mumkin)
+- [ ] Yangi `src/lib/ai/deepseek.ts` — DeepSeek chat completion API'ga so'rov yuboruvchi markazlashgan klient
+- [ ] "Jarayonlarni nazorat qilish" degani nimani anglatishi aniqlashtirilishi kerak — masalan:
+  - Vakansiya/ariza/suhbat statistikasini kunlik/haftalik tahlil qilib, anomaliya (masalan kutilmagan rad etish darajasi oshishi) haqida ogohlantirish
+  - Muddati o'tgan ariza/suhbat/probatsiya bosqichlarini avtomatik aniqlab, adminlarga eslatma berish
+- [ ] Bu funksiya fon jarayoni (cron/scheduled job) sifatidami yoki admin so'rov berganda ishlaydigan tarzdami — aniqlashtirish kerak
+
+### 6.4 Adminlar uchun alohida AI yordamchi sahifasi
+- [ ] Yangi `/dashboard/hr/ai-assistant` sahifasi — admin savol beradi (masalan "bu oyda eng ko'p rad etilgan vakansiya qaysi?"), AI real ma'lumotlar (Prisma'dan olingan) asosida javob beradi
+- [ ] RBAC: `manage_settings` yoki yangi `use_ai_assistant` permission bilan cheklanishi kerak (barcha xodimlarga emas)
+- [ ] Suhbat tarixini saqlash kerakmi — agar ha, yangi Prisma modeli talab qiladi (migratsiya)
+
+### 6.5 Oddiy foydalanuvchilar (xodim/nomzod) uchun support AI
+- [ ] Yangi kichik chat-widget komponenti — `dashboard/employee` va `dashboard/candidate` ichida ko'rinadi
+- [ ] Nomzod uchun: ariza holati, keyingi bosqich haqida savolларga javob beradi (shaxsiy ma'lumotlarini ko'radi, boshqa nomzodlarnikini emas — RBAC bilan qat'iy cheklash shart)
+- [ ] Xodim uchun: KPI, training, career-path bo'yicha savollarga javob beradi
+
+### 6.6 AI orqali platformaga qo'shimcha ma'lumot generatsiya qilish
+- [ ] **Aniqlashtirish talab qilinadi** — "qo'shimcha ma'lumotlar" deganda nimani nazarda tutyapsiz? Masalan:
+  - Vakansiya tavsifi/talablarini AI yordamida avtomatik yozib berish (HR faqat lavozim nomini kiritadi)
+  - Nomzod rezyumesidan avtomatik skill/tajriba xulosasi chiqarish
+  - Suhbat savollarini lavozimga qarab AI generatsiya qilishi
+- [ ] Har biri alohida, aniq ko'lamli vazifa — "hammasi" deb umumiy bajarish xato natija berishi mumkin, shuning uchun ustuvorlik tanlash kerak
+
+### Ushbu bosqich uchun ochiq savollar (javob kutilmoqda)
+1. DeepSeek API kalitini beryapsizmi, yoki boshqa AI provayder (OpenAI, Gemini) dan foydalanaylikmi?
+2. "Jarayonlarni nazorat qilish AI agenti" — fon jarayonimi (avtomatik, vaqti-vaqti bilan ishlaydi) yoki admin so'rov berganda ishlaydigan chat interfeysimi?
+3. "Qo'shimcha ma'lumotlar generatsiya qilish" — yuqoridagi 3 misoldan qaysi biri (yoki boshqa narsa) nazarda tutilgan?
+4. 6.2 (menyu qayta tashkil qilish) uchun: qaysi bo'limlar eng tez-tez ishlatiladi, qaysilari kamdan-kam — shu asosida guruhlash to'g'ri bo'ladi
+
 ---
 
 ## Ishlash tartibi
