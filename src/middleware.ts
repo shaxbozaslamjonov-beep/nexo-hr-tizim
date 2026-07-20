@@ -1,24 +1,31 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from './lib/jwt';
+import { rolesWithPermission, type Action } from './lib/rbac';
 
 const publicRoutes = ['/login', '/register', '/', '/api/auth/login', '/api/auth/register'];
+// Prefixes that are always public regardless of HTTP method
+const publicRoutePrefixes = ['/apply'];
+// Routes public only for specific HTTP methods (e.g. anonymous candidate self-submission)
+const publicMethodRoutes: Record<string, string[]> = {
+  '/api/candidates': ['POST'],
+};
 
-// Role based access patterns can be defined here
-const roleAccessMap: Record<string, string[]> = {
-  '/dashboard/hr': ['HR_MANAGER', 'ADMIN', 'DIRECTOR'],
-  '/dashboard/employee': ['EMPLOYEE', 'HR_MANAGER', 'ADMIN', 'DEPARTMENT_HEAD', 'DIRECTOR'],
-  '/dashboard/admin': ['ADMIN'],
-  '/dashboard/director': ['DIRECTOR', 'ADMIN'],
-  '/dashboard/manager': ['DEPARTMENT_HEAD', 'ADMIN'],
-  '/dashboard/candidate': ['CANDIDATE', 'ADMIN'],
+// Route -> permission required. Allowed roles are derived from the central RBAC module
+// (src/lib/rbac.ts) so route gating always matches the permissions used elsewhere in the app.
+const routePermissions: Record<string, Action> = {
+  '/dashboard/hr': 'view_hr_dashboard',
+  '/dashboard/employee': 'view_employee_dashboard',
+  '/dashboard/candidate': 'view_candidate_dashboard',
 };
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  const isPublicRoute = publicRoutes.includes(pathname) || 
-    pathname.startsWith('/_next') || 
+  const isPublicRoute = publicRoutes.includes(pathname) ||
+    publicRoutePrefixes.some((p) => pathname.startsWith(p)) ||
+    (publicMethodRoutes[pathname]?.includes(request.method)) ||
+    pathname.startsWith('/_next') ||
     pathname.startsWith('/api/public') ||
     pathname === '/favicon.ico';
 
@@ -42,9 +49,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check RBAC
-  for (const [route, allowedRoles] of Object.entries(roleAccessMap)) {
+  for (const [route, action] of Object.entries(routePermissions)) {
     if (pathname.startsWith(route)) {
-      if (!allowedRoles.includes(payload.role)) {
+      const allowedRoles = rolesWithPermission(action);
+      if (!allowedRoles.includes(payload.role as import('./types').UserRole)) {
         // User not authorized for this route
         return NextResponse.redirect(new URL('/unauthorized', request.url));
       }

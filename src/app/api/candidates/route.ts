@@ -2,10 +2,11 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { runScreening } from '@/lib/screening';
+import { can } from '@/lib/rbac';
 
 export const dynamic = 'force-dynamic';
 
-// GET - list candidates (HR)
+// GET - list candidates (HR), or a candidate's own profile when role is CANDIDATE
 export async function GET(request: Request) {
   try {
     const session = await getSession();
@@ -14,6 +15,22 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const vacancyId = searchParams.get('vacancyId');
+
+    // A candidate may only ever see their own profile, regardless of query params.
+    if (session.role === 'CANDIDATE') {
+      const own = await prisma.candidateProfile.findUnique({
+        where: { userId: session.id },
+        include: {
+          applications: { include: { vacancy: true } },
+          interviews: { orderBy: { scheduledAt: 'desc' } },
+        },
+      });
+      return NextResponse.json(own ? [own] : []);
+    }
+
+    if (!can(session, 'manage_candidates')) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
 
     const candidates = await prisma.candidateProfile.findMany({
       where: {
@@ -82,6 +99,7 @@ export async function POST(request: Request) {
 
     // Create or find user account for candidate
     let userId: string;
+    let tempPassword: string | undefined;
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
@@ -99,7 +117,7 @@ export async function POST(request: Request) {
       }
     } else {
       // Auto-create candidate account
-      const tempPassword = Math.random().toString(36).slice(-8);
+      tempPassword = Math.random().toString(36).slice(-8);
       const { hashPassword } = await import('@/lib/password');
       const hashed = await hashPassword(tempPassword);
 
@@ -171,6 +189,7 @@ export async function POST(request: Request) {
         message: 'Application submitted successfully',
         applicationId: application.id,
         screening: screeningResult,
+        ...(tempPassword ? { account: { email, tempPassword } } : {}),
       },
       { status: 201 }
     );

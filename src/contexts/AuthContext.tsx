@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, UserRole } from '@/types';
 import { useRouter, usePathname } from 'next/navigation';
-import { setCookie, getCookie, deleteCookie } from '@/lib/utils/authUtils';
 import { useToast } from './ToastContext';
 
 interface AuthContextType {
@@ -25,25 +24,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    // Initial hydration from cookie
-    const token = getCookie('auth_token');
-    if (token) {
-      try {
-        const savedUser = localStorage.getItem('auth_user');
-        if (savedUser) {
-          setUser(JSON.parse(savedUser));
-        }
-      } catch (err) {
-        console.error('Failed to restore session:', err);
-        deleteCookie('auth_token');
+    // auth_token is an httpOnly cookie (by design, for security) so it can't be read here.
+    // The server middleware is the real authority on session validity; we just restore the
+    // last-known user from localStorage for the client UI. If the session is actually invalid,
+    // the next server round-trip (middleware) will redirect to /login.
+    try {
+      const savedUser = localStorage.getItem('auth_user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
       }
+    } catch (err) {
+      console.error('Failed to restore session:', err);
+      localStorage.removeItem('auth_user');
     }
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
     const publicPaths = ['/login', '/register', '/apply'];
-    if (!isLoading && !user && !publicPaths.some(path => pathname.startsWith(path))) {
+    if (!isLoading && !user && pathname !== '/' && !publicPaths.some(path => pathname.startsWith(path))) {
       router.push('/login');
     }
   }, [user, isLoading, pathname, router]);
@@ -94,10 +93,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       showToast('Login successful', 'success');
       
       // Redirect based on role
-      if (data.role === 'ADMIN' || data.role === 'HR_MANAGER') {
-        router.push('/dashboard/hr/analytics');
-      } else {
+      if (['ADMIN', 'HR_MANAGER', 'DIRECTOR', 'DEPARTMENT_HEAD'].includes(data.role)) {
         router.push('/dashboard/hr');
+      } else if (data.role === 'CANDIDATE') {
+        router.push('/dashboard/candidate');
+      } else {
+        router.push('/dashboard/employee');
       }
     } catch (err: any) {
       showToast(err.message || 'Login failed', 'error');
@@ -136,8 +137,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setUser(null);
-    deleteCookie('auth_token');
     localStorage.removeItem('auth_user');
+    // auth_token is httpOnly, so it can only be cleared server-side.
+    fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
     showToast('Logged out', 'info');
     router.push('/login');
   };

@@ -6,6 +6,7 @@ import { vacancyService } from '@/lib/services/vacancyService';
 import { interviewService } from '@/lib/services/interviewService';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { can } from '@/lib/rbac';
 import { Vacancy, Interview } from '@/types';
 import { ArrowLeft, Briefcase, MapPin, DollarSign, Calendar, Users, Edit, Trash2, Mic2, Clock, Video, Phone, ChevronRight, Activity, Eye, FileText } from 'lucide-react';
 import Link from 'next/link';
@@ -81,7 +82,7 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
     }
   };
 
-  const isAdmin = user?.role?.toUpperCase() === 'ADMIN';
+  const isAdmin = can(user, 'manage_vacancies');
 
   if (loading) return <div style={{ padding: '2rem' }}>{t('loading')}</div>;
   if (!vacancy) return <div style={{ padding: '2rem' }}>Vacancy not found</div>;

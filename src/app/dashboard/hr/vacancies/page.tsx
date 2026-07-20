@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { can } from '@/lib/rbac';
 import { vacancyService } from '@/lib/services/vacancyService';
 import { Vacancy } from '@/types';
 import Link from 'next/link';
@@ -93,7 +94,7 @@ export default function VacanciesPage() {
     }
   };
 
-  const isAdmin = user?.role?.toUpperCase() === 'ADMIN';
+  const isAdmin = can(user, 'manage_vacancies');
 
   return (
     <div className="animate-fade-in" style={{ padding: '0 1rem' }}>

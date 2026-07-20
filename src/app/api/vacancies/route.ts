@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { can } from '@/lib/rbac';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,8 +34,7 @@ export async function POST(request: Request) {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const allowedRoles = ['HR_MANAGER', 'ADMIN', 'DIRECTOR', 'DEPARTMENT_HEAD'];
-    if (!allowedRoles.includes(session.role)) {
+    if (!can(session, 'manage_vacancies')) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 

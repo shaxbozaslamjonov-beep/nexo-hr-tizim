@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { vacancyService } from '@/lib/services/vacancyService';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { can } from '@/lib/rbac';
 import { toast } from 'react-hot-toast';
 import { ArrowLeft, Save, Briefcase, MapPin, DollarSign, List, AlignLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -40,7 +41,7 @@ export default function CreateVacancyPage() {
   });
 
   // Admin check
-  const isAdmin = user?.role?.toUpperCase() === 'ADMIN';
+  const isAdmin = can(user, 'manage_vacancies');
 
   if (!isAdmin && user) {
     router.push('/dashboard/hr/vacancies');

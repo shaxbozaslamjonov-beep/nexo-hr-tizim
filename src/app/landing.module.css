@@ -1,0 +1,155 @@
+.page {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--grad-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.loginBtn {
+  padding: 0.65rem 1.5rem;
+  border-radius: 12px;
+  background: var(--grad-primary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.loginBtn:hover {
+  transform: translateY(-2px);
+}
+
+.hero {
+  text-align: center;
+  padding: 5rem 1.5rem 4rem;
+  background: var(--grad-welcome);
+  color: white;
+}
+
+.heroTitle {
+  font-size: 2.75rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  opacity: 0.85;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cardMeta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cardDesc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.applyBtn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-light);
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+}

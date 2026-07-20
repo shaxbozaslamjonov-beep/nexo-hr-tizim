@@ -1,5 +1,5 @@
 
-export type UserRole = 'ADMIN' | 'EMPLOYEE' | 'HR_MANAGER' | 'DIRECTOR' | 'DEPARTMENT_HEAD';
+export type UserRole = 'ADMIN' | 'EMPLOYEE' | 'HR_MANAGER' | 'DIRECTOR' | 'DEPARTMENT_HEAD' | 'CANDIDATE';
 
 export interface UserSettings {
   language: 'uz' | 'ru';

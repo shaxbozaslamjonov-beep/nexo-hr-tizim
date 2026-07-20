@@ -33,6 +33,8 @@ import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './sidebar.module.css';
 import { useAuth } from '@/contexts/AuthContext';
 import { Collapsible } from '@/components/ui/Collapsible';
+import { can } from '@/lib/rbac';
+import { User as UserIcon, FileText } from 'lucide-react';
 
 interface NavItem {
   label: string;
@@ -57,7 +59,41 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
   const { t } = useLanguage();
   const { logout } = useAuth();
 
-  const navSections: NavSection[] = [
+  const isHrSide = can(role, 'view_hr_dashboard');
+  const isCandidate = role?.toUpperCase() === 'CANDIDATE';
+
+  const settingsHref = isCandidate
+    ? '/dashboard/candidate/profile'
+    : isHrSide
+    ? '/dashboard/hr/settings'
+    : '/dashboard/employee/profile';
+
+  const employeeNavSections: NavSection[] = [
+    {
+      titleKey: 'sidebar.main',
+      icon: Home,
+      items: [
+        { label: 'Dashboard', href: '/dashboard/employee', icon: Home, translationKey: 'dashboard' },
+        { label: 'My KPI', href: '/dashboard/employee/kpi', icon: Trophy, translationKey: 'kpiPerformance' },
+        { label: 'Training', href: '/dashboard/employee/training', icon: GraduationCap, translationKey: 'training.title' },
+        { label: 'Career Path', href: '/dashboard/employee/career', icon: Map, translationKey: 'careerPaths' },
+        { label: 'My Profile', href: '/dashboard/employee/profile', icon: UserIcon, translationKey: 'profile' },
+      ],
+    },
+  ];
+
+  const candidateNavSections: NavSection[] = [
+    {
+      titleKey: 'sidebar.main',
+      icon: Home,
+      items: [
+        { label: 'My Application', href: '/dashboard/candidate', icon: FileText, translationKey: 'candidateDashboard.myApplication' },
+        { label: 'My Profile', href: '/dashboard/candidate/profile', icon: UserIcon, translationKey: 'profile' },
+      ],
+    },
+  ];
+
+  const hrNavSections: NavSection[] = [
     {
       titleKey: 'sidebar.main',
       icon: Home,
@@ -110,6 +146,12 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
       ],
     },
   ];
+
+  const navSections: NavSection[] = isCandidate
+    ? candidateNavSections
+    : isHrSide
+    ? hrNavSections
+    : employeeNavSections;
 
   return (
     <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
@@ -199,13 +241,13 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
           <Collapsible
             title={t('sidebar.settings')}
             icon={Settings}
-            defaultOpen={pathname === '/dashboard/hr/settings'}
+            defaultOpen={pathname === settingsHref}
             triggerClassName={styles.collapsibleTrigger}
             className={collapsed ? 'hidden' : ''}
           >
             <Link 
-              href="/dashboard/hr/settings" 
-              className={`${styles.navItem} ${styles.nestedNavItem} ${pathname === '/dashboard/hr/settings' ? styles.active : ''}`}
+              href={settingsHref}
+              className={`${styles.navItem} ${styles.nestedNavItem} ${pathname === settingsHref ? styles.active : ''}`}
             >
               <div className={styles.navIcon}>
                 <Settings size={18} />
@@ -216,8 +258,8 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
           
           {collapsed && (
             <Link 
-              href="/dashboard/hr/settings" 
-              className={`${styles.navItem} ${pathname === '/dashboard/hr/settings' ? styles.active : ''}`}
+              href={settingsHref}
+              className={`${styles.navItem} ${pathname === settingsHref ? styles.active : ''}`}
               title={t('settings.title')}
             >
               <div className={styles.navIcon}>
