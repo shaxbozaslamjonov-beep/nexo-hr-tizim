@@ -88,11 +88,11 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [x] **Yana bir topilgan xato**: yangi `/login/forgot` sahifasi yaratilgandan so'ng u middleware'da "ochiq" deb belgilanmagani aniqlandi — anonim foydalanuvchi bu sahifaga kira olmasdi (avtomatik `/login`ga qaytarilardi). `middleware.ts`dagi `publicRoutePrefixes`ga `/login` qo'shib tuzatildi.
 - Brauzerda tekshirildi: login, register, /login/forgot sahifalari to'g'ri render bo'lishi va login funksionalligi (kirish → `/dashboard/hr`) buzilmaganligi tasdiqlandi.
 
-### 6.2 Ichki interfeys (dashboard) tartibga solish va menyu qulaylashtirish
-- [ ] `Sidebar.tsx` dagi HR menyusi hozircha 6 ta bo'lim, ko'p sathli (Rekrutment → 5 pastki band, Rivojlanish → 2, Xodimlar → 5, Darslar → 1-3) — real foydalanish oqimiga qarab guruhlashni qayta ko'rib chiqish (masalan tez-tez ishlatiladigan amallarni tepaga chiqarish, kam ishlatiladiganlarni "Ko'proq" ostiga yig'ish)
-- [ ] Global qidiruv (`Header.tsx` dagi "Поиск по платформе") — hozir qanday ishlashini tekshirish, natijalar sahifasi/dropdown yo'q bo'lsa qo'shish
-- [ ] Barcha `dashboard/hr/*` sahifalarida qattiq kodlangan inline style'larni (`style={{...}}`) komponentlashtirish — hozircha har sahifa o'zining uzun inline style blokini takrorlaydi, bu katta miqyosda dizaynni yangilashni qiyinlashtiradi
-- [ ] Yangi landing/login vizual tizimini (rang, shrift, motion) `dashboard/hr` ichkarisiga ham asta-sekin tarqatish — katta hajmli ish, bosqichma-bosqich (avval eng ko'p ochiladigan sahifalar: Dashboard, Vakansiyalar, Nomzodlar)
+### 6.2 Ichki interfeys (dashboard) tartibga solish va menyu qulaylashtirish ~ QISMAN BAJARILDI
+- [x] Sidebar menyusi 5 bo'limdan 4 taga tushirildi — kam elementli "Rivojlanish yo'llari" (2 band) va "Darslar" (1-3 band) guruhlari bitta "O'qitish" guruhiga birlashtirildi (bir xil mavzu — training/tests/lessons)
+- [x] Sidebar'dagi faol havola urg'u rangi (`--nexo-cyan`) landing/login'dagi safety-amber (`#F5A623`) rangiga almashtirildi — ichki va tashqi interfeys o'rtasida vizual bog'liqlik yaratildi (asosiy binafsha-siyoh gradient sidebar identitikasi saqlanib qoldi, faqat urg'u rangi mos qilindi)
+- [ ] Global qidiruv (`Header.tsx` dagi "Поиск по платформе") — hozir faqat input, natija ko'rsatmaydi (tekshirilmadi, alohida vazifa)
+- [ ] Barcha `dashboard/hr/*` sahifalarida (~25 ta sahifa) qattiq kodlangan inline style'larni komponentlashtirish — **katta hajmli, alohida bosqichma-bosqich reja talab qiladigan ish**, bitta o'tirishda xavfsiz bajarib bo'lmaydi. Asosiy Dashboard (`HRDashboardContent.tsx`) sahifasi tekshirildi — u allaqachon Framer Motion bilan yaxshi animatsiyalangan, qayta qurish shart emas.
 
 ### 6.3 AI agent — jarayonlarni nazorat qilish uchun (DeepSeek API) ✅ ASOSIY QISM BAJARILDI
 - [x] `DEEPSEEK_API_KEY` `.env` fayliga qo'shildi (git'ga tushmaydi, `.gitignore`da)

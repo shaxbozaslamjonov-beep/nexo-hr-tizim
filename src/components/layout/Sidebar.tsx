@@ -119,14 +119,6 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
       ],
     },
     {
-      titleKey: 'sidebar.development',
-      icon: GraduationCap,
-      items: [
-        { label: 'Training Tracks', href: '/dashboard/hr/training', icon: GraduationCap, translationKey: 'training.title' },
-        { label: 'Tests', href: '/dashboard/hr/tests', icon: FileEdit, translationKey: 'tests.title' },
-      ],
-    },
-    {
       titleKey: 'sidebar.workforce',
       icon: Users,
       items: [
@@ -138,9 +130,13 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
       ],
     },
     {
-      titleKey: 'sidebar.lessons',
-      icon: BookOpen,
+      // Merged "development" (training tracks/tests) + "lessons" into one group —
+      // both were small (2 and 1-3 items) and cover the same learning domain.
+      titleKey: 'sidebar.learning',
+      icon: GraduationCap,
       items: [
+        { label: 'Training Tracks', href: '/dashboard/hr/training', icon: GraduationCap, translationKey: 'training.title' },
+        { label: 'Tests', href: '/dashboard/hr/tests', icon: FileEdit, translationKey: 'tests.title' },
         { label: 'All Lessons', href: '/dashboard/hr/lessons', icon: BookOpen, translationKey: 'sidebar.lessonsList' },
         ...(role?.toUpperCase() === 'EMPLOYEE' ? [
           { label: 'My Assignments', href: '/dashboard/hr/lessons/assignments', icon: ClipboardList, translationKey: 'sidebar.myAssignments' }

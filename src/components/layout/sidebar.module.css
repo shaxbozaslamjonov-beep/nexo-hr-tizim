@@ -92,7 +92,7 @@
 
 .toggleBtn:hover {
   transform: scale(1.15);
-  background: var(--nexo-cyan);
+  background: #F5A623;
   color: white;
 }
 
@@ -180,9 +180,9 @@
   top: 20%;
   height: 60%;
   width: 3px;
-  background: var(--nexo-cyan);
+  background: #F5A623;
   border-radius: 0 4px 4px 0;
-  box-shadow: 0 0 10px var(--nexo-cyan);
+  box-shadow: 0 0 10px #F5A623;
 }
 
 .nestedNavItem {
@@ -204,7 +204,7 @@
 }
 
 .active .navIcon {
-  color: var(--nexo-cyan);
+  color: #F5A623;
 }
 
 .footer {
