@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { SupportChatWidget } from '@/components/ai/SupportChatWidget';
 import styles from './dashboard-layout.module.css';
 
 interface DashboardLayoutProps {
@@ -49,6 +50,7 @@ export function DashboardLayout({ children, role, userName, breadcrumbs = [], hi
           </AnimatePresence>
         </main>
       </div>
+      {['EMPLOYEE', 'CANDIDATE'].includes(role?.toUpperCase()) && <SupportChatWidget />}
     </div>
   );
 }

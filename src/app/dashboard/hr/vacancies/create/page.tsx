@@ -7,7 +7,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { can } from '@/lib/rbac';
 import { toast } from 'react-hot-toast';
-import { ArrowLeft, Save, Briefcase, MapPin, DollarSign, List, AlignLeft } from 'lucide-react';
+import { ArrowLeft, Save, Briefcase, MapPin, DollarSign, List, AlignLeft, Sparkles, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -16,6 +16,8 @@ export default function CreateVacancyPage() {
   const router = useRouter();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     department: '',
@@ -47,6 +49,33 @@ export default function CreateVacancyPage() {
     router.push('/dashboard/hr/vacancies');
     return null;
   }
+
+  const handleGenerateWithAi = async () => {
+    if (!formData.title) {
+      setAiError(t('vacancies.form.aiNeedsTitle'));
+      return;
+    }
+    setAiError('');
+    setAiLoading(true);
+    try {
+      const res = await fetch('/api/ai/generate-vacancy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: formData.title, department: formData.department, shift: formData.shift }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed');
+      setFormData((prev) => ({
+        ...prev,
+        description: data.description || prev.description,
+        requirements: data.requirements || prev.requirements,
+      }));
+    } catch (err: any) {
+      setAiError(err.message);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -255,6 +284,25 @@ export default function CreateVacancyPage() {
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* AI generation */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={handleGenerateWithAi}
+              disabled={aiLoading}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.65rem 1.25rem', borderRadius: '12px', border: '1px solid var(--border)',
+                background: 'var(--bg-muted)', color: 'var(--text-primary)', fontWeight: 700,
+                fontSize: '0.85rem', cursor: 'pointer',
+              }}
+            >
+              {aiLoading ? <Loader2 size={16} /> : <Sparkles size={16} />}
+              {aiLoading ? t('vacancies.form.aiGenerating') : t('vacancies.form.aiGenerate')}
+            </button>
+            {aiError && <span style={{ color: '#dc2626', fontSize: '0.85rem' }}>{aiError}</span>}
           </div>
 
           {/* Description */}

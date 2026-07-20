@@ -107,23 +107,16 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [x] Brauzerda to'liq tekshirildi: real savol so'rab ("hozir nechta ochiq vakansiya bor?") to'g'ri javob oldi (2 ta — DB bilan mos), "Tekshirishni boshlash" tugmasi real muammolarni topib berdi (1 ta PENDING_APPROVAL vakansiya, suhbat rejalashtirilmagan nomzodlar), noaniq savolga ("qaysi vakansiyaga eng ko'p ariza tushgan") AI to'g'ri ravishda "bu ma'lumot yo'q" deb javob berdi — o'ylab topmadi
 - [ ] Suhbat tarixi hozircha saqlanmaydi (faqat joriy sessiya davomida xotirada) — agar doimiy saqlash kerak bo'lsa, yangi Prisma modeli va migratsiya talab qiladi
 
-### 6.5 Oddiy foydalanuvchilar (xodim/nomzod) uchun support AI
-- [ ] Yangi kichik chat-widget komponenti — `dashboard/employee` va `dashboard/candidate` ichida ko'rinadi
-- [ ] Nomzod uchun: ariza holati, keyingi bosqich haqida savolларga javob beradi (shaxsiy ma'lumotlarini ko'radi, boshqa nomzodlarnikini emas — RBAC bilan qat'iy cheklash shart)
-- [ ] Xodim uchun: KPI, training, career-path bo'yicha savollarga javob beradi
+### 6.5 Oddiy foydalanuvchilar (xodim/nomzod) uchun support AI ✅ BAJARILDI
+- [x] Yangi [`SupportChatWidget`](src/components/ai/SupportChatWidget.tsx) — suzuvchi chat komponenti, `DashboardLayout`ga qo'shildi, faqat `EMPLOYEE`/`CANDIDATE` rollarida ko'rinadi (HR/Admin uchun ko'rinmaydi, ular alohida to'liq AI Assistant sahifasidan foydalanadi)
+- [x] Yangi [`/api/ai/support`](src/app/api/ai/support/route.ts) — nomzod uchun `buildCandidateSelfContext()`, xodim uchun `buildEmployeeSelfContext()` orqali **faqat o'z ma'lumotlarini** ko'radi. Boshqa foydalanuvchi (masalan ADMIN) bu endpointga so'rov yuborsa `403 Forbidden` qaytaradi — brauzerda tekshirildi.
+- Brauzerda to'liq tekshirildi: nomzod sifatida kirib "Mening arizam qaysi bosqichda?" deb so'raganda to'g'ri, shaxsiy ma'lumotga asoslangan javob oldi.
 
-### 6.6 AI orqali platformaga qo'shimcha ma'lumot generatsiya qilish
-- [ ] **Aniqlashtirish talab qilinadi** — "qo'shimcha ma'lumotlar" deganda nimani nazarda tutyapsiz? Masalan:
-  - Vakansiya tavsifi/talablarini AI yordamida avtomatik yozib berish (HR faqat lavozim nomini kiritadi)
-  - Nomzod rezyumesidan avtomatik skill/tajriba xulosasi chiqarish
-  - Suhbat savollarini lavozimga qarab AI generatsiya qilishi
-- [ ] Har biri alohida, aniq ko'lamli vazifa — "hammasi" deb umumiy bajarish xato natija berishi mumkin, shuning uchun ustuvorlik tanlash kerak
-
-### Ushbu bosqich uchun ochiq savollar (javob kutilmoqda)
-1. DeepSeek API kalitini beryapsizmi, yoki boshqa AI provayder (OpenAI, Gemini) dan foydalanaylikmi?
-2. "Jarayonlarni nazorat qilish AI agenti" — fon jarayonimi (avtomatik, vaqti-vaqti bilan ishlaydi) yoki admin so'rov berganda ishlaydigan chat interfeysimi?
-3. "Qo'shimcha ma'lumotlar generatsiya qilish" — yuqoridagi 3 misoldan qaysi biri (yoki boshqa narsa) nazarda tutilgan?
-4. 6.2 (menyu qayta tashkil qilish) uchun: qaysi bo'limlar eng tez-tez ishlatiladi, qaysilari kamdan-kam — shu asosida guruhlash to'g'ri bo'ladi
+### 6.6 AI orqali platformaga qo'shimcha ma'lumot generatsiya qilish ~ BOSHLANDI
+- [x] **Vakansiya tavsifi/talablarini AI yordamida avtomatik yozib berish** — birinchi va eng foydali variant tanlab amalga oshirildi: yangi [`/api/ai/generate-vacancy`](src/app/api/ai/generate-vacancy/route.ts), vakansiya yaratish formasida "AI bilan yozdirish" tugmasi — HR lavozim nomi/bo'lim/smenani kiritadi, AI tavsif va talablarni yozib beradi (HR keyin tahrirlashi mumkin). Brauzerda to'liq tekshirildi (Warehouse Supervisor misolida ishladi).
+- [ ] Nomzod rezyumesidan avtomatik skill/tajriba xulosasi chiqarish — hali qilinmadi
+- [ ] Suhbat savollarini lavozimga qarab AI generatsiya qilishi — hali qilinmadi
+- Qolgan ikkitasi alohida, kichikroq vazifalar — talab bo'lsa keyingi safar qo'shish mumkin
 
 ---
 

@@ -12,6 +12,12 @@ export const translations = {
       runCheck: 'Запустить проверку',
       checking: 'Проверка…',
     },
+    supportChat: {
+      title: 'Помощник',
+      emptyHint: 'Спросите о статусе заявки, KPI или обучении — я отвечу на основе ваших данных.',
+      placeholder: 'Напишите вопрос…',
+      thinking: 'Думаю…',
+    },
     analytics: {
       title: 'Аналитика',
       description: 'Управляйте путями развития, этапами и навыками.',
@@ -60,7 +66,10 @@ export const translations = {
         salary: 'Зарплата',
         status: 'Статус',
         description: 'Описание',
-        requirements: 'Требования'
+        requirements: 'Требования',
+        aiGenerate: 'Написать с помощью ИИ',
+        aiGenerating: 'Генерирую…',
+        aiNeedsTitle: 'Сначала укажите название должности',
       }
     },
     applications: {
@@ -667,6 +676,12 @@ export const translations = {
       runCheck: 'Tekshirishni boshlash',
       checking: 'Tekshirilmoqda…',
     },
+    supportChat: {
+      title: 'Yordamchi',
+      emptyHint: "Ariza holati, KPI yoki o'quv haqida so'rang — sizning ma'lumotlaringiz asosida javob beraman.",
+      placeholder: 'Savolingizni yozing…',
+      thinking: 'O\'ylayapman…',
+    },
     analytics: {
       title: 'Analitika',
       description: "Rivojlanish yo'llari, bosqichlar va ko'nikmalarni boshqaring.",
@@ -715,7 +730,10 @@ export const translations = {
         salary: "Ish haqi",
         status: "Holat",
         description: "Tavsif",
-        requirements: "Talablar"
+        requirements: "Talablar",
+        aiGenerate: "AI bilan yozdirish",
+        aiGenerating: "Yozilmoqda…",
+        aiNeedsTitle: "Avval lavozim nomini kiriting",
       }
     },
     applications: {
