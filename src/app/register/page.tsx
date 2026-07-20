@@ -35,6 +35,10 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.logoRow}>
+        <div className={styles.logoIcon}>N</div>
+        Nexo HR
+      </div>
       <div className={styles.card}>
         <h1 className={styles.title}>Nexo HR</h1>
         <p className={styles.subtitle}>{t('signUp')}</p>

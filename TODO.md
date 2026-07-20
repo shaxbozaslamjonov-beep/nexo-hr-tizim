@@ -80,10 +80,13 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 
 > Ishlab chiqilgan reja, tasdiqlashni kutmoqda. Har bir kichik bo'lim mustaqil bajarilishi mumkin.
 
-### 6.1 Login sahifasi dizaynini yangilash
-- [ ] Hozirgi `login/page.tsx` — generic siyoh-pushti gradient fon, landing sahifadagi yangi industrial-professional uslub (to'q ko'k + safety-amber, Space Grotesk) bilan **mos kelmaydi**. Login sahifasini xuddi shu vizual tizimga moslashtirish kerak — foydalanuvchi landing'dan login'ga o'tganda uslub uzilib qolmasligi uchun
-- [ ] Framer Motion bilan silliq kirish animatsiyasi (`src/lib/motion.ts` dagi umumiy tizimdan foydalanib)
-- [ ] `register` va `login/forgot` (hozircha yo'q, o'lik havola — alohida aniqlash kerak) sahifalari ham shu uslubga moslansin
+### 6.1 Login sahifasi dizaynini yangilash ✅ BAJARILDI
+- [x] `login/page.tsx` va `login.module.css` landing sahifadagi industrial-professional uslubga (to'q ko'k fon, safety-amber urg'u, Space Grotesk/JetBrains Mono, blueprint panjara, skanerlash chizig'i animatsiyasi) moslashtirildi
+- [x] Framer Motion bilan kirish animatsiyasi qo'shildi (`src/lib/motion.ts` dagi `springSnappy`)
+- [x] `register` sahifasi xuddi shu `login.module.css`ni ishlatgani sababli avtomatik yangi uslubga o'tdi (logo qatori qo'shildi)
+- [x] **Muhim topilgan xato**: `/login/forgot` havolasi mavjud bo'lsa-da, sahifaning o'zi hech qachon yaratilmagan edi (404) — endi yaratildi (HR-administratorga murojaat qilish haqida tushuntirish, chunki loyihada email yuborish infratuzilmasi yo'q)
+- [x] **Yana bir topilgan xato**: yangi `/login/forgot` sahifasi yaratilgandan so'ng u middleware'da "ochiq" deb belgilanmagani aniqlandi — anonim foydalanuvchi bu sahifaga kira olmasdi (avtomatik `/login`ga qaytarilardi). `middleware.ts`dagi `publicRoutePrefixes`ga `/login` qo'shib tuzatildi.
+- Brauzerda tekshirildi: login, register, /login/forgot sahifalari to'g'ri render bo'lishi va login funksionalligi (kirish → `/dashboard/hr`) buzilmaganligi tasdiqlandi.
 
 ### 6.2 Ichki interfeys (dashboard) tartibga solish va menyu qulaylashtirish
 - [ ] `Sidebar.tsx` dagi HR menyusi hozircha 6 ta bo'lim, ko'p sathli (Rekrutment → 5 pastki band, Rivojlanish → 2, Xodimlar → 5, Darslar → 1-3) — real foydalanish oqimiga qarab guruhlashni qayta ko'rib chiqish (masalan tez-tez ishlatiladigan amallarni tepaga chiqarish, kam ishlatiladiganlarni "Ko'proq" ostiga yig'ish)

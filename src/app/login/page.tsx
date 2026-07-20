@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { springSnappy } from '@/lib/motion';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -17,7 +19,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     try {
       await login(email, password);
     } catch (err: any) {
@@ -27,7 +29,28 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
+      <motion.div
+        className={styles.scanLine}
+        initial={{ top: '-5%', opacity: 0 }}
+        animate={{ top: '105%', opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 1.4, ease: 'easeInOut', delay: 0.15 }}
+      />
+
+      <div className={styles.logoRow}>
+        <div className={styles.logoIcon}>N</div>
+        Nexo HR
+      </div>
+
+      <motion.div
+        className={styles.card}
+        initial={{ opacity: 0, y: 24, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={springSnappy}
+      >
+        <span className={styles.eyebrow}>
+          <span className={styles.eyebrowDot} />
+          {t('landing.eyebrow')}
+        </span>
         <h1 className={styles.title}>Nexo HR</h1>
         <p className={styles.subtitle}>{t('signIn')}</p>
 
@@ -65,9 +88,9 @@ export default function LoginPage() {
           </Link>
 
           <div className={styles.checkboxGroup}>
-            <input 
-              type="checkbox" 
-              id="remember" 
+            <input
+              type="checkbox"
+              id="remember"
               className={styles.checkbox}
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
@@ -81,12 +104,12 @@ export default function LoginPage() {
         </form>
 
         <div className={styles.linkGroup}>
-          {t('noAccount')} 
+          {t('noAccount')}
           <Link href="/register" className={styles.link}>
             {t('signUp')}
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

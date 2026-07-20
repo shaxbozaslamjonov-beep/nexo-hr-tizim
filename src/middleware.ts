@@ -5,7 +5,7 @@ import { rolesWithPermission, type Action } from './lib/rbac';
 
 const publicRoutes = ['/login', '/register', '/', '/api/auth/login', '/api/auth/register'];
 // Prefixes that are always public regardless of HTTP method
-const publicRoutePrefixes = ['/apply'];
+const publicRoutePrefixes = ['/apply', '/login'];
 // Routes public only for specific HTTP methods (e.g. anonymous candidate self-submission)
 const publicMethodRoutes: Record<string, string[]> = {
   '/api/candidates': ['POST'],
