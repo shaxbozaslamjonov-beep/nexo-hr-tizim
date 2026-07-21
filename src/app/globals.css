@@ -28,6 +28,17 @@
   --brand-paper: #F7F5EF;
   --brand-ink: #14181F;
 
+  /* Internal dashboard sidebar — flat slate + cyan accent (matches sister-project ERP style) */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-text: #475569;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-heading: #0f172a;
+  --sidebar-hover-bg: #f1f5f9;
+  --sidebar-accent: #06b6d4;
+  --sidebar-accent-bg: rgba(6, 182, 212, 0.1);
+  --sidebar-accent-border: rgba(6, 182, 212, 0.2);
+
   /* Glassmorphism Tokens */
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.18);
@@ -85,6 +96,15 @@
   --glass-bg: rgba(30, 41, 59, 0.55);
   --glass-border: rgba(255, 255, 255, 0.08);
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+
+  --sidebar-bg: #0f172a;
+  --sidebar-border: #1e293b;
+  --sidebar-text: #94a3b8;
+  --sidebar-text-muted: #64748b;
+  --sidebar-heading: #f1f5f9;
+  --sidebar-hover-bg: rgba(148, 163, 184, 0.08);
+  --sidebar-accent-bg: rgba(34, 211, 238, 0.1);
+  --sidebar-accent-border: rgba(34, 211, 238, 0.25);
 
   color-scheme: dark;
 }

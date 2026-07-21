@@ -128,6 +128,17 @@ Foydalanuvchi taklif qilgan ikkita dizayn spec'ini ko'rib chiqib, "AI qilgan"dek
 - [ ] **Bitta signature animatsiya**: taklif qilingan spec'lardagi ortiqcha shimmer/pulse effektlari hech qachon amalga oshirilmagani sababli bu yerda tuzatish shart bo'lmadi — lekin kelajakda shunday effektlar so'ralsa, faqat bitta joyda (masalan card hover) qo'llash tavsiya etiladi.
 - [ ] Qolgan sahifalarda (interviews, KPI, lessons, training, trial-period) xuddi shunday ingliz placeholder'lar topildi, lekin vaqt tufayli faqat eng ko'p ishlatiladigan vakansiya formalari tuzatildi — qolganlari alohida, kichik vazifa sifatida qoladi.
 
+## 8-bosqich: Sidebar dizaynini "Tolib Xolva ERP" uslubiga moslashtirish ✅ BAJARILDI
+
+Foydalanuvchi ikkinchi loyihasi (kanban cheklist / Tolib Xolva ERP)ning sidebar tuzilishi va rang palitrasini namuna sifatida ko'rsatdi.
+
+- [x] Eski binafsha-siyoh **gradient** sidebar fon butunlay olib tashlandi — endi yassi oq fon (light) / to'q slate fon (dark), o'ng tomonda nozik chegara — aynan namunadagi uslub
+- [x] Urg'u rangi **cyan** (`#06b6d4`) ga o'zgartirildi (avval amber edi) — faol menyu bandi cyan fon+chegara+matn bilan ajratiladi, xuddi namunadagi kabi
+- [x] Yangi CSS o'zgaruvchilar: `--sidebar-bg`, `--sidebar-border`, `--sidebar-text`, `--sidebar-accent` va h.k. (`globals.css`) — light/dark uchun alohida qiymatlar, "bitta manba" tamoyiliga rioya qilingan
+- [x] Logo belgisi ham yangi cyan gradientga moslashtirildi
+- Brauzerda tekshirildi: light rejimda oq fon (`rgb(255,255,255)`), faol havola aniq cyan rangda (`rgb(6,182,212)`) render bo'lishi tasdiqlandi
+- [ ] Menyu **tarkibi** (item+subitem tuzilishi) hozircha o'zgartirilmadi — mavjud "bo'lim sarlavhasi → ochiladigan ro'yxat" andozasi funksional jihatdan namunadagidek ishlaydi (bosilganda ochiladi/yopiladi), shuning uchun faqat vizual uslub yangilandi. Agar namunadagi kabi "asosiy band bosilganda birinchi pastki bandga o'tish" xatti-harakati aniq talab qilinsa — bu alohida, kichikroq keyingi qadam.
+
 ---
 
 ## Ishlash tartibi
