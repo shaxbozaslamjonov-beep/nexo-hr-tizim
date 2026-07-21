@@ -139,6 +139,17 @@ Foydalanuvchi ikkinchi loyihasi (kanban cheklist / Tolib Xolva ERP)ning sidebar 
 - Brauzerda tekshirildi: light rejimda oq fon (`rgb(255,255,255)`), faol havola aniq cyan rangda (`rgb(6,182,212)`) render bo'lishi tasdiqlandi
 - [ ] Menyu **tarkibi** (item+subitem tuzilishi) hozircha o'zgartirilmadi — mavjud "bo'lim sarlavhasi → ochiladigan ro'yxat" andozasi funksional jihatdan namunadagidek ishlaydi (bosilganda ochiladi/yopiladi), shuning uchun faqat vizual uslub yangilandi. Agar namunadagi kabi "asosiy band bosilganda birinchi pastki bandga o'tish" xatti-harakati aniq talab qilinsa — bu alohida, kichikroq keyingi qadam.
 
+## 9-bosqich: YAKUNIY dizayn tizimi — Navy + Emerald + Bronze ✅ BAJARILDI
+
+Foydalanuvchi uchta taklif qilingan palitradan birini (Navy "ishonch" + Emerald "o'sish" + Bronze "imkoniyat") **yakuniy** deb tanladi. Butun tizimga (jamoat sayti + ichki dashboard) joriy qilindi — bundan buyon rang o'zgarishlari shu asosda davom etadi.
+
+- [x] `globals.css`dagi barcha asosiy semantik token (`--primary`, `--success`, `--warning`, `--info` va h.k.) Navy/Emerald/Bronze ramp'lariga o'tkazildi, to'liq 10 pog'onali rang shkalalari (`--navy-50..900`, `--emerald-50..800`, `--bronze-50..800`) qo'shildi
+- [x] Landing va login sahifalaridagi eski industrial navy+amber (Space Grotesk/JetBrains Mono, "blueprint" panjara fon) uslubi olib tashlandi — endi Navy gradient hero (spec'dagi aynan shu formula: `navy-900 → navy-600`) + Emerald CTA/urg'u, faqat Poppins (sarlavha) + Inter (matn) — spec'ning "2 tadan ortiq shrift oilasi ishlatilmasin" qoidasiga muvofiq
+- [x] Sidebar urg'u rangi cyan'dan **navy-600**ga o'zgartirildi — bu spec'ning o'zida "Sidebar: Active state → Navy-600 text" deb aniq ko'rsatilgan, shuning uchun oldingi bosqichdagi ishni yo'qqa chiqarmasdan, yakuniy palitraga moslashtirildi
+- [x] Status badge'lar (`.badge-open`, `.badge-pending` va h.k.) Emerald/Bronze/Navy pog'onalariga qayta rangla ndi
+- Brauzerda tekshirildi: landing hero fonida aniq `rgb(13,27,61) → rgb(65,105,201)` gradient, login tugmasida `rgb(68,155,120)` (emerald), dashboard faol menyu bandida `rgb(65,105,201)` (navy-600) render bo'lishi tasdiqlandi
+- [ ] Vakansiya kartochkalari, tugma va boshqa ichki komponentlar (`.btn-primary`, `.card` va h.k.) hozircha faqat markazlashgan CSS o'zgaruvchilar orqali avtomatik yangi rangni oladi (chunki ular allaqachon `var(--primary)` kabi token'lardan foydalanadi) — alohida qattiq kodlangan joy qolmagan bo'lishi kerak, lekin har bir sahifani birma-bir vizual tekshirish hali qilinmadi
+
 ---
 
 ## Ishlash tartibi

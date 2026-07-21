@@ -1,66 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Core Colors */
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #a5b4fc;
-  --secondary: #ec4899;
-  --secondary-light: #f9a8d4;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --info: #3b82f6;
+  /* ===== Nexo HR design system — Navy (trust) + Emerald (growth) + Bronze (opportunity) ===== */
+
+  /* Navy ramp — primary brand */
+  --navy-50: #F5F7FC;
+  --navy-100: #E8ECFB;
+  --navy-200: #D4DFF7;
+  --navy-300: #B4C7F1;
+  --navy-400: #8BA8E8;
+  --navy-500: #5A7FD4;
+  --navy-600: #4169C9;
+  --navy-700: #2E4BA8;
+  --navy-800: #1F3480;
+  --navy-900: #0D1B3D;
+
+  /* Emerald ramp — growth / success accent */
+  --emerald-50: #F0F8F5;
+  --emerald-100: #DDEEE8;
+  --emerald-300: #99C4B3;
+  --emerald-500: #449B78;
+  --emerald-600: #2D8659;
+  --emerald-700: #1E6B48;
+  --emerald-800: #125034;
+
+  /* Bronze ramp — featured / premium accent */
+  --bronze-50: #FEF7F0;
+  --bronze-100: #FBE8D8;
+  --bronze-300: #EDB88C;
+  --bronze-500: #D97F36;
+  --bronze-600: #C9651E;
+  --bronze-700: #A84F0E;
+  --bronze-800: #7E3A05;
+
+  /* Core semantic tokens (consumed throughout the app) */
+  --primary: var(--navy-600);
+  --primary-dark: var(--navy-800);
+  --primary-light: var(--navy-300);
+  --secondary: var(--emerald-500);
+  --secondary-light: var(--emerald-300);
+  --success: var(--emerald-500);
+  --warning: var(--bronze-500);
+  --error: #E74C3C;
+  --info: var(--navy-500);
+  --featured: var(--bronze-500);
 
   /* Backgrounds & Surfaces */
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #FAFBFC;
+  --foreground: var(--navy-900);
   --surface: #ffffff;
-  
+
   /* Accent used for the analytics "highlight" stat variant (dashboard.module.css .accent) */
-  --stat-accent: #8b5cf6;
+  --stat-accent: var(--bronze-500);
 
-  /* Public-facing brand tokens (landing, login, register, /apply) — single source
-     for the industrial navy/amber identity so it isn't re-declared as raw hex per file. */
-  --brand-navy: #0A101C;
-  --brand-amber: #F5A623;
-  --brand-amber-dark: #E08A1E;
-  --brand-paper: #F7F5EF;
-  --brand-ink: #14181F;
+  /* Public-facing brand tokens (landing, login, register, /apply) — single source,
+     now aligned to the Navy/Emerald identity instead of the old industrial navy/amber. */
+  --brand-navy: var(--navy-900);
+  --brand-navy-2: var(--navy-600);
+  --brand-amber: var(--emerald-500);
+  --brand-amber-dark: var(--emerald-600);
+  --brand-paper: #FAFBFC;
+  --brand-ink: var(--navy-900);
 
-  /* Internal dashboard sidebar — flat slate + cyan accent (matches sister-project ERP style) */
+  /* Internal dashboard sidebar — flat surface + navy accent (per design-system sidebar spec) */
   --sidebar-bg: #ffffff;
-  --sidebar-border: #e2e8f0;
-  --sidebar-text: #475569;
-  --sidebar-text-muted: #94a3b8;
-  --sidebar-heading: #0f172a;
-  --sidebar-hover-bg: #f1f5f9;
-  --sidebar-accent: #06b6d4;
-  --sidebar-accent-bg: rgba(6, 182, 212, 0.1);
-  --sidebar-accent-border: rgba(6, 182, 212, 0.2);
+  --sidebar-border: var(--navy-200);
+  --sidebar-text: #5A6372;
+  --sidebar-text-muted: #7A8391;
+  --sidebar-heading: var(--navy-900);
+  --sidebar-hover-bg: var(--navy-50);
+  --sidebar-accent: var(--navy-600);
+  --sidebar-accent-bg: var(--navy-100);
+  --sidebar-accent-border: var(--navy-200);
 
   /* Glassmorphism Tokens */
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  
+  --glass-shadow: 0 8px 32px 0 rgba(13, 27, 61, 0.25);
+
   /* Borders & Shadows */
-  --border: #e2e8f0;
-  --input: #e2e8f0;
+  --border: #E8EAED;
+  --input: #E8EAED;
   --ring: var(--primary);
-  
-  --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-  --card-hover-shadow: 0 20px 60px -10px rgba(79, 70, 229, 0.3);
-  
-  /* Typography */
+
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 20px 40px -10px rgba(65, 105, 201, 0.2);
+
+  /* Typography — Poppins for headlines, Inter for body (max 2 families, per design system) */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Poppins', var(--font-sans);
-  
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-light: #94a3b8;
-  --bg-muted: #f1f5f9;
-  
+
+  --text-primary: var(--navy-900);
+  --text-secondary: #5A6372;
+  --text-light: #7A8391;
+  --bg-muted: #F3F5F7;
+
   /* Layout */
   --sidebar-width: 280px;
   --header-height: 72px;
@@ -71,9 +105,9 @@
   --radius-2xl: 2rem;
 
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  --grad-sidebar: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --grad-welcome: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 100%);
+  --grad-primary: linear-gradient(135deg, var(--navy-600) 0%, var(--navy-800) 100%);
+  --grad-sidebar: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-600) 100%);
+  --grad-welcome: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-600) 100%);
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
 }
 
@@ -103,8 +137,9 @@
   --sidebar-text-muted: #64748b;
   --sidebar-heading: #f1f5f9;
   --sidebar-hover-bg: rgba(148, 163, 184, 0.08);
-  --sidebar-accent-bg: rgba(34, 211, 238, 0.1);
-  --sidebar-accent-border: rgba(34, 211, 238, 0.25);
+  --sidebar-accent: var(--navy-400);
+  --sidebar-accent-bg: rgba(139, 168, 232, 0.12);
+  --sidebar-accent-border: rgba(139, 168, 232, 0.3);
 
   color-scheme: dark;
 }
@@ -241,18 +276,18 @@ input, button, textarea, select {
   gap: 0.375rem;
 }
 
-.badge-open { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
-.badge-pending { background: rgba(245, 158, 11, 0.1); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.2); }
-.badge-pending_approval { background: rgba(245, 158, 11, 0.1); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.2); }
-.badge-closed { background: rgba(107, 114, 128, 0.1); color: #4b5563; border: 1px solid rgba(107, 114, 128, 0.2); }
-.badge-passed { background: rgba(59, 130, 246, 0.1); color: #2563eb; border: 1px solid rgba(59, 130, 246, 0.2); }
-.badge-training { background: rgba(139, 92, 246, 0.1); color: #7c3aed; border: 1px solid rgba(139, 92, 246, 0.2); }
-.badge-error { background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); }
-.badge-screening { background: rgba(99, 102, 241, 0.1); color: #4f46e5; border: 1px solid rgba(99, 102, 241, 0.2); }
-.badge-interview { background: rgba(139, 92, 246, 0.1); color: #7c3aed; border: 1px solid rgba(139, 92, 246, 0.2); }
-.badge-offer { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
-.badge-rejected { background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); }
-.badge-hired { background: rgba(16, 185, 129, 0.2); color: #047857; border: 2px solid #10b981; }
+.badge-open { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
+.badge-pending { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-pending_approval { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-closed { background: var(--bg-muted); color: var(--text-secondary); border: 1px solid var(--border); }
+.badge-passed { background: var(--navy-50); color: var(--navy-700); border: 1px solid var(--navy-100); }
+.badge-training { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-error { background: rgba(231, 76, 60, 0.1); color: #C0392B; border: 1px solid rgba(231, 76, 60, 0.2); }
+.badge-screening { background: var(--navy-50); color: var(--navy-700); border: 1px solid var(--navy-100); }
+.badge-interview { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-offer { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
+.badge-rejected { background: rgba(231, 76, 60, 0.1); color: #C0392B; border: 1px solid rgba(231, 76, 60, 0.2); }
+.badge-hired { background: var(--emerald-100); color: var(--emerald-800); border: 2px solid var(--emerald-500); }
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
