@@ -97,7 +97,7 @@
 .primary { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
 .success { background: rgba(16, 185, 129, 0.1); color: var(--success); }
 .warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-.accent { background: rgba(139, 92, 246, 0.1); color: var(--nexo-purple); }
+.accent { background: rgba(139, 92, 246, 0.1); color: var(--stat-accent); }
 
 .cardContent {
   display: flex;

@@ -131,7 +131,7 @@ export default function CreateVacancyPage() {
           <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
             {t('vacancies.createNew')}
           </h1>
-          <p style={{ color: 'var(--text-secondary)' }}>Fill in the details to publish a new job opening</p>
+          <p style={{ color: 'var(--text-secondary)' }}>{t('vacancies.form.subtitle')}</p>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2rem' }}>
@@ -139,7 +139,7 @@ export default function CreateVacancyPage() {
             {/* Position Link */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                Linked Position (from Career Maps)
+                {t('vacancies.form.linkedPosition')}
               </label>
               <select
                 value={formData.positionId}
@@ -156,7 +156,7 @@ export default function CreateVacancyPage() {
                 }}
                 style={inputStyleNoIcon}
               >
-                <option value="">-- Select central position --</option>
+                <option value="">{t('vacancies.form.selectPosition')}</option>
                 {positions.map(pos => (
                   <option key={pos.id} value={pos.id}>{pos.title}</option>
                 ))}
@@ -173,7 +173,7 @@ export default function CreateVacancyPage() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Senior Frontend Developer"
+                  placeholder={t('vacancies.form.titlePlaceholder')}
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   style={inputStyle}
@@ -191,7 +191,7 @@ export default function CreateVacancyPage() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Engineering"
+                  placeholder={t('vacancies.form.departmentPlaceholder')}
                   value={formData.department}
                   onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                   style={inputStyle}
@@ -220,11 +220,11 @@ export default function CreateVacancyPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                  Min Salary (UZS)
+                  {t('vacancies.form.salaryMin')}
                 </label>
                 <input
                   type="number"
-                  placeholder="e.g. 5000000"
+                  placeholder="5000000"
                   value={formData.salaryMin}
                   onChange={(e) => setFormData({ ...formData, salaryMin: e.target.value })}
                   style={inputStyleNoIcon}
@@ -232,11 +232,11 @@ export default function CreateVacancyPage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                  Max Salary (UZS)
+                  {t('vacancies.form.salaryMax')}
                 </label>
                 <input
                   type="number"
-                  placeholder="e.g. 10000000"
+                  placeholder="10000000"
                   value={formData.salaryMax}
                   onChange={(e) => setFormData({ ...formData, salaryMax: e.target.value })}
                   style={inputStyleNoIcon}
@@ -247,7 +247,7 @@ export default function CreateVacancyPage() {
             {/* Shift */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                Work Shift *
+                {t('vacancies.form.shift')} *
               </label>
               <select
                 required
@@ -255,9 +255,9 @@ export default function CreateVacancyPage() {
                 onChange={(e) => setFormData({ ...formData, shift: e.target.value as any })}
                 style={inputStyleNoIcon}
               >
-                <option value="day">Kunduzgi (Day)</option>
-                <option value="night">Tungi (Night)</option>
-                <option value="flex">Moslashuvchan (Flex)</option>
+                <option value="day">{t('vacancies.form.shiftDay')}</option>
+                <option value="night">{t('vacancies.form.shiftNight')}</option>
+                <option value="flex">{t('vacancies.form.shiftFlex')}</option>
               </select>
             </div>
           </div>
@@ -313,7 +313,7 @@ export default function CreateVacancyPage() {
             <textarea
               required
               rows={5}
-              placeholder="Describe the role, responsibilities, and team..."
+              placeholder={t('vacancies.form.description')}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               style={textareaStyle}
@@ -328,7 +328,7 @@ export default function CreateVacancyPage() {
             <textarea
               required
               rows={5}
-              placeholder="List requirements, skills, and experience needed..."
+              placeholder={t('vacancies.form.requirements')}
               value={formData.requirements}
               onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
               style={textareaStyle}

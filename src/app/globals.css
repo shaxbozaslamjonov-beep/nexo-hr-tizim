@@ -17,14 +17,16 @@
   --foreground: #0f172a;
   --surface: #ffffff;
   
-  /* Nexo Vibrant Palette Aliases */
-  --nexo-blue: #1e3a8a;
-  --nexo-indigo: #4f46e5;
-  --nexo-purple: #8b5cf6;
-  --nexo-pink: #ec4899;
-  --nexo-orange: #f97316;
-  --nexo-cyan: #06b6d4;
-  --nexo-green: #10b981;
+  /* Accent used for the analytics "highlight" stat variant (dashboard.module.css .accent) */
+  --stat-accent: #8b5cf6;
+
+  /* Public-facing brand tokens (landing, login, register, /apply) — single source
+     for the industrial navy/amber identity so it isn't re-declared as raw hex per file. */
+  --brand-navy: #0A101C;
+  --brand-amber: #F5A623;
+  --brand-amber-dark: #E08A1E;
+  --brand-paper: #F7F5EF;
+  --brand-ink: #14181F;
 
   /* Glassmorphism Tokens */
   --glass-bg: rgba(255, 255, 255, 0.25);

@@ -223,7 +223,7 @@ export default function EditVacancyPage({ params }: { params: Promise<{ id: stri
             <textarea
               required
               rows={5}
-              placeholder="Describe the role, responsibilities, and team..."
+              placeholder={t('vacancies.form.description')}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               style={textareaStyle}
@@ -238,7 +238,7 @@ export default function EditVacancyPage({ params }: { params: Promise<{ id: stri
             <textarea
               required
               rows={5}
-              placeholder="List requirements, skills, and experience needed..."
+              placeholder={t('vacancies.form.requirements')}
               value={formData.requirements}
               onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
               style={textareaStyle}

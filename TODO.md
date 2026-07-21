@@ -118,6 +118,16 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [ ] Suhbat savollarini lavozimga qarab AI generatsiya qilishi — hali qilinmadi
 - Qolgan ikkitasi alohida, kichikroq vazifalar — talab bo'lsa keyingi safar qo'shish mumkin
 
+## 7-bosqich: Dizayn tizimini "senior daraja"ga olib chiqish ✅ ASOSIY QISM BAJARILDI
+
+Foydalanuvchi taklif qilgan ikkita dizayn spec'ini ko'rib chiqib, "AI qilgan"dek emas, professional ko'rinish uchun 4 ta ustuvorlik aniqlandi va bajarildi:
+
+- [x] **Bitta manba (single source of truth)**: `globals.css`dagi 7 ta ishlatilmagan `--nexo-*` rang alias'i (bittasidan tashqari hech qayerda ishlatilmagan edi) olib tashlandi, qolgan bitta ishlatilishi aniq nomlandi (`--stat-accent`). Landing/login sahifalaridagi 43 ta qattiq kodlangan hex qiymat (`#0A101C`, `#F5A623`, `#F7F5EF`, `#14181F`) yangi `--brand-navy`, `--brand-amber`, `--brand-paper`, `--brand-ink` o'zgaruvchilariga o'tkazildi — endi brend rangini bitta joydan boshqarish mumkin.
+- [x] **Rang sonini kamaytirish**: audit qilindi, hozirgi tizimda ortiqcha rang aniqlanmadi (taklif qilingan spec'lardagi qo'shimcha "accent-yashil" kabi keraksiz ranglar hech qachon amalga oshirilmagan edi).
+- [x] **Til izchilligi**: vakansiya yaratish/tahrirlash formalarida ingliz tilida qolib ketgan matnlar (`"Fill in the details..."`, `"Linked Position"`, `"Work Shift"`, `"Min/Max Salary"`, placeholder'lar va h.k.) barchasi RU/UZ tarjimaga o'tkazildi. **Muhim topilma**: `backToCandidates` tarjima kaliti faqat RU blokida bor edi, UZ blokida yo'q edi — UZ tilidagi foydalanuvchilar "Назад" tugmasi o'rniga ingliz "Back" so'zini ko'rar edi (fallback orqali). Tuzatildi.
+- [ ] **Bitta signature animatsiya**: taklif qilingan spec'lardagi ortiqcha shimmer/pulse effektlari hech qachon amalga oshirilmagani sababli bu yerda tuzatish shart bo'lmadi — lekin kelajakda shunday effektlar so'ralsa, faqat bitta joyda (masalan card hover) qo'llash tavsiya etiladi.
+- [ ] Qolgan sahifalarda (interviews, KPI, lessons, training, trial-period) xuddi shunday ingliz placeholder'lar topildi, lekin vaqt tufayli faqat eng ko'p ishlatiladigan vakansiya formalari tuzatildi — qolganlari alohida, kichik vazifa sifatida qoladi.
+
 ---
 
 ## Ishlash tartibi

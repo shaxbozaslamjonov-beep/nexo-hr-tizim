@@ -2,8 +2,8 @@
 
 .page {
   min-height: 100vh;
-  background: #F7F5EF;
-  color: #14181F;
+  background: var(--brand-paper);
+  color: var(--brand-ink);
   font-family: var(--font-sans);
 }
 
@@ -38,8 +38,8 @@
   width: 38px;
   height: 38px;
   border-radius: 9px;
-  background: linear-gradient(135deg, #F5A623 0%, #E08A1E 100%);
-  color: #14181F;
+  background: linear-gradient(135deg, var(--brand-amber) 0%, var(--brand-amber-dark) 100%);
+  color: var(--brand-ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +62,7 @@
 }
 
 .loginBtn:hover {
-  border-color: #F5A623;
+  border-color: var(--brand-amber);
   background: rgba(245, 166, 35, 0.1);
 }
 
@@ -72,7 +72,7 @@
   position: relative;
   overflow: hidden;
   padding: 6.5rem 1.5rem 5.5rem;
-  background: #0A101C;
+  background: var(--brand-navy);
   background-image:
     linear-gradient(rgba(245, 166, 35, 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgba(245, 166, 35, 0.055) 1px, transparent 1px);
@@ -85,7 +85,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #F5A623 20%, #F5A623 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--brand-amber) 20%, var(--brand-amber) 80%, transparent 100%);
   box-shadow: 0 0 24px 4px rgba(245, 166, 35, 0.5);
   pointer-events: none;
 }
@@ -106,7 +106,7 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #F5A623;
+  color: var(--brand-amber);
   padding: 0.4rem 0.9rem;
   border: 1px solid rgba(245, 166, 35, 0.35);
   border-radius: 999px;
@@ -118,7 +118,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #F5A623;
+  background: var(--brand-amber);
 }
 
 .heroTitle {
@@ -127,13 +127,13 @@
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   line-height: 1.08;
   letter-spacing: -0.025em;
-  color: #F7F5EF;
+  color: var(--brand-paper);
   margin-bottom: 1.25rem;
 }
 
 .heroTitle em {
   font-style: normal;
-  color: #F5A623;
+  color: var(--brand-amber);
 }
 
 .heroSubtitle {
@@ -154,12 +154,12 @@
   border: 1px solid rgba(247, 245, 239, 0.12);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
-  color: #F7F5EF;
+  color: var(--brand-paper);
 }
 
 .statNumber {
   font-weight: 700;
-  color: #F5A623;
+  color: var(--brand-amber);
   font-size: 1rem;
 }
 
@@ -189,7 +189,7 @@
 .sectionTick {
   width: 22px;
   height: 3px;
-  background: #F5A623;
+  background: var(--brand-amber);
   border-radius: 2px;
   flex-shrink: 0;
   margin-bottom: 0.4rem;
@@ -200,7 +200,7 @@
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #14181F;
+  color: var(--brand-ink);
 }
 
 .filterBar {
@@ -231,13 +231,13 @@
   border: 1px solid rgba(20, 24, 31, 0.12);
   background: #FFFFFF;
   font-size: 0.9rem;
-  color: #14181F;
+  color: var(--brand-ink);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: #F5A623;
+  border-color: var(--brand-amber);
   box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15);
 }
 
@@ -261,13 +261,13 @@
 
 .chip:hover {
   border-color: rgba(245, 166, 35, 0.4);
-  color: #14181F;
+  color: var(--brand-ink);
 }
 
 .chipActive {
-  background: #14181F;
-  border-color: #14181F;
-  color: #F7F5EF;
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+  color: var(--brand-paper);
 }
 
 .grid {
@@ -293,7 +293,7 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: #F5A623;
+  background: var(--brand-amber);
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -313,7 +313,7 @@
   font-family: 'Space Grotesk', var(--font-sans);
   font-size: 1.2rem;
   font-weight: 700;
-  color: #14181F;
+  color: var(--brand-ink);
   margin-bottom: 0.75rem;
 }
 
@@ -358,8 +358,8 @@
   gap: 0.4rem;
   padding: 0.65rem 1.3rem;
   border-radius: 8px;
-  background: #14181F;
-  color: #F7F5EF;
+  background: var(--brand-ink);
+  color: var(--brand-paper);
   font-weight: 600;
   font-size: 0.85rem;
   text-decoration: none;
@@ -367,8 +367,8 @@
 }
 
 .applyBtn:hover {
-  background: #F5A623;
-  color: #14181F;
+  background: var(--brand-amber);
+  color: var(--brand-ink);
   gap: 0.65rem;
 }
 
@@ -386,7 +386,7 @@
   padding: 2.5rem;
   color: rgba(247, 245, 239, 0.4);
   font-size: 0.8rem;
-  background: #0A101C;
+  background: var(--brand-navy);
   font-family: 'JetBrains Mono', monospace;
 }
 
