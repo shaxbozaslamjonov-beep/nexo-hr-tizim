@@ -262,6 +262,79 @@
   accent-color: #3b82f6;
 }
 
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.75rem 1rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  background: rgba(248, 250, 252, 0.6);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.dropzone:hover,
+.dropzoneActive {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.dropzoneIcon {
+  font-size: 1.5rem;
+}
+
+.dropzoneLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.dropzoneHint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+}
+
+.fileName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileRemoveBtn {
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.orDivider {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0.75rem 0;
+}
+
 .checkLabel {
   font-size: 0.9375rem;
   color: #475569;

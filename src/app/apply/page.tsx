@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
@@ -31,7 +31,45 @@ function ApplyForm() {
     computerSkill: 'basic',
     hasRequiredDocs: false,
     source: 'website',
+    cvUrl: '',
   });
+  const [cvFileName, setCvFileName] = useState('');
+  const [cvError, setCvError] = useState('');
+  const [dropActive, setDropActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const MAX_CV_SIZE = 2 * 1024 * 1024;
+  const ALLOWED_CV_TYPES = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ];
+
+  const handleCvFile = (file: File | undefined | null) => {
+    setCvError('');
+    if (!file) return;
+    if (!ALLOWED_CV_TYPES.includes(file.type)) {
+      setCvError(t('apply.resume.typeError'));
+      return;
+    }
+    if (file.size > MAX_CV_SIZE) {
+      setCvError(t('apply.resume.sizeError'));
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      update('cvUrl', reader.result as string);
+      setCvFileName(file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeCv = () => {
+    update('cvUrl', '');
+    setCvFileName('');
+    setCvError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   const STEPS = [
     t('apply.steps.personal'),
@@ -211,6 +249,44 @@ function ApplyForm() {
                       <option value="other">{t('apply.sources.other')}</option>
                     </select>
                   </div>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      {t('apply.resume.title')} <span style={{ color: '#94a3b8', fontWeight: 500 }}>{t('apply.resume.optional')}</span>
+                    </label>
+                    {cvFileName ? (
+                      <div className={styles.fileRow}>
+                        <span className={styles.fileName}>📄 {cvFileName}</span>
+                        <button type="button" className={styles.fileRemoveBtn} onClick={removeCv}>
+                          {t('apply.resume.remove')}
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className={`${styles.dropzone} ${dropActive ? styles.dropzoneActive : ''}`}
+                        onClick={() => fileInputRef.current?.click()}
+                        onDragOver={(e) => { e.preventDefault(); setDropActive(true); }}
+                        onDragLeave={() => setDropActive(false)}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          setDropActive(false);
+                          handleCvFile(e.dataTransfer.files?.[0]);
+                        }}
+                      >
+                        <span className={styles.dropzoneIcon}>📎</span>
+                        <span className={styles.dropzoneLabel}>{t('apply.resume.uploadLabel')}</span>
+                        <span className={styles.dropzoneHint}>{t('apply.resume.dragHint')}</span>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          style={{ display: 'none' }}
+                          onChange={(e) => handleCvFile(e.target.files?.[0])}
+                        />
+                      </div>
+                    )}
+                    {cvError && <div className={styles.error} style={{ marginTop: '0.75rem' }}>{cvError}</div>}
+                    <div className={styles.orDivider}>{t('apply.resume.orManual')}</div>
+                  </div>
                 </>
               )}
 
@@ -260,9 +336,9 @@ function ApplyForm() {
                 <>
                   <div className={styles.sectionTitle}>📄 {t('apply.steps.documents')}</div>
                   <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                    Please confirm that you have the following documents ready to present on request:
+                    {t('apply.documents.intro')}
                   </p>
-                  {['Passport / National ID', 'Diploma or Certificate', 'Medical Clearance', 'Work Record Book'].map((doc) => (
+                  {(t('apply.documents.items') as unknown as string[]).map((doc) => (
                     <div key={doc} className={styles.checkRow}>
                       <input type="checkbox" checked readOnly />
                       <span className={styles.checkLabel}>{doc}</span>
@@ -287,11 +363,12 @@ function ApplyForm() {
                       [t('apply.fields.email'), form.email],
                       [t('apply.fields.phone'), form.phone || '—'],
                       [t('apply.fields.education'), form.education || '—'],
-                      [t('apply.fields.experienceMonths'), form.experienceMonths ? `${form.experienceMonths} months` : '—'],
-                      [t('apply.fields.shiftReady'), form.shiftReady ? 'Yes' : 'No'],
-                      [t('apply.fields.manufacturingExp'), form.hasManufacturingExp ? 'Yes' : 'No'],
+                      [t('apply.fields.experienceMonths'), form.experienceMonths ? `${form.experienceMonths} ${t('apply.confirm.months')}` : '—'],
+                      [t('apply.fields.shiftReady'), form.shiftReady ? t('apply.confirm.yes') : t('apply.confirm.no')],
+                      [t('apply.fields.manufacturingExp'), form.hasManufacturingExp ? t('apply.confirm.yes') : t('apply.confirm.no')],
                       [t('apply.fields.computerSkill'), form.computerSkill],
                       [t('apply.fields.source'), form.source],
+                      [t('apply.resume.title'), cvFileName || '—'],
                     ].map(([label, val]) => (
                       <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem 0', borderBottom: '1px solid rgba(226, 232, 240, 0.6)', fontSize: '0.9375rem' }}>
                         <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>
@@ -300,7 +377,7 @@ function ApplyForm() {
                     ))}
                   </div>
                   <p style={{ fontSize: '0.875rem', color: '#94a3b8', textAlign: 'center' }}>
-                    By submitting, your application will be scored automatically and you\'ll be notified of the result.
+                    {t('apply.confirm.disclaimer')}
                   </p>
                 </>
               )}

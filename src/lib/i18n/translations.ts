@@ -151,6 +151,27 @@ export const translations = {
         manufacturingExp: 'У меня есть опыт в производстве',
         docsConfirm: 'Я подтверждаю наличие всех необходимых документов и даю согласие на обработку данных.'
       },
+      resume: {
+        title: 'Резюме / CV',
+        optional: '(необязательно)',
+        uploadLabel: 'Загрузить файл (PDF, DOC, DOCX)',
+        dragHint: 'Перетащите файл сюда или нажмите, чтобы выбрать',
+        orManual: 'или просто заполните поля формы вручную',
+        fileSelected: 'Выбранный файл',
+        remove: 'Удалить',
+        sizeError: 'Размер файла не должен превышать 2 МБ',
+        typeError: 'Принимаются только файлы PDF, DOC или DOCX'
+      },
+      documents: {
+        intro: 'Подтвердите, что у вас готовы следующие документы для предъявления по запросу:',
+        items: ['Паспорт / удостоверение личности', 'Диплом или сертификат', 'Медицинская справка', 'Трудовая книжка']
+      },
+      confirm: {
+        yes: 'Да',
+        no: 'Нет',
+        months: 'мес.',
+        disclaimer: 'После отправки ваша заявка будет автоматически оценена, и вы получите уведомление о результате.'
+      },
       sources: {
         website: 'Сайт компании',
         telegram: 'Telegram канал',
@@ -852,6 +873,27 @@ export const translations = {
         shiftReady: 'Smenali ishlashga tayyorman (tong / kech / tun)',
         manufacturingExp: 'Ishlab chiqarish sohasida tajribam bor',
         docsConfirm: 'Barcha kerakli hujjatlarim borligini tasdiqlayman va ma\'lumotlarimni qayta ishlanishiga roziman.'
+      },
+      resume: {
+        title: 'Rezyume / CV',
+        optional: '(ixtiyoriy)',
+        uploadLabel: 'Fayl yuklash (PDF, DOC, DOCX)',
+        dragHint: 'Faylni shu yerga tashlang yoki tanlash uchun bosing',
+        orManual: 'yoki shaklni qo\'lda to\'ldiring',
+        fileSelected: 'Tanlangan fayl',
+        remove: 'O\'chirish',
+        sizeError: 'Fayl hajmi 2 MB dan oshmasligi kerak',
+        typeError: 'Faqat PDF, DOC yoki DOCX fayllar qabul qilinadi'
+      },
+      documents: {
+        intro: 'Quyidagi hujjatlar so\'rov bo\'yicha taqdim etishga tayyor ekanini tasdiqlang:',
+        items: ['Pasport / shaxsni tasdiqlovchi hujjat', 'Diplom yoki sertifikat', 'Tibbiy ma\'lumotnoma', 'Mehnat daftarchasi']
+      },
+      confirm: {
+        yes: 'Ha',
+        no: 'Yo\'q',
+        months: 'oy',
+        disclaimer: 'Yuborilgach, arizangiz avtomatik baholanadi va natija haqida sizga xabar beriladi.'
       },
       sources: {
         website: 'Kompaniya sayti',
