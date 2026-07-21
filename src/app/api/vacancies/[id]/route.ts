@@ -7,12 +7,17 @@ export const dynamic = 'force-dynamic';
 // GET single vacancy
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const session = await getSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
     const { id } = await params;
     const vacancy = await prisma.vacancy.findUnique({
       where: { id },
       include: { applications: { include: { candidate: true } }, _count: true },
     });
-    if (!vacancy) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    if (!vacancy || vacancy.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
     return NextResponse.json(vacancy);
   } catch (error) {
     return NextResponse.json({ error: 'Failed' }, { status: 500 });
@@ -26,7 +31,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { id } = await params;
-    const body = await request.json();
+    const { companyId, createdBy, ...body } = await request.json();
+
+    const existing = await prisma.vacancy.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
     // Directors can approve, HRs can edit
     const vacancy = await prisma.vacancy.update({
@@ -43,14 +53,18 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   }
 }
 
-// DELETE  
+// DELETE
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getSession();
-    if (!['HR_MANAGER', 'ADMIN'].includes(session?.role || '')) {
+    if (!session || !['HR_MANAGER', 'ADMIN'].includes(session.role)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
     const { id } = await params;
+    const existing = await prisma.vacancy.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
     await prisma.vacancy.delete({ where: { id } });
     return NextResponse.json({ message: 'Deleted' });
   } catch {

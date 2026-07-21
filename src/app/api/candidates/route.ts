@@ -34,6 +34,7 @@ export async function GET(request: Request) {
 
     const candidates = await prisma.candidateProfile.findMany({
       where: {
+        user: { companyId: session.companyId },
         ...(status ? { status } : {}),
       },
       include: {
@@ -79,6 +80,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields', code: 'missing_fields' }, { status: 400 });
     }
 
+    const vacancy = await prisma.vacancy.findUnique({ where: { id: vacancyId }, select: { companyId: true } });
+    if (!vacancy) {
+      return NextResponse.json({ error: 'Vacancy not found', code: 'vacancy_not_found' }, { status: 404 });
+    }
+
     // Run automated screening
     const screeningResult = runScreening({
       experienceMonths: Number(experienceMonths) || 0,
@@ -122,7 +128,7 @@ export async function POST(request: Request) {
       const hashed = await hashPassword(tempPassword);
 
       const newUser = await prisma.user.create({
-        data: { email, password: hashed, role: 'CANDIDATE' },
+        data: { email, password: hashed, role: 'CANDIDATE', companyId: vacancy.companyId },
       });
       userId = newUser.id;
     }

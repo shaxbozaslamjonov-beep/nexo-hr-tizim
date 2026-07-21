@@ -5,16 +5,20 @@ import { can } from '@/lib/rbac';
 
 export const dynamic = 'force-dynamic';
 
-// GET - list all vacancies
+// GET - list vacancies for the caller's company
 export async function GET(request: Request) {
   try {
+    const session = await getSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
 
-    const where = status ? { status } : {};
-
     const vacancies = await prisma.vacancy.findMany({
-      where,
+      where: {
+        companyId: session.companyId,
+        ...(status ? { status } : {}),
+      },
       orderBy: { createdAt: 'desc' },
       include: {
         _count: { select: { applications: true } },
@@ -57,6 +61,7 @@ export async function POST(request: Request) {
         shift: shift || '',
         status: 'PENDING_APPROVAL',
         createdBy: session.id,
+        companyId: session.companyId,
         positionId: positionId || null,
       },
     });
@@ -77,6 +82,11 @@ export async function PATCH(request: Request) {
     const { id, title, department, description, requirements, salaryRange, salaryMin, salaryMax, shift, status, positionId } = body;
 
     if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+
+    const existing = await prisma.vacancy.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
     const vacancy = await (prisma as any).vacancy.update({
       where: { id },

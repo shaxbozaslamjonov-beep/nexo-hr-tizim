@@ -10,6 +10,12 @@ const prisma = new PrismaClient({
 async function main() {
   console.log('🌱 Seeding database...');
 
+  const company = await prisma.company.upsert({
+    where: { slug: 'nexo-demo' },
+    update: {},
+    create: { name: 'Nexo Demo', slug: 'nexo-demo', plan: 'trial' },
+  });
+
   // Seed admin/HR users
   const users = [
     { email: 'admin@nexo.hr', password: 'admin123', role: 'ADMIN', firstName: 'System', lastName: 'Admin' },
@@ -23,7 +29,7 @@ async function main() {
     if (!existing) {
       const hashed = await bcrypt.hash(u.password, 10);
       const user = await prisma.user.create({
-        data: { email: u.email, password: hashed, role: u.role },
+        data: { email: u.email, password: hashed, role: u.role, companyId: company.id },
       });
       await prisma.employeeProfile.create({
         data: {
@@ -54,7 +60,7 @@ async function main() {
       const existing = await prisma.vacancy.findFirst({ where: { title: v.title } });
       if (!existing) {
         await prisma.vacancy.create({
-          data: { ...v, requirements: 'Minimum 1 year experience, shift availability required', createdBy: admin.id },
+          data: { ...v, requirements: 'Minimum 1 year experience, shift availability required', createdBy: admin.id, companyId: company.id },
         });
         console.log(`  ✅ Created vacancy: ${v.title}`);
       }

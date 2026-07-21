@@ -7,6 +7,7 @@ export type AuthPayload = {
   id: string;
   email: string;
   role: string;
+  companyId: string;
 };
 
 export async function signToken(payload: AuthPayload): Promise<string> {

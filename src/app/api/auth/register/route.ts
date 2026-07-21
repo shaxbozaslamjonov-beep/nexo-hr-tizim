@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
+import { getDefaultCompanyId } from '@/lib/company';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,12 +24,14 @@ export async function POST(request: Request) {
 
     const hashedPassword = await hashPassword(password);
     const userRole = role || 'CANDIDATE';
+    const companyId = await getDefaultCompanyId();
 
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         role: userRole,
+        companyId,
         candidateProfile: userRole === 'CANDIDATE' ? {
           create: {
             firstName,

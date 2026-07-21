@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getDefaultCompanyId } from '@/lib/company';
 
 export const dynamic = 'force-dynamic';
 
-// GET - public list of OPEN vacancies (no auth required)
-export async function GET() {
+// GET - public list of OPEN vacancies for a company (no auth required)
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const companyId = searchParams.get('companyId') || (await getDefaultCompanyId());
+
     const vacancies = await prisma.vacancy.findMany({
-      where: { status: 'OPEN' },
+      where: { status: 'OPEN', companyId },
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,

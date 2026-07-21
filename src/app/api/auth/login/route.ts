@@ -37,6 +37,7 @@ export async function POST(request: Request) {
       id: user.id,
       email: user.email,
       role: user.role,
+      companyId: user.companyId,
     });
 
     const firstName = user.employeeProfile?.firstName || user.candidateProfile?.firstName || 'User';

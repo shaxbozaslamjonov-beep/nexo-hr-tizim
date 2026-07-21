@@ -217,6 +217,7 @@ export const translations = {
         docsRequired: 'Пожалуйста, подтвердите наличие всех необходимых документов.',
         missing_fields: 'Пожалуйста, заполните все обязательные поля.',
         duplicate: 'Вы уже подавали заявку на эту вакансию ранее.',
+        vacancy_not_found: 'Вакансия не найдена. Возможно, она уже закрыта.',
         server_error: 'Произошла ошибка на сервере. Попробуйте ещё раз позже.',
         generic: 'Не удалось отправить заявку. Попробуйте ещё раз.'
       }
@@ -944,6 +945,7 @@ export const translations = {
         docsRequired: 'Iltimos, barcha kerakli hujjatlaringiz borligini tasdiqlang.',
         missing_fields: 'Iltimos, barcha majburiy maydonlarni to\'ldiring.',
         duplicate: 'Siz bu vakansiyaga avval ariza topshirgansiz.',
+        vacancy_not_found: 'Vakansiya topilmadi. Ehtimol, u allaqachon yopilgan.',
         server_error: 'Serverda xatolik yuz berdi. Birozdan so\'ng qayta urinib ko\'ring.',
         generic: 'Arizani yuborib bo\'lmadi. Qaytadan urinib ko\'ring.'
       }

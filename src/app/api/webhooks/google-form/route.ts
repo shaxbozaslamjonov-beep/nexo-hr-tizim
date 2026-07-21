@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
+import { getDefaultCompanyId } from '@/lib/company';
 
 export async function POST(request: Request) {
   try {
@@ -32,11 +33,13 @@ export async function POST(request: Request) {
     const tempPassword = Math.random().toString(36).slice(-10);
     const hashedPassword = await hashPassword(tempPassword);
 
+    const companyId = await getDefaultCompanyId();
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         role: 'CANDIDATE',
+        companyId,
       }
     });
 
@@ -56,6 +59,7 @@ export async function POST(request: Request) {
     if (position) {
       const vacancy = await prisma.vacancy.findFirst({
         where: {
+          companyId,
           title: {
             contains: position
           }
