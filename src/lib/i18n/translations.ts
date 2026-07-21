@@ -19,16 +19,22 @@ export const translations = {
       thinking: 'Думаю…',
     },
     analytics: {
-      title: 'Аналитика',
-      description: 'Управляйте путями развития, этапами и навыками.',
+      title: 'Аналитика найма',
+      description: 'Отслеживайте воронку рекрутинга, вакансии и динамику команды в реальном времени.',
+      noData: 'Пока нет данных для отображения',
       stats: {
         totalCandidates: "Всего кандидатов",
-        avgTime: "Среднее время",
+        avgTime: "Среднее время закрытия",
         offerAcceptance: "Принятие офферов",
         positionsFilled: "Закрытые позиции",
-        days: "дней"
+        days: "дней",
+        noData: "Нет данных"
+      },
+      candidateSkills: {
+        title: "Уровень компьютерной грамотности кандидатов"
       },
       vacancyStatus: {
+        title: "Статус вакансий",
         open: "Открытые",
         pending: "В ожидании",
         closed: "Закрытые"
@@ -404,15 +410,17 @@ export const translations = {
     insights: {
       recruitmentGrowth: {
         title: "Рост рекрутмента",
-        description: "Поток кандидатов увеличился на 12% по сравнению с прошлым месяцем."
+        description: "{{thisMonth}} заявок в этом месяце против {{lastMonth}} в прошлом.",
+        descriptionEmpty: "В этом месяце заявок пока не поступало."
       },
       retentionRate: {
         title: "Коэффициент удержания",
-        description: "Текучесть кадров остается на низком уровне (3.2%)."
+        description: "Текучесть кадров составляет {{churn}}%."
       },
       actionRequired: {
         title: "Требуется действие",
-        description: "Для 3 вакансий недостаточно кандидатов. Рекомендуется усилить рекламу."
+        description: "Для {{count}} вакансий недостаточно кандидатов. Рекомендуется усилить рекламу.",
+        descriptionEmpty: "Все открытые вакансии получают отклики."
       }
     },
     toolbar: {
@@ -747,16 +755,22 @@ export const translations = {
       thinking: 'O\'ylayapman…',
     },
     analytics: {
-      title: 'Analitika',
-      description: "Rivojlanish yo'llari, bosqichlar va ko'nikmalarni boshqaring.",
+      title: 'Rekrutment analitikasi',
+      description: "Rekrutment voronkasi, vakansiyalar va jamoa dinamikasini real vaqtda kuzating.",
+      noData: "Hozircha ko'rsatish uchun ma'lumot yo'q",
       stats: {
         totalCandidates: "Jami nomzodlar",
-        avgTime: "O'rtacha vaqt",
+        avgTime: "O'rtacha yopilish vaqti",
         offerAcceptance: "Taklif qabuli",
         positionsFilled: "To'lgan o'rinlar",
-        days: "kun"
+        days: "kun",
+        noData: "Ma'lumot yo'q"
+      },
+      candidateSkills: {
+        title: "Nomzodlarning kompyuter savodxonligi darajasi"
       },
       vacancyStatus: {
+        title: "Vakansiyalar holati",
         open: "Ochiq",
         pending: "Kutilmoqda",
         closed: "Yopiq"
@@ -1082,15 +1096,17 @@ export const translations = {
     insights: {
       recruitmentGrowth: {
         title: "Rekrutment o'sishi",
-        description: "Nomzodlar oqimi o'tgan oyga nisbatan 12% ga oshdi."
+        description: "Bu oyda {{thisMonth}} ta ariza, o'tgan oyda {{lastMonth}} ta ariza.",
+        descriptionEmpty: "Bu oyda hali ariza tushmagan."
       },
       retentionRate: {
         title: "Xodimlarni saqlab qolish",
-        description: "Xodimlar almashinuvi (churn rate) past darajada (3.2%)."
+        description: "Xodimlar almashinuvi (churn rate) {{churn}}% ni tashkil etadi."
       },
       actionRequired: {
         title: "Harakat talab etiladi",
-        description: "3 ta vakansiya uchun nomzodlar yetarli emas. Reklamani kuchaytiring."
+        description: "{{count}} ta vakansiya uchun nomzodlar yetarli emas. Reklamani kuchaytiring.",
+        descriptionEmpty: "Barcha ochiq vakansiyalarga arizalar tushmoqda."
       }
     },
     toolbar: {

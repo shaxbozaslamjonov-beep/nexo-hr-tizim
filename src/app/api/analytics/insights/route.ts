@@ -1,55 +1,64 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+import { can } from '@/lib/rbac';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    // We calculate some mock metrics for insights, but based on real data counts if possible.
-    // For recruitment growth, we could compare candidates added this month vs last month.
-    // For retention rate, we could calculate (active employees / total employees) * 100.
-    // For action required, we check how many open vacancies have 0 candidates.
+    const session = await getSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!can(session, 'view_analytics')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+
+    const companyId = session.companyId;
+    const { searchParams } = new URL(request.url);
+    const range = searchParams.get('range') === '7days' ? 7 : 30;
 
     const now = new Date();
-    const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const periodStart = new Date(now.getTime() - range * 86400000);
+    const prevPeriodStart = new Date(now.getTime() - range * 2 * 86400000);
 
-    const [thisMonthCandidates, lastMonthCandidates, totalEmployees, terminatedEmployees, openVacancies] = await Promise.all([
-      // Candidates added this month (using id as proxy or assuming they are all from this month if no createdAt)
-      // Since CandidateProfile doesn't have a createdAt in the schema (wait, let's look at CandidateProfile... wait, it doesn't have createdAt? Let's check.)
-      prisma.candidateProfile.count(), // We'll just mock the growth for now if no timestamps exist on CandidateProfile. Wait, User has createdAt. We can use User.
-      prisma.candidateProfile.count(),
-      prisma.employeeProfile.count({ where: { status: { not: 'TERMINATED' } } }),
-      prisma.employeeProfile.count({ where: { status: 'TERMINATED' } }),
+    const [
+      applicationsThisMonth,
+      applicationsLastMonth,
+      totalEmployees,
+      terminatedEmployees,
+      openVacancies,
+    ] = await Promise.all([
+      prisma.application.count({ where: { vacancy: { companyId }, createdAt: { gte: periodStart } } }),
+      prisma.application.count({ where: { vacancy: { companyId }, createdAt: { gte: prevPeriodStart, lt: periodStart } } }),
+      prisma.employeeProfile.count({ where: { user: { companyId }, status: { not: 'TERMINATED' } } }),
+      prisma.employeeProfile.count({ where: { user: { companyId }, status: 'TERMINATED' } }),
       prisma.vacancy.findMany({
-        where: { status: 'OPEN' },
-        include: { applications: true }
-      })
+        where: { companyId, status: 'OPEN' },
+        include: { applications: true },
+      }),
     ]);
 
-    // Calculate recruitment growth
-    // Without strict timestamps, let's just use a static +12.5% or a formula based on total counts to make it dynamic but plausible.
-    const recruitmentGrowth = 12.5; 
-    
-    // Calculate retention rate
-    const totalEver = totalEmployees + terminatedEmployees;
-    const retentionRate = totalEver === 0 ? 100 : ((totalEmployees / totalEver) * 100).toFixed(1);
+    const recruitmentGrowth = applicationsLastMonth === 0
+      ? (applicationsThisMonth > 0 ? 100 : 0)
+      : Math.round(((applicationsThisMonth - applicationsLastMonth) / applicationsLastMonth) * 1000) / 10;
 
-    // Calculate action required (vacancies with 0 applications)
-    const emptyVacancies = openVacancies.filter(v => v.applications.length === 0).length;
+    const totalEver = totalEmployees + terminatedEmployees;
+    const retentionRate = totalEver === 0 ? 100 : Math.round((totalEmployees / totalEver) * 1000) / 10;
+
+    const emptyVacancies = openVacancies.filter((v) => v.applications.length === 0).length;
 
     const insights = {
       recruitmentGrowth: {
-        value: `+${recruitmentGrowth}%`,
-        trend: 'up',
-        // Description will be handled by UI translation
+        value: `${recruitmentGrowth >= 0 ? '+' : ''}${recruitmentGrowth}%`,
+        trend: recruitmentGrowth >= 0 ? 'up' : 'down',
+        applicationsThisMonth,
+        applicationsLastMonth,
       },
       retentionRate: {
         value: `${retentionRate}%`,
-        trend: 'stable'
+        trend: retentionRate >= 90 ? 'stable' : 'down',
+        churnRate: Math.round((100 - retentionRate) * 10) / 10,
       },
       actionRequired: {
-        value: `${emptyVacancies} ta vakansiya`,
-        count: emptyVacancies
-      }
+        value: emptyVacancies,
+        count: emptyVacancies,
+      },
     };
 
     return NextResponse.json(insights);

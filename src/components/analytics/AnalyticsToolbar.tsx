@@ -67,11 +67,11 @@ export function AnalyticsToolbar({ onEditTimeRange, onEditPreferences }: Analyti
           <DropdownMenuLabel className="font-semibold text-slate-500 text-xs uppercase tracking-wider px-2 py-1.5">
             Department
           </DropdownMenuLabel>
-          <DropdownMenuItem className="gap-3 rounded-lg cursor-pointer hover:bg-slate-50 py-2.5 text-slate-700" onClick={() => handleFilter('dept-it')}>
+          <DropdownMenuItem className="gap-3 rounded-lg cursor-pointer hover:bg-slate-50 py-2.5 text-slate-700 opacity-60" onClick={() => toast('Bo\'lim bo\'yicha filtr tez orada qo\'shiladi', { icon: '🚧' })}>
             <Building2 className="h-4 w-4" />
             <span className="font-medium">IT & Tech</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="gap-3 rounded-lg cursor-pointer hover:bg-slate-50 py-2.5 text-slate-700" onClick={() => handleFilter('dept-sales')}>
+          <DropdownMenuItem className="gap-3 rounded-lg cursor-pointer hover:bg-slate-50 py-2.5 text-slate-700 opacity-60" onClick={() => toast('Bo\'lim bo\'yicha filtr tez orada qo\'shiladi', { icon: '🚧' })}>
             <Building2 className="h-4 w-4" />
             <span className="font-medium">Sales</span>
           </DropdownMenuItem>

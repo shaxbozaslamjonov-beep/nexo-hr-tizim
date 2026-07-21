@@ -2,27 +2,46 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { BrainCircuit } from 'lucide-react';
-import { 
-  Radar, 
-  RadarChart, 
-  PolarGrid, 
-  PolarAngleAxis, 
-  PolarRadiusAxis, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   ResponsiveContainer,
-  Tooltip
+  Tooltip,
+  Cell,
 } from 'recharts';
 
-const data = [
-  { subject: 'Technical', A: 120, B: 110, fullMark: 150 },
-  { subject: 'Management', A: 98, B: 130, fullMark: 150 },
-  { subject: 'Communication', A: 86, B: 130, fullMark: 150 },
-  { subject: 'Strategy', A: 99, B: 100, fullMark: 150 },
-  { subject: 'Design', A: 85, B: 90, fullMark: 150 },
-  { subject: 'Sales', A: 65, B: 85, fullMark: 150 },
-];
+interface CandidateSkillsChartProps {
+  data?: {
+    total: number;
+    computerSkill: { name: string; value: number }[];
+    education: { name: string; value: number }[];
+  } | null;
+}
 
-export function CandidateSkillsChart() {
+const SKILL_COLORS: Record<string, string> = {
+  none: '#cbd5e1',
+  basic: '#818cf8',
+  advanced: '#4f46e5',
+};
+
+export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
   const { t } = useLanguage();
+
+  const skillLabels: Record<string, string> = {
+    none: t('apply.computerSkills.none') || 'None',
+    basic: t('apply.computerSkills.basic') || 'Basic',
+    advanced: t('apply.computerSkills.advanced') || 'Advanced',
+  };
+
+  const chartData = (data?.computerSkill || []).map((d) => ({
+    ...d,
+    label: skillLabels[d.name] || d.name,
+  }));
+
+  const hasData = (data?.total || 0) > 0;
 
   return (
     <Card className="h-full border-none shadow-md overflow-hidden bg-gradient-to-br from-card to-muted/20">
@@ -31,34 +50,31 @@ export function CandidateSkillsChart() {
           <div className="p-2 bg-indigo-500/10 rounded-xl transition-colors group-hover:bg-indigo-500/20">
             <BrainCircuit className="h-5 w-5 text-indigo-500" />
           </div>
-          {t('skills') || 'Talantlar salohiyati'}
+          {t('analytics.candidateSkills.title') || "Nomzodlar ko'nikma darajasi"}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex items-center justify-center p-0">
-        <ResponsiveContainer width="100%" height={320}>
-          <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-            <defs>
-              <linearGradient id="radarGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2}/>
-              </linearGradient>
-            </defs>
-            <PolarGrid stroke="#e2e8f0" />
-            <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }} />
-            <PolarRadiusAxis angle={30} domain={[0, 150]} tick={false} axisLine={false} />
-            <Radar
-              name="Current Pool"
-              dataKey="A"
-              stroke="#4f46e5"
-              strokeWidth={3}
-              fill="url(#radarGradient)"
-              fillOpacity={0.6}
-            />
-            <Tooltip 
-              contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)' }}
-            />
-          </RadarChart>
-        </ResponsiveContainer>
+      <CardContent className="p-0">
+        {hasData ? (
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={chartData} margin={{ top: 24, right: 24, left: 0, bottom: 8 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }} axisLine={false} tickLine={false} />
+              <YAxis allowDecimals={false} tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <Tooltip
+                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)' }}
+              />
+              <Bar dataKey="value" radius={[8, 8, 0, 0]} maxBarSize={64}>
+                {chartData.map((entry) => (
+                  <Cell key={entry.name} fill={SKILL_COLORS[entry.name] || '#4f46e5'} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex items-center justify-center h-[280px] text-sm text-slate-400 font-medium px-6 text-center">
+            {t('analytics.noData') || "Hozircha ko'rsatish uchun nomzod ma'lumotlari yo'q"}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

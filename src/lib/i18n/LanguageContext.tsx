@@ -6,7 +6,7 @@ import { translations, Language } from './translations';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -27,10 +27,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.lang = lang;
   };
 
-  const t = (key: string): string => {
+  const t = (key: string, params?: Record<string, string | number>): string => {
     const keys = key.split('.');
     let value: any = translations[language];
-    
+
     for (const k of keys) {
       if (value && value[k]) {
         value = value[k];
@@ -38,7 +38,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return key;
       }
     }
-    
+
+    if (typeof value === 'string' && params) {
+      return Object.entries(params).reduce(
+        (acc, [k, v]) => acc.replace(new RegExp(`{{${k}}}`, 'g'), String(v)),
+        value
+      );
+    }
+
     return value;
   };
 

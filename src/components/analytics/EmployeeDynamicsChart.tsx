@@ -24,14 +24,10 @@ interface EmployeeDynamicsChartProps {
 export function EmployeeDynamicsChart({ data }: EmployeeDynamicsChartProps) {
   const { t } = useLanguage();
 
-  const formattedData = data.length > 0 ? data : [
-    { month: 'Yan', hires: 12, left: 4 },
-    { month: 'Fev', hires: 18, left: 6 },
-    { month: 'Mar', hires: 15, left: 8 },
-    { month: 'Apr', hires: 25, left: 5 },
-    { month: 'May', hires: 32, left: 7 },
-    { month: 'Iyun', hires: 28, left: 10 },
-  ];
+  const formattedData = data;
+  const totalHires = formattedData.reduce((sum, d) => sum + d.hires, 0);
+  const totalLeft = formattedData.reduce((sum, d) => sum + d.left, 0);
+  const netGrowth = totalHires - totalLeft;
 
   return (
     <Card className="h-full flex flex-col border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden bg-white/60 backdrop-blur-xl rounded-[2.5rem] group">
@@ -46,7 +42,9 @@ export function EmployeeDynamicsChart({ data }: EmployeeDynamicsChartProps) {
           <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-2 ml-1">Staffing Trends over time</p>
         </div>
         <div className="flex gap-2">
-           <div className="px-3 py-1 bg-emerald-500/10 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-wider">Growth +15%</div>
+           <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${netGrowth >= 0 ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
+             Net {netGrowth >= 0 ? '+' : ''}{netGrowth}
+           </div>
         </div>
       </CardHeader>
       <CardContent className="flex-1 p-8 pt-6">

@@ -26,11 +26,8 @@ const COLORS = ['#10b981', '#f59e0b', '#6b7280']; // Green (Open), Orange (Pendi
 export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   const { t } = useLanguage();
 
-  const baseData = data.length > 0 ? data : [
-    { name: 'Open', value: 12 },
-    { name: 'Pending', value: 5 },
-    { name: 'Closed', value: 8 },
-  ];
+  const baseData = data;
+  const hasData = baseData.some((d) => d.value > 0);
 
   const localizedNames: Record<string, string> = {
     'Open': t('analytics.vacancyStatus.open') || 'Ochiq',
@@ -65,11 +62,16 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
           <div className="p-3 bg-emerald-500/10 rounded-2xl transition-transform group-hover:scale-110 duration-500">
             <Filter className="h-6 w-6 text-emerald-600" />
           </div>
-          {t('vacancies.statusLabel') || t('statusLabel') || 'Vakansiyalar holati'}
+          {t('analytics.vacancyStatus.title')}
         </CardTitle>
         <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-2 ml-1">Current Distribution</p>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col items-center justify-center p-8 pt-2 pb-2">
+        {!hasData ? (
+          <div className="flex items-center justify-center h-[280px] w-full text-sm text-slate-400 font-medium">
+            {t('analytics.noData')}
+          </div>
+        ) : (
         <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
@@ -94,6 +96,7 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
             <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }} />
           </PieChart>
         </ResponsiveContainer>
+        )}
       </CardContent>
       <CardFooter className="p-8 pt-0 pb-6 flex justify-center mt-auto">
         <Link href="/dashboard/hr/vacancies" className="w-full flex items-center justify-center gap-2 py-3 bg-slate-50 rounded-2xl text-sm font-black text-slate-700 hover:bg-slate-100 transition-all group/btn">

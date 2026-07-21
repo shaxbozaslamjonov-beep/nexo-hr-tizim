@@ -32,26 +32,25 @@ const DEFAULT_PREFERENCES: AnalyticsPreferences = {
   }
 };
 
+const EMPTY_EXTRA = { avgDaysToFill: null, offerAcceptanceRate: null, positionsFilled: 0, positionsTotal: 0 };
+
 export function AnalyticsContent() {
   const { t } = useLanguage();
-  const [stats, setStats] = useState({ candidates: 124, vacancies: 5, lessons: 42, testResults: 186 });
-  const [funnelData, setFunnelData] = useState([
-    { name: 'Application', value: 450 },
-    { name: 'Screening', value: 280 },
-    { name: 'Interview', value: 120 },
-    { name: 'Training', value: 85 },
-    { name: 'Hired', value: 32 }
-  ]);
+  const [stats, setStats] = useState({ candidates: 0, vacancies: 0, lessons: 0, testResults: 0 });
+  const [trends, setTrends] = useState<{ candidates?: number | null; vacancies?: number | null }>({});
+  const [extra, setExtra] = useState<typeof EMPTY_EXTRA>(EMPTY_EXTRA);
+  const [funnelData, setFunnelData] = useState<{ name: string; value: number }[]>([]);
   const [dynamicsData, setDynamicsData] = useState([]);
   const [vacancyStatusData, setVacancyStatusData] = useState([
     { name: 'Open', value: 0 },
     { name: 'Pending', value: 0 },
     { name: 'Closed', value: 0 },
   ]);
+  const [skillsData, setSkillsData] = useState<any>(null);
   const [insightsData, setInsightsData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('30days');
-  
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [preferences, setPreferences] = useState<AnalyticsPreferences>(DEFAULT_PREFERENCES);
 
@@ -68,21 +67,26 @@ export function AnalyticsContent() {
 
     const fetchData = async () => {
       try {
-        const [statsRes, funnelRes, dynamicsRes, vacStatusRes, insightsRes] = await Promise.all([
-          fetch('/api/analytics/stats'),
+        const [statsRes, funnelRes, dynamicsRes, vacStatusRes, insightsRes, skillsRes] = await Promise.all([
+          fetch(`/api/analytics/stats?range=${timeRange}`),
           fetch('/api/analytics/recruitment-funnel'),
           fetch('/api/analytics/employee-dynamics'),
           fetch('/api/analytics/vacancy-status'),
-          fetch('/api/analytics/insights')
+          fetch(`/api/analytics/insights?range=${timeRange}`),
+          fetch('/api/analytics/candidate-skills'),
         ]);
 
         if (statsRes.ok) {
            const s = await statsRes.json();
-           if (s && s.candidates !== undefined) setStats(s);
+           if (s && s.candidates !== undefined) {
+             setStats(s);
+             setTrends(s.trends || {});
+             setExtra(s.extra || EMPTY_EXTRA);
+           }
         }
         if (funnelRes.ok) {
            const f = await funnelRes.json();
-           if (f && f.length > 0) setFunnelData(f);
+           if (Array.isArray(f)) setFunnelData(f);
         }
         if (dynamicsRes.ok) {
            const d = await dynamicsRes.json();
@@ -95,6 +99,10 @@ export function AnalyticsContent() {
         if (insightsRes.ok) {
            const i = await insightsRes.json();
            if (i) setInsightsData(i);
+        }
+        if (skillsRes.ok) {
+           const sk = await skillsRes.json();
+           if (sk) setSkillsData(sk);
         }
       } catch (error) {
         console.error('Error fetching analytics data:', error);
@@ -131,17 +139,17 @@ export function AnalyticsContent() {
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {t('analytics.title') || 'Analitika'}
+              {t('analytics.title')}
             </h1>
             <p className="text-sm text-slate-500 mt-1 font-medium">
-              {t('analytics.description') || "Rivojlanish yo'llari, bosqichlar va ko'nikmalarni boshqaring."}
+              {t('analytics.description')}
             </p>
           </div>
         </div>
 
         <div className="relative z-10 w-full lg:w-auto">
           <AnalyticsToolbar 
-            onEditTimeRange={() => {}} 
+            onEditTimeRange={(range) => setTimeRange(range)}
             onEditPreferences={() => setIsEditModalOpen(true)} 
           />
         </div>
@@ -154,7 +162,7 @@ export function AnalyticsContent() {
 
       {/* Top row stats cards - Ultra Premium */}
       <div className="transition-all duration-700 delay-300">
-        <StatsCards stats={stats} targets={preferences.targets} />
+        <StatsCards stats={stats} targets={preferences.targets} trends={trends} />
       </div>
 
       {/* Candidates Overview Table/Metrics */}
@@ -169,31 +177,40 @@ export function AnalyticsContent() {
           <div className="p-0">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-800">
               <div className="p-6 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.totalCandidates') || 'Jami nomzodlar'}</p>
+                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.totalCandidates')}</p>
                 <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">450</h4>
-                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12.5%</span>
+                  <h4 className="text-3xl font-black text-slate-900">{stats.candidates}</h4>
+                  {trends.candidates != null && (
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${trends.candidates >= 0 ? 'text-emerald-600 bg-emerald-50' : 'text-red-600 bg-red-50'}`}>
+                      {trends.candidates >= 0 ? '+' : ''}{trends.candidates}%
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="p-6 flex flex-col justify-center bg-white hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.avgTime') || 'O\'rtacha vaqt'}</p>
+                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.avgTime')}</p>
                 <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">14<span className="text-lg text-slate-400 font-semibold ml-1">{t('analytics.stats.days') || 'kun'}</span></h4>
-                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">-2.4%</span>
+                  {extra.avgDaysToFill != null ? (
+                    <h4 className="text-3xl font-black text-slate-900">{extra.avgDaysToFill}<span className="text-lg text-slate-400 font-semibold ml-1">{t('analytics.stats.days')}</span></h4>
+                  ) : (
+                    <h4 className="text-lg font-semibold text-slate-400">{t('analytics.stats.noData')}</h4>
+                  )}
                 </div>
               </div>
               <div className="p-6 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.offerAcceptance') || 'Taklif qabuli'}</p>
+                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.offerAcceptance')}</p>
                 <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">82%</h4>
-                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+4.1%</span>
+                  {extra.offerAcceptanceRate != null ? (
+                    <h4 className="text-3xl font-black text-slate-900">{extra.offerAcceptanceRate}%</h4>
+                  ) : (
+                    <h4 className="text-lg font-semibold text-slate-400">{t('analytics.stats.noData')}</h4>
+                  )}
                 </div>
               </div>
               <div className="p-6 flex flex-col justify-center bg-white hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.positionsFilled') || 'To\'lgan o\'rinlar'}</p>
+                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.positionsFilled')}</p>
                 <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">8<span className="text-lg text-slate-400 font-semibold ml-1">/12</span></h4>
-                  <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">{t('status.active') || 'Faol'}</span>
+                  <h4 className="text-3xl font-black text-slate-900">{extra.positionsFilled}<span className="text-lg text-slate-400 font-semibold ml-1">/{extra.positionsTotal}</span></h4>
                 </div>
               </div>
             </div>
@@ -203,15 +220,15 @@ export function AnalyticsContent() {
 
       {/* Main Charts Grid - Rich Hierarchy */}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        
+
         {/* Recruitment Funnel - Strong visual weight */}
         <div className="lg:col-span-2 group">
           <RecruitmentFunnelChart data={funnelData} />
         </div>
 
-        {/* Radar Skills Chart - High interaction */}
+        {/* Candidate skills breakdown - real data */}
         <div className="transition-transform hover:scale-[1.02] duration-500">
-          <CandidateSkillsChart />
+          <CandidateSkillsChart data={skillsData} />
         </div>
 
         {/* Vacancies Pie Chart - Refactored to separate component */}

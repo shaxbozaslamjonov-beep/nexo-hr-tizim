@@ -50,12 +50,13 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
     };
   });
 
-  const total = formattedData[0]?.value || 500; // Guaranteed data for visual impact
+  const total = formattedData[0]?.value || 0;
+  const hasData = formattedData.some((d) => d.value > 0);
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
-      const rate = ((data.value / total) * 100).toFixed(1);
+      const rate = total > 0 ? ((data.value / total) * 100).toFixed(1) : '0.0';
       return (
         <div className="bg-white/95 backdrop-blur-xl border-none rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-5 text-sm min-w-[220px]">
           <div className="flex items-center gap-3 mb-4">
@@ -95,6 +96,11 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
         </div>
       </CardHeader>
       <CardContent className="flex-1 p-8 pt-6">
+        {!hasData ? (
+          <div className="flex items-center justify-center h-full min-h-[350px] text-sm text-slate-400 font-medium">
+            {t('analytics.noData')}
+          </div>
+        ) : (
         <ResponsiveContainer width="100%" height="100%" minHeight={350}>
           <BarChart
             data={formattedData}
@@ -143,6 +149,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   );
