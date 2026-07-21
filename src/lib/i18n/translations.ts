@@ -214,7 +214,11 @@ export const translations = {
       errors: {
         requiredFields: 'Пожалуйста, заполните все обязательные поля.',
         noVacancy: 'Вакансия не выбрана. Пожалуйста, откройте ссылку из объявления о вакансии.',
-        docsRequired: 'Пожалуйста, подтвердите наличие всех необходимых документов.'
+        docsRequired: 'Пожалуйста, подтвердите наличие всех необходимых документов.',
+        missing_fields: 'Пожалуйста, заполните все обязательные поля.',
+        duplicate: 'Вы уже подавали заявку на эту вакансию ранее.',
+        server_error: 'Произошла ошибка на сервере. Попробуйте ещё раз позже.',
+        generic: 'Не удалось отправить заявку. Попробуйте ещё раз.'
       }
     },
     candidates: {
@@ -937,7 +941,11 @@ export const translations = {
       errors: {
         requiredFields: 'Iltimos, barcha majburiy maydonlarni to\'ldiring.',
         noVacancy: 'Vakansiya tanlanmagan. Iltimos, vakansiya e\'lonidan havola orqali kiring.',
-        docsRequired: 'Iltimos, barcha kerakli hujjatlaringiz borligini tasdiqlang.'
+        docsRequired: 'Iltimos, barcha kerakli hujjatlaringiz borligini tasdiqlang.',
+        missing_fields: 'Iltimos, barcha majburiy maydonlarni to\'ldiring.',
+        duplicate: 'Siz bu vakansiyaga avval ariza topshirgansiz.',
+        server_error: 'Serverda xatolik yuz berdi. Birozdan so\'ng qayta urinib ko\'ring.',
+        generic: 'Arizani yuborib bo\'lmadi. Qaytadan urinib ko\'ring.'
       }
     },
     candidates: {

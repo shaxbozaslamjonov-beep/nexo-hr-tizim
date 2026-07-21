@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     } = body;
 
     if (!firstName || !lastName || !vacancyId) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields', code: 'missing_fields' }, { status: 400 });
     }
 
     // Run automated screening
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
         },
       });
       if (existingApp) {
-        return NextResponse.json({ error: 'Duplicate application for this vacancy' }, { status: 400 });
+        return NextResponse.json({ error: 'Duplicate application for this vacancy', code: 'duplicate' }, { status: 400 });
       }
     } else {
       // Auto-create candidate account
@@ -195,6 +195,6 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error('Application Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error', code: 'server_error' }, { status: 500 });
   }
 }

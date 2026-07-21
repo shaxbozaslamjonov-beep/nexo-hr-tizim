@@ -33,6 +33,14 @@ function ApplyForm() {
     source: 'website',
     cvUrl: '',
   });
+  const DOC_COUNT = 4;
+  const [docsChecked, setDocsChecked] = useState<boolean[]>(Array(DOC_COUNT).fill(true));
+  const toggleDoc = (i: number) => setDocsChecked((prev) => {
+    const next = prev.map((v, idx) => (idx === i ? !v : v));
+    if (!next.every(Boolean)) update('hasRequiredDocs', false);
+    return next;
+  });
+  const allDocsChecked = docsChecked.every(Boolean);
   const [cvFileName, setCvFileName] = useState('');
   const [cvError, setCvError] = useState('');
   const [dropActive, setDropActive] = useState(false);
@@ -112,10 +120,13 @@ function ApplyForm() {
         body: JSON.stringify({ ...form, vacancyId }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Submission failed');
+      if (!res.ok) {
+        const code = data.code as string | undefined;
+        throw new Error(code ? t(`apply.errors.${code}`) : (data.error || t('apply.errors.generic')));
+      }
       setResult(data);
     } catch (e: any) {
-      setError(e.message);
+      setError(e.message || t('apply.errors.generic'));
     } finally {
       setLoading(false);
     }
@@ -338,14 +349,25 @@ function ApplyForm() {
                   <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
                     {t('apply.documents.intro')}
                   </p>
-                  {(t('apply.documents.items') as unknown as string[]).map((doc) => (
+                  {(t('apply.documents.items') as unknown as string[]).map((doc, i) => (
                     <div key={doc} className={styles.checkRow}>
-                      <input type="checkbox" checked readOnly />
-                      <span className={styles.checkLabel}>{doc}</span>
+                      <input
+                        type="checkbox"
+                        id={`doc-${i}`}
+                        checked={docsChecked[i]}
+                        onChange={() => toggleDoc(i)}
+                      />
+                      <label htmlFor={`doc-${i}`} className={styles.checkLabel}>{doc}</label>
                     </div>
                   ))}
                   <div className={styles.checkRow} style={{ marginTop: '1.5rem', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.1)' }}>
-                    <input type="checkbox" id="docsConfirm" checked={form.hasRequiredDocs} onChange={(e) => update('hasRequiredDocs', e.target.checked)} />
+                    <input
+                      type="checkbox"
+                      id="docsConfirm"
+                      checked={form.hasRequiredDocs}
+                      disabled={!allDocsChecked}
+                      onChange={(e) => update('hasRequiredDocs', e.target.checked)}
+                    />
                     <label htmlFor="docsConfirm" className={styles.checkLabel} style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                       {t('apply.fields.docsConfirm')}
                     </label>
