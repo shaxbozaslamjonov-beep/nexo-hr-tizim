@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, FormEvent } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search } from 'lucide-react';
+import { Search, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import styles from './landing.module.css';
 
 interface PublicVacancy {
@@ -36,11 +37,32 @@ const cardVariants = {
 };
 
 export function LandingPage() {
-  const { t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [vacancies, setVacancies] = useState<PublicVacancy[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [department, setDepartment] = useState<string | null>(null);
+
+  const [contactForm, setContactForm] = useState({ fullName: '', phone: '', message: '' });
+  const [contactStatus, setContactStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleContactSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setContactStatus('submitting');
+    try {
+      const res = await fetch('/api/public/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactForm),
+      });
+      if (!res.ok) throw new Error('failed');
+      setContactStatus('success');
+      setContactForm({ fullName: '', phone: '', message: '' });
+    } catch {
+      setContactStatus('error');
+    }
+  };
 
   useEffect(() => {
     fetch('/api/public/vacancies')
@@ -70,7 +92,32 @@ export function LandingPage() {
           <div className={styles.logoIcon}>N</div>
           Nexo HR
         </div>
-        <Link href="/login" className={styles.loginBtn}>{t('landing.login')}</Link>
+        <div className={styles.headerActions}>
+          <div className={styles.langSwitch}>
+            <button
+              className={`${styles.langBtn} ${language === 'uz' ? styles.langActive : ''}`}
+              onClick={() => setLanguage('uz')}
+            >
+              UZ
+            </button>
+            <div className={styles.langDivider} />
+            <button
+              className={`${styles.langBtn} ${language === 'ru' ? styles.langActive : ''}`}
+              onClick={() => setLanguage('ru')}
+            >
+              RU
+            </button>
+          </div>
+          <button
+            className={styles.themeBtn}
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <Link href="/login" className={styles.loginBtn}>{t('landing.login')}</Link>
+        </div>
       </header>
 
       <section className={styles.hero}>
@@ -178,6 +225,90 @@ export function LandingPage() {
             </AnimatePresence>
           </div>
         )}
+      </section>
+
+      <section className={styles.aboutSection}>
+        <div className={styles.aboutInner}>
+          <div className={styles.sectionHead}>
+            <span className={styles.sectionTick} />
+            <h2 className={styles.sectionTitle}>{t('landing.about.title')}</h2>
+          </div>
+          <p className={styles.aboutLead}>{t('landing.about.lead')}</p>
+          <div className={styles.aboutGrid}>
+            <div className={styles.aboutCard}>
+              <div className={styles.aboutCardTitle}>{t('landing.about.missionTitle')}</div>
+              <p className={styles.aboutCardText}>{t('landing.about.missionText')}</p>
+            </div>
+            <div className={styles.aboutCard}>
+              <div className={styles.aboutCardTitle}>{t('landing.about.futureTitle')}</div>
+              <p className={styles.aboutCardText}>{t('landing.about.futureText')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.saasSection}>
+        <div className={styles.saasBanner}>
+          <div>
+            <div className={styles.saasTitle}>{t('landing.saas.title')}</div>
+            <p className={styles.saasText}>{t('landing.saas.text')}</p>
+          </div>
+          <Link href="/register" className={styles.saasBtn}>{t('landing.saas.cta')} →</Link>
+        </div>
+      </section>
+
+      <section className={styles.contactSection}>
+        <div className={styles.sectionHead}>
+          <span className={styles.sectionTick} />
+          <h2 className={styles.sectionTitle}>{t('landing.contact.title')}</h2>
+        </div>
+        <p className={styles.aboutLead} style={{ color: '#5B6472' }}>{t('landing.contact.lead')}</p>
+
+        <form className={styles.contactForm} onSubmit={handleContactSubmit}>
+          <div className={styles.formRow}>
+            <div className={styles.formField}>
+              <label className={styles.formLabel} htmlFor="contact-name">{t('landing.contact.fullName')}</label>
+              <input
+                id="contact-name"
+                className={styles.formInput}
+                placeholder={t('landing.contact.fullNamePlaceholder')}
+                value={contactForm.fullName}
+                onChange={(e) => setContactForm((f) => ({ ...f, fullName: e.target.value }))}
+                required
+              />
+            </div>
+            <div className={styles.formField}>
+              <label className={styles.formLabel} htmlFor="contact-phone">{t('landing.contact.phone')}</label>
+              <input
+                id="contact-phone"
+                type="tel"
+                className={styles.formInput}
+                placeholder={t('landing.contact.phonePlaceholder')}
+                value={contactForm.phone}
+                onChange={(e) => setContactForm((f) => ({ ...f, phone: e.target.value }))}
+                required
+              />
+            </div>
+          </div>
+          <div className={styles.formField}>
+            <label className={styles.formLabel} htmlFor="contact-message">{t('landing.contact.message')}</label>
+            <textarea
+              id="contact-message"
+              className={styles.formTextarea}
+              placeholder={t('landing.contact.messagePlaceholder')}
+              value={contactForm.message}
+              onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
+              required
+            />
+          </div>
+
+          {contactStatus === 'success' && <div className={styles.formSuccess}>{t('landing.contact.success')}</div>}
+          {contactStatus === 'error' && <div className={styles.formError}>{t('landing.contact.error')}</div>}
+
+          <button type="submit" className={styles.formSubmit} disabled={contactStatus === 'submitting'}>
+            {contactStatus === 'submitting' ? t('landing.contact.submitting') : t('landing.contact.submit')}
+          </button>
+        </form>
       </section>
 
       <footer className={styles.footer}>

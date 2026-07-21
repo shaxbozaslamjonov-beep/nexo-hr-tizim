@@ -464,6 +464,15 @@ model CareerLevel {
   employees   EmployeeProfile[]
 }
 
+model ContactRequest {
+  id        String   @id @default(uuid())
+  fullName  String
+  phone     String
+  message   String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
+
 model Meeting {
   id          String   @id @default(uuid())
   title       String
