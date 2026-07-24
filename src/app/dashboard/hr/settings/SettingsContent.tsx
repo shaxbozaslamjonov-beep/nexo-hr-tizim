@@ -641,14 +641,42 @@ export function SettingsContent() {
                   </div>
 
                   <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f0f9ff', border: '1px solid #bae6fd', marginBottom: '2rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                       <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#0369a1' }}>Bot Token Holati</span>
                       <span style={{ padding: '0.25rem 0.75rem', background: '#16a34a', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
                     </div>
-                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid #e0f2fe', fontSize: '0.85rem', fontFamily: 'monospace', color: '#0369a1', wordBreak: 'break-all' }}>
+                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid #e0f2fe', fontSize: '0.85rem', fontFamily: 'monospace', color: '#0369a1', wordBreak: 'break-all', marginBottom: '1rem' }}>
                       8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk
                     </code>
+
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid #bae6fd' }}>
+                      <div>
+                        <div style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.9rem' }}>Vercel Webhook URL:</div>
+                        <div style={{ fontSize: '0.8rem', color: '#0284c7', fontFamily: 'monospace' }}>https://nexo-hr-tizim-5fe5.vercel.app/api/webhooks/telegram</div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            const res = await fetch('/api/webhooks/telegram?setup=true');
+                            const data = await res.json();
+                            if (data.success) {
+                              showToast('Telegram Webhook Vercel bilan ulandi!', 'success');
+                            } else {
+                              showToast('Xatolik: ' + (data.result?.description || 'Bog\'lab bo\'lmadi'), 'error');
+                            }
+                          } catch (e) {
+                            showToast('Ulashda xatolik', 'error');
+                          }
+                        }}
+                        className={styles.btnPrimary}
+                        style={{ background: '#0284c7', fontSize: '0.8rem', padding: '0.5rem 1rem' }}
+                      >
+                        ⚡ Webhook URLni Vercel Bilan Ulash
+                      </button>
+                    </div>
                   </div>
+
 
                   {/* Test Message Sender */}
                   <div style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

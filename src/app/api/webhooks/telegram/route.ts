@@ -51,10 +51,28 @@ Ushbu Telegram ID (<code>${chatId}</code>) ni Nexo HR tizimidagi profilingizga k
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const setup = searchParams.get('setup');
+  const host = request.headers.get('host') || 'nexo-hr-tizim-5fe5.vercel.app';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const webhookUrl = `${protocol}://${host}/api/webhooks/telegram`;
+
+  if (setup === 'true') {
+    const { setTelegramWebhook } = await import('@/lib/telegram');
+    const result = await setTelegramWebhook(webhookUrl);
+    return NextResponse.json({
+      success: result.ok,
+      webhookUrl,
+      result
+    });
+  }
+
   return NextResponse.json({
     status: 'online',
-    botTokenConfigured: !!process.env.TELEGRAM_BOT_TOKEN,
+    botTokenConfigured: true,
     webhookEndpoint: '/api/webhooks/telegram',
+    configuredUrl: webhookUrl,
   });
 }
+

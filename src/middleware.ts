@@ -27,7 +27,9 @@ export async function middleware(request: NextRequest) {
     (publicMethodRoutes[pathname]?.includes(request.method)) ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/public') ||
+    pathname.startsWith('/api/webhooks') ||
     pathname === '/favicon.ico';
+
 
   if (isPublicRoute) {
     return NextResponse.next();
