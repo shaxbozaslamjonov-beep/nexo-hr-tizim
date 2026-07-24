@@ -652,7 +652,7 @@ export function SettingsContent() {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid #bae6fd' }}>
                       <div>
                         <div style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.9rem' }}>Vercel Webhook URL:</div>
-                        <div style={{ fontSize: '0.8rem', color: '#0284c7', fontFamily: 'monospace' }}>https://nexo-hr-tizim-5fe5.vercel.app/api/webhooks/telegram</div>
+                        <div style={{ fontSize: '0.8rem', color: '#0284c7', fontFamily: 'monospace' }}>https://nexo-hr-tizim.vercel.app/api/webhooks/telegram</div>
                       </div>
                       <button
                         type="button"
