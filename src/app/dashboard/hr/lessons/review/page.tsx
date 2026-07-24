@@ -2,52 +2,41 @@
 
 import React, { useEffect, useState } from 'react';
 import { lessonService } from '@/lib/services/lessonService';
-import { Lesson, Assignment, User } from '@/types';
-import { 
-  CheckCircle2, 
-  Clock, 
+import { Lesson, Assignment } from '@/types';
+import {
+  CheckCircle2,
+  Clock,
   Search,
   BookOpen,
   User as UserIcon,
   Award,
-  Filter,
-  CheckCircle,
-  AlertCircle,
   FileText,
   TrendingUp,
-  LayoutGrid,
   ClipboardList,
-  ChevronRight,
   ExternalLink,
   MessageSquare,
-  GraduationCap,
-  Calendar
+  Paperclip,
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import styles from '@/components/lessons/lessons.module.css';
+import fx from '@/components/analytics/effects.module.css';
 
 export default function AssignmentReviewPage() {
-  const { user: currentUser } = useAuth();
-  const { t, language } = useLanguage();
-  
+  const { language } = useLanguage();
+
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'ALL' | 'PENDING' | 'SUBMITTED' | 'CHECKED'>('SUBMITTED');
+  const [filter, setFilter] = useState<'ALL' | 'SUBMITTED' | 'CHECKED'>('SUBMITTED');
   const [gradingId, setGradingId] = useState<string | null>(null);
   const [grade, setGrade] = useState<number>(100);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [assignData, lessonData] = await Promise.all([
           lessonService.getAssignments(),
-          lessonService.getLessons()
+          lessonService.getLessons(),
         ]);
         setAssignments(assignData);
         setLessons(lessonData);
@@ -71,276 +60,330 @@ export default function AssignmentReviewPage() {
     }
   };
 
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const displayed = assignments.filter(a => {
+  const displayed = assignments.filter((a) => {
     const matchesFilter = filter === 'ALL' || a.status === filter;
-    const matchesSearch = searchQuery === '' || 
+    const matchesSearch =
+      searchQuery === '' ||
       ((a as any).employee?.firstName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       ((a as any).employee?.lastName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       (a.userId || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
+  const submittedCount = assignments.filter((a) => a.status === 'SUBMITTED').length;
+  const checkedCount = assignments.filter((a) => a.status === 'CHECKED').length;
+  const recentCount = assignments.filter(
+    (a) => a.submittedAt && new Date(a.submittedAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+  ).length;
+
   const stats = [
-    { 
-      label: 'Jami yuborilgan', 
-      value: assignments.length, 
-      trend: `So'nggi 7 kun: +${assignments.filter(a => a.submittedAt && new Date(a.submittedAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}`,
-      icon: FileText, 
-      color: 'bg-blue-500/10 text-blue-600' 
+    {
+      label: 'Jami yuborilgan',
+      value: assignments.length,
+      trend: `So'nggi 7 kun: +${recentCount}`,
+      icon: FileText,
+      iconBg: '#eff6ff',
+      iconColor: '#2563eb',
     },
-    { 
-      label: 'Kutilmoqda', 
-      value: assignments.filter(a => a.status === 'SUBMITTED').length, 
-      trend: 'Bugun: 0 ta yangi',
-      icon: Clock, 
-      color: 'bg-orange-500/10 text-orange-600' 
+    {
+      label: 'Kutilmoqda',
+      value: submittedCount,
+      trend: submittedCount > 0 ? `${submittedCount} ta javob kutmoqda` : 'Hammasi ko\'rib chiqilgan',
+      icon: Clock,
+      iconBg: '#fff7ed',
+      iconColor: '#ea580c',
     },
-    { 
-      label: 'Tekshirilgan', 
-      value: assignments.filter(a => a.status === 'CHECKED').length, 
-      trend: 'Muvaffaqiyatli: 100%',
-      icon: CheckCircle, 
-      color: 'bg-green-500/10 text-green-600' 
-    }
+    {
+      label: 'Tekshirilgan',
+      value: checkedCount,
+      trend: assignments.length > 0 ? `${Math.round((checkedCount / assignments.length) * 100)}% yakunlangan` : '—',
+      icon: CheckCircle2,
+      iconBg: '#f0fdf4',
+      iconColor: '#16a34a',
+    },
   ];
 
-  return (
-    <div className="bg-background text-foreground min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-foreground flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <ClipboardList className="h-8 w-8 text-primary" />
-              </div>
-              {t('assignmentReview') || 'Topshiriqlarni tekshirish'}
-            </h1>
-            <p className="text-muted-foreground mt-1">Xodimlarning bajarilgan topshiriqlarini tekshiring va baholang</p>
-          </div>
-        </div>
+  const cardStyle: React.CSSProperties = {
+    background: 'white',
+    borderRadius: '20px',
+    border: '1px solid #e2e8f0',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+  };
 
-        {/* 1. Statistika Kartochkalari (KPI Style) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {stats.map((stat, i) => (
-            <Card key={i} className="border border-border shadow-sm bg-card rounded-xl overflow-hidden group">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                    <h3 className="text-4xl font-bold mt-2 text-foreground">{stat.value}</h3>
-                    <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1 font-medium">
-                      <TrendingUp className="h-3 w-3 text-green-500" />
-                      {stat.trend}
-                    </p>
-                  </div>
-                  <div className={`p-3 rounded-2xl ${stat.color} transition-transform group-hover:scale-110 duration-300`}>
-                    <stat.icon className="h-6 w-6" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '0.6rem 0.9rem',
+    borderRadius: '12px',
+    border: '1px solid #e2e8f0',
+    fontSize: '0.9rem',
+    fontFamily: 'inherit',
+    color: '#0d1b3d',
+  };
+
+  return (
+    <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+      {/* Header */}
+      <div className={fx.fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingBottom: '1.25rem', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ width: '52px', height: '52px', borderRadius: '16px', background: 'linear-gradient(135deg, #0d1b3d 0%, #2e4ba8 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px -8px rgba(13, 27, 61, 0.4)', flexShrink: 0 }}>
+          <ClipboardList size={26} color="white" />
+        </div>
+        <div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0d1b3d', margin: 0, letterSpacing: '-0.02em' }}>
+            Topshiriqlarni tekshirish
+          </h1>
+          <p style={{ color: '#64748b', margin: '0.25rem 0 0 0', fontSize: '0.9rem' }}>
+            Xodimlarning bajarilgan topshiriqlarini tekshiring va baholang
+          </p>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className={`${fx.fadeInUp} ${fx.delay1}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+        {stats.map((stat, i) => (
+          <div key={i} className={fx.hoverLift} style={{ ...cardStyle, padding: '1.5rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <div>
+              <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{stat.label}</p>
+              <h3 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#0d1b3d', margin: '0.5rem 0' }}>{stat.value}</h3>
+              <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0, display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}>
+                <TrendingUp size={12} color="#16a34a" /> {stat.trend}
+              </p>
+            </div>
+            <div style={{ padding: '0.75rem', borderRadius: '14px', background: stat.iconBg, color: stat.iconColor, display: 'flex' }}>
+              <stat.icon size={22} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filters + Search */}
+      <div className={`${fx.fadeInUp} ${fx.delay2}`} style={{ ...cardStyle, background: '#f8fafc', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '0.35rem', padding: '0.3rem', background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+          {[
+            { id: 'ALL', label: 'Barchasi' },
+            { id: 'SUBMITTED', label: 'Yangi' },
+            { id: 'CHECKED', label: 'Tekshirilgan' },
+          ].map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setFilter(s.id as any)}
+              style={{
+                padding: '0.5rem 1.1rem',
+                borderRadius: '9px',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                border: 'none',
+                cursor: 'pointer',
+                background: filter === s.id ? '#0d1b3d' : 'transparent',
+                color: filter === s.id ? 'white' : '#64748b',
+                transition: 'all 0.2s',
+              }}
+            >
+              {s.label}
+            </button>
           ))}
         </div>
 
-        {/* 2. Filtrlar + Qidiruv Bar */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-muted/20 p-4 rounded-2xl border border-border">
-          <div className="flex items-center p-1 bg-background/50 rounded-xl w-fit border border-border">
-            {[
-              { id: 'ALL', label: 'Barchasi' },
-              { id: 'SUBMITTED', label: 'Yangi' },
-              { id: 'CHECKED', label: 'Tekshirilgan' }
-            ].map((s) => (
-              <Button
-                key={s.id}
-                variant="ghost"
-                onClick={() => setFilter(s.id as any)}
-                className={`rounded-lg px-6 py-2 h-9 text-sm font-semibold transition-all ${
-                  filter === s.id 
-                    ? "bg-primary/10 text-primary shadow-sm" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
-                }`}
-              >
-                {s.label}
-              </Button>
-            ))}
-          </div>
-
-          <div className="relative max-w-sm w-full lg:w-80 group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-            <Input 
-              placeholder="Xodim bo'yicha qidirish..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 rounded-xl bg-background border-border hover:border-primary/50 focus:border-primary transition-all shadow-sm"
-            />
-          </div>
+        <div style={{ position: 'relative', width: '100%', maxWidth: '320px' }}>
+          <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)' }} />
+          <input
+            placeholder="Xodim bo'yicha qidirish..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ ...inputStyle, paddingLeft: '2.5rem', background: 'white' }}
+          />
         </div>
+      </div>
 
-        {/* 3. Xodim Filtri (Department Head Card) */}
-        <div className="rounded-xl border border-border p-4 bg-muted/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <UserIcon className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h4 className="font-bold text-foreground">DE Department Head</h4>
-              <p className="text-xs text-muted-foreground font-medium">Monitoring va boshqaruv bo'limi</p>
-            </div>
-          </div>
-          <div className="flex gap-6">
-             <div className="text-center">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase">Topshiriqlar</p>
-                <p className="text-lg font-bold text-foreground">{assignments.length}</p>
-             </div>
-             <div className="text-center border-x border-border/50 px-6">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase">Kutilmoqda</p>
-                <p className="text-lg font-bold text-orange-500">{assignments.filter(a => a.status === 'SUBMITTED').length}</p>
-             </div>
-             <div className="text-center">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase">Tayyor</p>
-                <p className="text-lg font-bold text-green-500">{assignments.filter(a => a.status === 'CHECKED').length}</p>
-             </div>
-          </div>
+      {/* Assignment cards grid */}
+      {loading ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} style={{ ...cardStyle, height: '18rem', background: '#f1f5f9', border: 'none' }} />
+          ))}
         </div>
-
-        {/* 4. Topshiriqlar Kartochkalari Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map(i => (
-              <Card key={i} className="animate-pulse bg-muted/30 border-none h-64 rounded-2xl" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayed.length === 0 ? (
-              <div className="col-span-full bg-card/50 border border-dashed border-border p-20 rounded-[2rem] text-center">
-                <BookOpen className="h-16 w-16 text-muted-foreground/30 mx-auto mb-6" />
-                <h2 className="text-xl font-semibold text-foreground">Hozircha topshiriqlar yo'q</h2>
-                <p className="text-muted-foreground mt-2 max-w-xs mx-auto">Sizda hali tekshirilishi kerak bo'lgan topshiriqlar mavjud emas.</p>
-              </div>
-            ) : displayed.map((a) => {
-              const lesson = lessons.find(l => l.id === a.lessonId);
+      ) : (
+        <div className={`${fx.fadeInUp} ${fx.delay3}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {displayed.length === 0 ? (
+            <div style={{ gridColumn: '1 / -1', ...cardStyle, border: '1px dashed #cbd5e1', padding: '4rem 2rem', textAlign: 'center' }}>
+              <BookOpen size={48} color="#cbd5e1" style={{ margin: '0 auto 1rem' }} />
+              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0d1b3d', margin: 0 }}>Hozircha topshiriqlar yo'q</h2>
+              <p style={{ color: '#94a3b8', marginTop: '0.5rem' }}>Sizda hali tekshirilishi kerak bo'lgan topshiriqlar mavjud emas.</p>
+            </div>
+          ) : (
+            displayed.map((a) => {
+              const lesson = lessons.find((l) => l.id === a.lessonId);
+              const employee = (a as any).employee;
+              const isChecked = a.status === 'CHECKED';
               return (
-                <Card key={a.id} className="group border border-border shadow-sm hover:shadow-md transition-all duration-300 bg-card overflow-hidden rounded-2xl flex flex-col h-full ring-primary/5 hover:ring-2">
-                  <div className="p-6 flex-1 space-y-5">
-                    {/* Header */}
+                <div key={a.id} className={fx.hoverLift} style={{ ...cardStyle, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                  <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
                     <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="p-2 bg-primary/5 rounded-lg">
-                          <BookOpen className="h-4 w-4 text-primary" />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <div style={{ padding: '0.4rem', borderRadius: '8px', background: '#eff6ff', display: 'flex' }}>
+                          <BookOpen size={14} color="#2563eb" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">O'quv kursi topshiriq'i</span>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8' }}>
+                          O'quv kursi topshirig'i
+                        </span>
                       </div>
-                      <h3 className="text-xl font-bold tracking-tight text-foreground line-clamp-2 min-h-[3.5rem] group-hover:text-primary transition-colors">
-                        {lesson?.title[language] || lesson?.title['ru'] || 'Sarlahasiz dars'}
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0d1b3d', margin: 0, lineHeight: 1.3, minHeight: '2.6rem' }}>
+                        {lesson?.title?.[language] || lesson?.title?.['ru'] || 'Sarlavhasiz dars'}
                       </h3>
                     </div>
 
-                    {/* Metrics Board */}
-                    <div className="rounded-xl border border-border/50 bg-muted/20 overflow-hidden divide-y divide-border/50">
-                      <div className="flex items-center justify-between p-3">
-                        <span className="text-[11px] font-bold text-muted-foreground uppercase">Xodim:</span>
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary">
-                            {((a as any).employee?.firstName || a.userId || '??')[0]}
+                    <div style={{ borderRadius: '14px', border: '1px solid #f1f5f9', background: '#f8fafc', overflow: 'hidden' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Xodim</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <div style={{ width: '20px', height: '20px', borderRadius: '999px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 800, color: '#2563eb' }}>
+                            {(employee?.firstName || a.userId || '?')[0]}
                           </div>
-                          <span className="text-sm font-semibold text-foreground truncate max-w-[120px]">
-                            {(a as any).employee ? `${(a as any).employee.firstName} ${(a as any).employee.lastName}` : (a.userId || 'ID: ---')}
+                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0d1b3d' }}>
+                            {employee ? `${employee.firstName} ${employee.lastName}` : a.userId || 'ID: ---'}
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-3 text-sm">
-                        <span className="text-[11px] font-bold text-muted-foreground uppercase font-sans">Sana:</span>
-                        <span className="font-medium text-foreground">{a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : '---'}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Sana</span>
+                        <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#0d1b3d' }}>
+                          {a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : '---'}
+                        </span>
                       </div>
-                      <div className="flex items-center justify-between p-3">
-                        <span className="text-[11px] font-bold text-muted-foreground uppercase">Baho:</span>
-                        {a.status === 'CHECKED' ? (
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm font-bold text-foreground">{a.grade}/100</span>
-                            <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
-                              <div className="h-full bg-green-500" style={{ width: `${a.grade}%` }} />
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Baho</span>
+                        {isChecked ? (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0d1b3d' }}>{a.grade}/100</span>
+                            <div style={{ width: '48px', height: '5px', borderRadius: '999px', background: '#e2e8f0', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', background: '#16a34a', width: `${a.grade}%` }} />
                             </div>
                           </div>
                         ) : (
-                          <Badge variant="secondary" className="bg-orange-100 text-orange-700 hover:bg-orange-100 border-none rounded-lg text-[10px] font-bold px-2 py-0.5">
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '999px', background: '#ffedd5', color: '#c2410c' }}>
                             Kutilmoqda
-                          </Badge>
+                          </span>
                         )}
                       </div>
-                      <div className="flex items-center justify-between p-3 border-none">
-                         <span className="text-[11px] font-bold text-muted-foreground uppercase">Holat:</span>
-                         <Badge variant="outline" className={`px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase tracking-wider
-                            ${a.status === 'CHECKED' ? 'bg-green-500/10 text-green-600 border-green-500/20' : 
-                              a.status === 'SUBMITTED' ? 'bg-blue-500/10 text-blue-600 border-blue-500/20' : 
-                              'bg-orange-500/10 text-orange-600 border-orange-500/20'}`}>
-                            {a.status === 'CHECKED' ? '✓ Tekshirilgan' : a.status === 'SUBMITTED' ? '● Yangi' : '○ Kutilmoqda'}
-                          </Badge>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Holat</span>
+                        <span
+                          style={{
+                            fontSize: '0.65rem',
+                            fontWeight: 800,
+                            padding: '0.2rem 0.6rem',
+                            borderRadius: '999px',
+                            textTransform: 'uppercase',
+                            background: isChecked ? '#dcfce7' : '#dbeafe',
+                            color: isChecked ? '#15803d' : '#1d4ed8',
+                          }}
+                        >
+                          {isChecked ? '✓ Tekshirilgan' : '● Yangi'}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Question Excerpt */}
-                    <div className="space-y-2">
-                       <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-1.5 opacity-60">
-                         <MessageSquare className="h-3 w-3" /> Xodim Javobi:
-                       </span>
-                       <div className="p-3 bg-muted/5 rounded-lg border-l-2 border-primary/20 italic text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                         "{a.submissionText || 'Javob matni mavjud emas'}"
-                       </div>
+                    <div>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.35rem', marginBottom: '0.5rem' }}>
+                        <MessageSquare size={12} /> Xodim javobi
+                      </span>
+                      <div style={{ padding: '0.75rem 0.9rem', borderRadius: '10px', borderLeft: '3px solid #bfdbfe', background: '#f8fafc', fontSize: '0.8rem', color: '#475569', fontStyle: 'italic', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any }}>
+                        "{a.submissionText || 'Javob matni mavjud emas'}"
+                      </div>
+                      {a.fileUrl && (
+                        <a
+                          href={a.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ marginTop: '0.6rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: '#2563eb', textDecoration: 'none' }}
+                        >
+                          <Paperclip size={13} /> Biriktirilgan faylni ochish
+                        </a>
+                      )}
                     </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="p-6 pt-0 border-t border-border/30 bg-muted/5 mt-auto">
+                  <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid #f1f5f9', background: '#fbfdff' }}>
                     {a.status === 'SUBMITTED' ? (
                       gradingId === a.id ? (
-                        <div className="space-y-4 pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                          <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Ball belgilang (0-100)</label>
-                            <Input 
-                              type="number" 
-                              className="h-10 text-lg font-bold text-center border-primary/20 focus:border-primary rounded-xl" 
-                              value={grade} 
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          <div>
+                            <label style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', color: '#94a3b8', display: 'block', marginBottom: '0.4rem' }}>
+                              Ball belgilang (0-100)
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              max={100}
+                              value={grade}
                               onChange={(e) => setGrade(Number(e.target.value))}
-                              min="0" max="100"
+                              style={{ ...inputStyle, textAlign: 'center', fontSize: '1.1rem', fontWeight: 800 }}
                             />
                           </div>
-                          <div className="flex gap-2">
-                            <Button className="h-10 flex-1 rounded-xl font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" onClick={() => handleGrade(a.id)}>
+                          <div style={{ display: 'flex', gap: '0.6rem' }}>
+                            <button
+                              type="button"
+                              onClick={() => handleGrade(a.id)}
+                              style={{ flex: 1, padding: '0.65rem', borderRadius: '10px', border: 'none', background: '#0d1b3d', color: 'white', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                            >
                               Saqlash
-                            </Button>
-                            <Button variant="outline" className="h-10 px-4 rounded-xl text-xs font-semibold" onClick={() => setGradingId(null)}>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setGradingId(null)}
+                              style={{ padding: '0.65rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', background: 'white', color: '#64748b', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                            >
                               Bekor
-                            </Button>
+                            </button>
                           </div>
                         </div>
                       ) : (
-                        <div className="pt-4 flex gap-3">
-                          <Button variant="outline" className="flex-1 h-10 rounded-xl font-bold text-xs gap-2 group/btn">
-                             <ExternalLink className="h-3.5 w-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" /> Ko'rish
-                          </Button>
-                          <Button className="flex-1 h-10 rounded-xl font-bold text-xs gap-2 shadow-sm" onClick={() => setGradingId(a.id)}>
-                            <Award className="h-4 w-4" /> Baholash
-                          </Button>
+                        <div style={{ display: 'flex', gap: '0.6rem' }}>
+                          <a
+                            href={a.fileUrl || '#'}
+                            target={a.fileUrl ? '_blank' : undefined}
+                            rel="noopener noreferrer"
+                            style={{
+                              flex: 1,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '0.4rem',
+                              padding: '0.65rem',
+                              borderRadius: '10px',
+                              border: '1px solid #e2e8f0',
+                              background: 'white',
+                              color: a.fileUrl ? '#0d1b3d' : '#cbd5e1',
+                              fontWeight: 700,
+                              fontSize: '0.8rem',
+                              textDecoration: 'none',
+                              cursor: a.fileUrl ? 'pointer' : 'not-allowed',
+                              pointerEvents: a.fileUrl ? 'auto' : 'none',
+                            }}
+                          >
+                            <ExternalLink size={14} /> Ko'rish
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => { setGradingId(a.id); setGrade(100); }}
+                            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: 'none', background: '#0d1b3d', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                          >
+                            <Award size={14} /> Baholash
+                          </button>
                         </div>
                       )
                     ) : (
-                      <div className="pt-4">
-                        <Button variant="outline" className="w-full h-11 rounded-xl font-bold text-xs gap-2 hover:bg-primary/5 hover:text-primary transition-all border-dashed">
-                           <CheckCircle2 size={16} className="text-green-500" /> Tekshirilgan · Tafsilotlar
-                        </Button>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: '1px dashed #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 700, fontSize: '0.8rem' }}>
+                        <CheckCircle2 size={15} /> Tekshirilgan
                       </div>
                     )}
                   </div>
-                </Card>
+                </div>
               );
-            })}
-          </div>
-        )}
-      </div>
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 }

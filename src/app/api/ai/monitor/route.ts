@@ -15,7 +15,7 @@ export async function POST() {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const snapshot = await buildHrSnapshot();
+    const snapshot = await buildHrSnapshot(session.companyId);
 
     const messages = [
       {

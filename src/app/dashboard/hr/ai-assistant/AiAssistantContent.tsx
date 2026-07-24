@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, ShieldAlert, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { TaskKanbanBoard } from '@/components/ai-assistant/TaskKanbanBoard';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -65,7 +66,8 @@ export function AiAssistantContent() {
   };
 
   return (
-    <div style={{ padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.5rem', alignItems: 'start' }}>
+    <div style={{ padding: '1rem' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.5rem', alignItems: 'start' }}>
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '20px', display: 'flex', flexDirection: 'column', height: '70vh' }}>
         <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--grad-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
@@ -148,6 +150,9 @@ export function AiAssistantContent() {
           </div>
         )}
       </div>
+    </div>
+
+    <TaskKanbanBoard />
     </div>
   );
 }

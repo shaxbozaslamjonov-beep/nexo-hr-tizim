@@ -1,14 +1,14 @@
 import prisma from '@/lib/prisma';
 
 /** Builds a compact, real-data snapshot of the HR pipeline to ground AI answers. */
-export async function buildHrSnapshot(): Promise<string> {
-  const [vacanciesByStatus, applicationsByStage, candidatesByStatus, upcomingInterviews, staleApplications] =
+export async function buildHrSnapshot(companyId: string): Promise<string> {
+  const [vacanciesByStatus, applicationsByStage, candidatesByStatus, upcomingInterviews, staleApplications, openTasks] =
     await Promise.all([
-      prisma.vacancy.groupBy({ by: ['status'], _count: true }),
-      prisma.application.groupBy({ by: ['stage'], _count: true }),
-      prisma.candidateProfile.groupBy({ by: ['status'], _count: true }),
+      prisma.vacancy.groupBy({ by: ['status'], _count: true, where: { companyId } }),
+      prisma.application.groupBy({ by: ['stage'], _count: true, where: { vacancy: { companyId } } }),
+      prisma.candidateProfile.groupBy({ by: ['status'], _count: true, where: { user: { companyId } } }),
       prisma.interview.findMany({
-        where: { scheduledAt: { gte: new Date() } },
+        where: { scheduledAt: { gte: new Date() }, application: { vacancy: { companyId } } },
         orderBy: { scheduledAt: 'asc' },
         take: 10,
         include: { candidate: true },
@@ -17,9 +17,15 @@ export async function buildHrSnapshot(): Promise<string> {
         where: {
           updatedAt: { lte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
           stage: { notIn: ['REJECTED', 'HIRED'] },
+          vacancy: { companyId },
         },
         include: { vacancy: true, candidate: true },
         take: 20,
+      }),
+      prisma.aiTask.findMany({
+        where: { companyId, status: { not: 'DONE' } },
+        orderBy: { createdAt: 'desc' },
+        take: 15,
       }),
     ]);
 
@@ -46,6 +52,12 @@ export async function buildHrSnapshot(): Promise<string> {
     lines.push(
       `- ${a.candidate.firstName} ${a.candidate.lastName} → "${a.vacancy.title}" (bosqich: ${a.stage}, oxirgi yangilanish: ${a.updatedAt.toISOString().slice(0, 10)})`
     )
+  );
+
+  lines.push('\n## Ochiq vazifalar (Kanban taxtasi):');
+  if (openTasks.length === 0) lines.push('- Yo\'q');
+  openTasks.forEach((tsk) =>
+    lines.push(`- [${tsk.status}] ${tsk.title}${tsk.fileName ? ` (fayl: ${tsk.fileName})` : ''}`)
   );
 
   return lines.join('\n');

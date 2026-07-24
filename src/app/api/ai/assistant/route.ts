@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing question' }, { status: 400 });
     }
 
-    const snapshot = await buildHrSnapshot();
+    const snapshot = await buildHrSnapshot(session.companyId);
 
     const messages = [
       {

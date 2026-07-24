@@ -18,6 +18,7 @@ model Company {
 
   users     User[]
   vacancies Vacancy[]
+  aiTasks   AiTask[]
 }
 
 model User {
@@ -494,6 +495,22 @@ model ContactRequest {
   message   String
   status    String   @default("NEW")
   createdAt DateTime @default(now())
+}
+
+model AiTask {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  title       String
+  description String?
+  status      String   @default("TODO") // TODO | IN_PROGRESS | DONE
+  fileUrl     String?
+  fileName    String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId])
 }
 
 model Meeting {
