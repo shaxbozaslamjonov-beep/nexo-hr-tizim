@@ -1,5 +1,6 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk';
 const TELEGRAM_API_BASE = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+const APP_BASE_URL = 'https://nexo-hr-tizim-5fe5.vercel.app';
 
 export interface TelegramSendMessageOptions {
   chatId: string | number;
@@ -38,36 +39,86 @@ export async function sendTelegramMessage(options: TelegramSendMessageOptions): 
 }
 
 /**
- * Send formatted notification for candidate application
+ * Register bot commands menu with Telegram API (/setMyCommands)
  */
-export async function notifyNewCandidate(chatId: string | number, candidate: { name: string; vacancy: string; phone?: string; email?: string }) {
-  const text = `
-<b>🚀 Yangi Nomzod Topshirig'i!</b>
+export async function setTelegramCommands() {
+  const commands = [
+    { command: 'start', description: '🚀 Tizimni ishga tushirish & Bosh menyu' },
+    { command: 'dashboard', description: '📊 HR Dashboard & Analitika' },
+    { command: 'candidates', description: '💼 Nomzodlar & Otkliklar' },
+    { command: 'vacancies', description: '📋 Vakansiyalar ro\'yxati' },
+    { command: 'employees', description: '👥 Xodimlar boshqaruvi' },
+    { command: 'faq', description: '❓ FAQ / Ko\'p beriladigan savollar' },
+    { command: 'help', description: 'ℹ️ Yordam va Qo\'llab-quvvatlash' },
+  ];
 
-👤 <b>Ism:</b> ${candidate.name}
-💼 <b>Vakansiya:</b> ${candidate.vacancy}
-📞 <b>Tel:</b> ${candidate.phone || 'Ko\'rsatilmagan'}
-📧 <b>Email:</b> ${candidate.email || 'Ko\'rsatilmagan'}
-
-<i>Nexo HR Platformasi orqali yuborildi.</i>
-  `.trim();
-
-  return sendTelegramMessage({ chatId, text });
+  try {
+    const res = await fetch(`${TELEGRAM_API_BASE}/setMyCommands`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ commands }),
+    });
+    return await res.json();
+  } catch (error: any) {
+    return { ok: false, description: error.message };
+  }
 }
 
 /**
- * Send OTP Code or Password Reset notification
+ * Main Persistent Keyboard Layout (Reply Keyboard)
  */
-export async function sendSecurityNotification(chatId: string | number, title: string, details: string) {
-  const text = `
-<b>🔒 Xavfsizlik Bildirishnomasi: ${title}</b>
+export function getTelegramMainKeyboard() {
+  return {
+    keyboard: [
+      [
+        { text: '📊 Dashboard va Hisobot' },
+        { text: '💼 Nomzodlar va Vakansiyalar' }
+      ],
+      [
+        { text: '👥 Xodimlar Boshqaruvi' },
+        { text: '📅 Davomat va KPI' }
+      ],
+      [
+        { text: '❓ FAQ / Savol-Javoblar' },
+        { text: '🌐 Tizimni O\'chish (Web App)', web_app: { url: `${APP_BASE_URL}/dashboard/hr` } }
+      ]
+    ],
+    resize_keyboard: true,
+    persistent: true
+  };
+}
 
-${details}
+/**
+ * Inline Keyboard Buttons for Welcome Message
+ */
+export function getWelcomeInlineKeyboard() {
+  return {
+    inline_keyboard: [
+      [
+        { text: '🚀 Nexo HR Platformasini Ochish', url: `${APP_BASE_URL}/dashboard/hr` }
+      ],
+      [
+        { text: '❓ FAQ / Savol-Javoblar', callback_data: 'faq_main' },
+        { text: '📞 Qo\'llab-quvvatlash', callback_data: 'support_contact' }
+      ]
+    ]
+  };
+}
 
-⏱ <i>Vaqt: ${new Date().toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' })}</i>
-  `.trim();
-
-  return sendTelegramMessage({ chatId, text });
+/**
+ * Inline Keyboard Buttons for FAQ Questions
+ */
+export function getFAQInlineKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: '1. Nexo HR nima va vazifasi nima?', callback_data: 'faq_1' }],
+      [{ text: '2. Yangi nomzod va vakansiya yaratish', callback_data: 'faq_2' }],
+      [{ text: '3. Telegram xabarnomalarini yoqish', callback_data: 'faq_3' }],
+      [{ text: '4. RBAC ruxsatnomalari va xavfsizlik', callback_data: 'faq_4' }],
+      [{ text: '5. Parolni tiklash va kirish', callback_data: 'faq_5' }],
+      [{ text: '🔙 Asosiy Menyu', callback_data: 'menu_main' }]
+    ]
+  };
 }
 
 /**
@@ -75,6 +126,8 @@ ${details}
  */
 export async function setTelegramWebhook(webhookUrl: string) {
   try {
+    // Set commands first
+    await setTelegramCommands();
     const res = await fetch(`${TELEGRAM_API_BASE}/setWebhook?url=${encodeURIComponent(webhookUrl)}`);
     const data = await res.json();
     return data;
