@@ -10,7 +10,6 @@ import {
   ResponsiveContainer, 
   Legend
 } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Filter, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
@@ -21,7 +20,7 @@ interface VacancyStatusChartProps {
   }[];
 }
 
-const COLORS = ['#10b981', '#f59e0b', '#6b7280']; // Green (Open), Orange (Pending), Gray (Closed)
+const COLORS = ['#10b981', '#f59e0b', '#64748b']; // Green (Open), Amber (Pending), Slate (Closed)
 
 export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   const { t } = useLanguage();
@@ -43,11 +42,10 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/95 backdrop-blur-xl border-none rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 text-sm">
-          <p className="font-extrabold text-slate-800 mb-1 uppercase tracking-tight">{payload[0].payload.localName}</p>
-          <div className="flex items-center gap-2">
-            <span className="text-slate-500 font-bold">{t('vacancies.title')}:</span>
-            <span className="font-black text-slate-900 text-lg">{payload[0].value}</span>
+        <div style={{ background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '0.85rem' }}>
+          <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0d1b3d', textTransform: 'uppercase', margin: '0 0 0.25rem 0' }}>{payload[0].payload.localName}</p>
+          <div style={{ fontSize: '0.9rem', fontWeight: 900, color: '#2563eb' }}>
+            {payload[0].value} ta vakansiya
           </div>
         </div>
       );
@@ -56,54 +54,71 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden bg-white/60 backdrop-blur-xl rounded-[2.5rem] group">
-      <CardHeader className="p-8 pb-2">
-        <CardTitle className="text-2xl font-black tracking-tighter flex items-center gap-3 text-slate-900">
-          <div className="p-3 bg-emerald-500/10 rounded-2xl transition-transform group-hover:scale-110 duration-500">
-            <Filter className="h-6 w-6 text-emerald-600" />
-          </div>
-          {t('analytics.vacancyStatus.title')}
-        </CardTitle>
-        <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-2 ml-1">Current Distribution</p>
-      </CardHeader>
-      <CardContent className="flex-1 flex flex-col items-center justify-center p-8 pt-2 pb-2">
+    <div style={{
+      background: 'white',
+      borderRadius: '24px',
+      border: '1px solid #e2e8f0',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      minHeight: '420px',
+    }}>
+      {/* Header */}
+      <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg, #10b981 0%, #047857 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)' }}>
+          <Filter size={22} color="white" />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d1b3d', margin: 0, lineHeight: 1.2 }}>
+            {t('analytics.vacancyStatus.title') || 'Статус вакансий'}
+          </h3>
+          <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
+            Current Distribution
+          </p>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '260px' }}>
         {!hasData ? (
-          <div className="flex items-center justify-center h-[280px] w-full text-sm text-slate-400 font-medium">
-            {t('analytics.noData')}
+          <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600 }}>
+            {t('analytics.noData') || 'Vakansiya holatlari mavjud emas'}
           </div>
         ) : (
-        <ResponsiveContainer width="100%" height={280}>
-          <PieChart>
-            <Pie
-              data={formattedData}
-              cx="50%"
-              cy="50%"
-              innerRadius={75}
-              outerRadius={95}
-              paddingAngle={8}
-              dataKey="value"
-              nameKey="localName"
-              stroke="none"
-              cornerRadius={12}
-              animationBegin={200}
-              animationDuration={1500}
-            >
-              {formattedData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }} />
-          </PieChart>
-        </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={260}>
+            <PieChart>
+              <Pie
+                data={formattedData}
+                cx="50%"
+                cy="50%"
+                innerRadius={65}
+                outerRadius={85}
+                paddingAngle={6}
+                dataKey="value"
+                nameKey="localName"
+                stroke="none"
+                cornerRadius={10}
+              >
+                {formattedData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="bottom" height={32} iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }} />
+            </PieChart>
+          </ResponsiveContainer>
         )}
-      </CardContent>
-      <CardFooter className="p-8 pt-0 pb-6 flex justify-center mt-auto">
-        <Link href="/dashboard/hr/vacancies" className="w-full flex items-center justify-center gap-2 py-3 bg-slate-50 rounded-2xl text-sm font-black text-slate-700 hover:bg-slate-100 transition-all group/btn">
+      </div>
+
+      {/* Footer Button */}
+      <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem', borderTop: '1px solid #f1f5f9' }}>
+        <Link href="/dashboard/hr/vacancies" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '14px', fontSize: '0.85rem', fontWeight: 800, color: '#334155', textDecoration: 'none' }}>
           {t('vacancies.viewApplications') || "Batafsil ko'rish"}
-          <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+          <ArrowRight size={16} />
         </Link>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk';
 const TELEGRAM_API_BASE = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-const APP_BASE_URL = 'https://nexo-hr-tizim-5fe5.vercel.app';
+const APP_BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://nexo-hr-tizim.vercel.app';
 
 export interface TelegramSendMessageOptions {
   chatId: string | number;

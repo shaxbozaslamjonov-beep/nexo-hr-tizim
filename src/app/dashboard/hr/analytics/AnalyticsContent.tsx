@@ -297,27 +297,13 @@ export function AnalyticsContent() {
       </div>
 
       {/* Main Charts Section */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-        {/* Row 1: Funnel + Skills */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '2rem' }}>
-          <div style={{ gridColumn: 'span 2 / span 2' }}>
-            <RecruitmentFunnelChart data={funnelData} />
-          </div>
-          <div>
-            <CandidateSkillsChart data={skillsData} />
-          </div>
-        </div>
-
-        {/* Row 2: Vacancy Status + Dynamics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '2rem' }}>
-          <div>
-            <VacancyStatusChart data={vacancyStatusData} />
-          </div>
-          <div style={{ gridColumn: 'span 2 / span 2' }}>
-            <EmployeeDynamicsChart data={dynamicsData} />
-          </div>
-        </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+        <RecruitmentFunnelChart data={funnelData} />
+        <CandidateSkillsChart data={skillsData} />
+        <VacancyStatusChart data={vacancyStatusData} />
+        <EmployeeDynamicsChart data={dynamicsData} />
       </div>
+
 
       {/* Decorative footer element */}
       <div style={{

@@ -10,7 +10,7 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-const APP_BASE_URL = 'https://nexo-hr-tizim-5fe5.vercel.app';
+const APP_BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://nexo-hr-tizim.vercel.app';
 
 export async function POST(request: Request) {
   try {
@@ -257,7 +257,7 @@ Sizning xabaringiz qabul qilindi! Quyidagi menyu tugmalaridan foydalaning yoki <
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const setup = searchParams.get('setup');
-  const host = request.headers.get('host') || 'nexo-hr-tizim-5fe5.vercel.app';
+  const host = request.headers.get('host') || 'nexo-hr-tizim.vercel.app';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   const webhookUrl = `${protocol}://${host}/api/webhooks/telegram`;
 
