@@ -5,29 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User as UserIcon, 
   Shield, 
-  Bell, 
   Settings as SystemIcon, 
   Users as UsersIcon, 
-  Database,
   Camera,
   Save,
-  Trash2,
   Lock,
   Plus,
-  Eye,
-  CheckCircle,
-  AlertTriangle,
-  Download,
-  Upload,
-  Send,
-  RefreshCw,
   Search,
   Key,
-  Smartphone,
+  Send,
   Building,
   Sliders,
   X,
-  Check
+  Check,
+  CheckCircle2,
+  SlidersHorizontal,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
@@ -49,9 +42,6 @@ interface UserItem {
   phone?: string;
   telegramId?: string;
   telegramUsername?: string;
-  telegramBotAccess?: boolean;
-  telegram2FA?: boolean;
-  avatarUrl?: string;
   shift?: string;
 }
 
@@ -71,17 +61,16 @@ export function SettingsContent() {
   const [resetPasswordUserId, setResetPasswordUserId] = useState<string | null>(null);
   const [newPasswordInput, setNewPasswordInput] = useState('');
 
-  // Personal profile change password state
+  // Personal profile password change
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Telegram test state
+  // Telegram test
   const [testTelegramId, setTestTelegramId] = useState('');
   const [testMessage, setTestMessage] = useState('Nexo HR: Test xabarnoma!');
   const [sendingTest, setSendingTest] = useState(false);
 
-  // Fetch users from Database
   const fetchUsers = async () => {
     try {
       const res = await fetch('/api/admin/users');
@@ -100,8 +89,6 @@ export function SettingsContent() {
           phone: '+998 90 123 45 67',
           telegramId: '',
           telegramUsername: '',
-          telegramBotAccess: true,
-          telegram2FA: false,
           shift: '1-smena (Morning)'
         })));
       }
@@ -273,81 +260,87 @@ export function SettingsContent() {
   );
 
   return (
-    <div className="p-4 sm:p-8 space-y-8 max-w-[1600px] mx-auto animate-in fade-in duration-500">
+    <div className={styles.root}>
       
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-        <div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-            <Sliders className="h-7 w-7 text-indigo-600" />
-            Tizim Sozlamalari & RBAC Portal
-          </h1>
-          <p className="text-sm text-slate-500 mt-1 font-medium">
-            Foydalanuvchilar, kompaniya filiallari, xavfsizlik qoidalari, AI va tizim boshqaruvi
-          </p>
+      {/* Hero Banner matching HR Dashboard */}
+      <div className={styles.heroBanner}>
+        <div className={styles.heroBgGlow} />
+        <div className={styles.heroBadge}>
+          <Sparkles size={14} />
+          SYSTEM CONTROL & RBAC
         </div>
+        <h1 className={styles.heroTitle}>Tizim Sozlamalari & RBAC Portal</h1>
+        <p className={styles.heroText}>
+          Foydalanuvchilar boshqaruvi, xavfsizlik qoidalari, Telegram integratsiyasi va RBAC ruxsatnomalarini markazlashgan holda boshqaring.
+        </p>
       </div>
 
-      {/* Main Tab Navigation & Content Container */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Main Navigation Sidebar & Content Layout */}
+      <div className={styles.layoutGrid}>
         
         {/* Left Navigation Sidebar */}
-        <div className="lg:col-span-1 space-y-2 bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm h-fit">
+        <div className={styles.navSidebar}>
           <button 
+            type="button"
             onClick={() => setActiveTab('profile')} 
-            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'profile' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+            className={`${styles.navTab} ${activeTab === 'profile' ? styles.navTabActive : ''}`}
           >
-            <UserIcon className="h-5 w-5" />
+            <UserIcon size={18} />
             Shaxsiy Profil
           </button>
 
           {isAdmin && (
             <>
               <button 
+                type="button"
                 onClick={() => setActiveTab('users')} 
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'users' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                className={`${styles.navTab} ${activeTab === 'users' ? styles.navTabActive : ''}`}
               >
-                <UsersIcon className="h-5 w-5" />
+                <UsersIcon size={18} />
                 Foydalanuvchilar
               </button>
 
               <button 
+                type="button"
                 onClick={() => setActiveTab('rbac')} 
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'rbac' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                className={`${styles.navTab} ${activeTab === 'rbac' ? styles.navTabActive : ''}`}
               >
-                <Shield className="h-5 w-5" />
+                <Shield size={18} />
                 Ruxsatnomalar (RBAC)
               </button>
             </>
           )}
 
           <button 
+            type="button"
             onClick={() => setActiveTab('security')} 
-            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'security' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+            className={`${styles.navTab} ${activeTab === 'security' ? styles.navTabActive : ''}`}
           >
-            <Lock className="h-5 w-5" />
+            <Lock size={18} />
             Login & Xavfsizlik
           </button>
 
           <button 
+            type="button"
             onClick={() => setActiveTab('telegram')} 
-            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'telegram' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+            className={`${styles.navTab} ${activeTab === 'telegram' ? styles.navTabActive : ''}`}
           >
-            <Send className="h-5 w-5" />
+            <Send size={18} />
             Telegram Bot Integratsiya
           </button>
 
           <button 
+            type="button"
             onClick={() => setActiveTab('company')} 
-            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all ${activeTab === 'company' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+            className={`${styles.navTab} ${activeTab === 'company' ? styles.navTabActive : ''}`}
           >
-            <Building className="h-5 w-5" />
+            <Building size={18} />
             Kompaniya & Filiallar
           </button>
         </div>
 
-        {/* Right Tab Content Container */}
-        <div className="lg:col-span-3">
+        {/* Right Content */}
+        <div className={styles.tabContent}>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -359,69 +352,71 @@ export function SettingsContent() {
               
               {/* TAB 1: SHAXSIY PROFIL */}
               {activeTab === 'profile' && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-8">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Shaxsiy Profil Sozlamalari</h2>
-                    <p className="text-sm text-slate-500 mt-1">Profilingiz rekvizitlari va xavfsizlik sozlamalari</p>
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <h2 className={styles.sectionTitle}>Shaxsiy Profil Sozlamalari</h2>
+                      <p className={styles.sectionSub}>Profilingiz rekvizitlari va xavfsizlik paroli</p>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase mb-2">F.I.Sh *</label>
-                      <input type="text" className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold" defaultValue={`${user?.firstName || ''} ${user?.lastName || ''}`} />
+                  <div className={styles.formGrid}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>F.I.Sh *</label>
+                      <input type="text" className={styles.formInput} defaultValue={`${user?.firstName || ''} ${user?.lastName || ''}`} />
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Telefon Raqami</label>
-                      <input type="text" className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold" defaultValue="+998 90 123 45 67" />
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Telefon Raqami</label>
+                      <input type="text" className={styles.formInput} defaultValue="+998 90 123 45 67" />
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Elektron Pochta (Email) *</label>
-                      <input type="email" className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold" defaultValue={user?.email} disabled />
+                    <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                      <label className={styles.formLabel}>Elektron Pochta (Email) *</label>
+                      <input type="email" className={styles.formInput} defaultValue={user?.email} disabled />
                     </div>
                   </div>
 
                   {/* Parolni Yangilash */}
-                  <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Key className="h-5 w-5 text-indigo-600" />
+                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9' }}>
+                    <h3 className={styles.sectionTitle} style={{ fontSize: '1.1rem', marginBottom: '1.25rem' }}>
+                      <Key size={20} style={{ display: 'inline', marginRight: '0.5rem', color: '#2563eb' }} />
                       Parolni Yangilash
                     </h3>
-                    <form onSubmit={handleSaveOwnPassword} className="space-y-4 max-w-md">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Joriy Parol</label>
+                    <form onSubmit={handleSaveOwnPassword} style={{ maxWidth: '480px', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                      <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Joriy Parol</label>
                         <input 
                           type="password" 
                           required
                           value={currentPassword}
                           onChange={e => setCurrentPassword(e.target.value)}
-                          className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium" 
+                          className={styles.formInput} 
                           placeholder="••••••••" 
                         />
                       </div>
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Yangi Parol</label>
+                      <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Yangi Parol</label>
                         <input 
                           type="password" 
                           required
                           value={newPassword}
                           onChange={e => setNewPassword(e.target.value)}
-                          className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium" 
+                          className={styles.formInput} 
                           placeholder="••••••••" 
                         />
                       </div>
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Yangi Parolni Tasdiqlash</label>
+                      <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Yangi Parolni Tasdiqlash</label>
                         <input 
                           type="password" 
                           required
                           value={confirmPassword}
                           onChange={e => setConfirmPassword(e.target.value)}
-                          className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium" 
+                          className={styles.formInput} 
                           placeholder="••••••••" 
                         />
                       </div>
-                      <button type="submit" disabled={loading} className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-md hover:bg-indigo-700 transition-all flex items-center gap-2">
-                        <Save className="h-4 w-4" />
+                      <button type="submit" disabled={loading} className={styles.btnPrimary} style={{ width: 'fit-content', marginTop: '0.5rem' }}>
+                        <Save size={18} />
                         {loading ? 'Saqlanmoqda...' : 'Profilni Saqlash'}
                       </button>
                     </form>
@@ -431,88 +426,89 @@ export function SettingsContent() {
 
               {/* TAB 2: FOYDALANUVCHILAR BOSHGARUV MARKAZI */}
               {activeTab === 'users' && isAdmin && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
-                  
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                  <div className={styles.sectionHeader}>
                     <div>
-                      <h2 className="text-xl font-bold text-slate-900 dark:text-white">Foydalanuvchilar Boshqaruv Markazi</h2>
-                      <p className="text-xs font-semibold text-slate-400 mt-1">Jami: {users.length} ta foydalanuvchi</p>
+                      <h2 className={styles.sectionTitle}>Foydalanuvchilar Boshqaruv Markazi</h2>
+                      <p className={styles.sectionSub}>Jami: {users.length} ta foydalanuvchi mavjud</p>
                     </div>
                     <button 
+                      type="button"
                       onClick={() => setIsAddUserOpen(true)}
-                      className="px-5 py-3 bg-indigo-600 text-white rounded-2xl font-bold text-sm shadow-md hover:bg-indigo-700 transition-all flex items-center gap-2"
+                      className={styles.btnPrimary}
                     >
-                      <Plus className="h-4 w-4" />
+                      <Plus size={18} />
                       + Yangi Foydalanuvchi
                     </button>
                   </div>
 
                   {/* Search Bar */}
-                  <div className="relative">
-                    <Search className="absolute left-4 top-3.5 h-5 w-5 text-slate-400" />
+                  <div className={styles.searchBox}>
+                    <Search className={styles.searchIcon} size={18} />
                     <input 
                       type="text" 
                       value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)}
                       placeholder="Ism, login, rol yoki ID bo'yicha qidirish..."
-                      className="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-sm font-medium text-slate-900 dark:text-white"
+                      className={styles.searchInput}
                     />
                   </div>
 
                   {/* Users Table */}
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.customTable}>
                       <thead>
-                        <tr className="border-b border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                          <th className="pb-3 px-2">Xodim</th>
-                          <th className="pb-3 px-2">Login / Email</th>
-                          <th className="pb-3 px-2">Rol</th>
-                          <th className="pb-3 px-2">Holati</th>
-                          <th className="pb-3 px-2 text-right">Amallar</th>
+                        <tr>
+                          <th>Xodim</th>
+                          <th>Login / Email</th>
+                          <th>Rol</th>
+                          <th>Holati</th>
+                          <th style={{ textAlign: 'right' }}>Amallar</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      <tbody>
                         {filteredUsers.map((u) => (
-                          <tr key={u.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                            <td className="py-4 px-2">
-                              <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-extrabold text-sm">
+                          <tr key={u.id}>
+                            <td>
+                              <div className={styles.userCell}>
+                                <div className={styles.avatarBadge}>
                                   {u.firstName?.[0]}{u.lastName?.[0]}
                                 </div>
                                 <div>
-                                  <div className="font-bold text-slate-900 dark:text-white text-sm">{u.firstName} {u.lastName}</div>
-                                  <div className="text-xs text-slate-400 font-mono">{u.employeeId}</div>
+                                  <div className={styles.userName}>{u.firstName} {u.lastName}</div>
+                                  <div className={styles.userSub}>{u.employeeId}</div>
                                 </div>
                               </div>
                             </td>
-                            <td className="py-4 px-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                            <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
                               {u.email}
                             </td>
-                            <td className="py-4 px-2">
-                              <span className="px-3 py-1 bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 font-extrabold text-[10px] tracking-wider rounded-lg uppercase">
-                                {u.role}
-                              </span>
+                            <td>
+                              <span className={styles.roleTag}>{u.role}</span>
                             </td>
-                            <td className="py-4 px-2">
-                              <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-extrabold text-[10px] rounded-lg">
-                                FAOL
-                              </span>
+                            <td>
+                              <span className={styles.statusTagActive}>FAOL</span>
                             </td>
-                            <td className="py-4 px-2 text-right space-x-2">
-                              <button 
-                                onClick={() => setEditingUser(u)}
-                                className="p-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 transition-colors"
-                                title="Tahrirlash (Enterprise)"
-                              >
-                                <Sliders className="h-4 w-4" />
-                              </button>
-                              <button 
-                                onClick={() => setResetPasswordUserId(u.id)}
-                                className="p-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-600 transition-colors"
-                                title="Parolni tiklash"
-                              >
-                                <Key className="h-4 w-4" />
-                              </button>
+                            <td>
+                              <div className={styles.actionBtnGroup}>
+                                <button 
+                                  type="button"
+                                  onClick={() => setEditingUser(u)}
+                                  className={styles.actionBtn}
+                                  title="Tahrirlash (Enterprise)"
+                                >
+                                  <SlidersHorizontal size={18} />
+                                </button>
+                                <button 
+                                  type="button"
+                                  onClick={() => setResetPasswordUserId(u.id)}
+                                  className={styles.actionBtn}
+                                  style={{ color: '#d97706', borderColor: '#fde68a', background: '#fffbeb' }}
+                                  title="Parolni tiklash"
+                                >
+                                  <Key size={18} />
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}
@@ -524,25 +520,27 @@ export function SettingsContent() {
 
               {/* TAB 3: RUXSATNOMALAR (RBAC) MATRIX */}
               {activeTab === 'rbac' && isAdmin && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Ruxsatnomalar Matritsasi (RBAC Portal)</h2>
-                    <p className="text-xs font-semibold text-slate-400 mt-1">Rollarga ko'ra modullar bo'yicha ruxsat darajalari</p>
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <h2 className={styles.sectionTitle}>Ruxsatnomalar Matritsasi (RBAC Portal)</h2>
+                      <p className={styles.sectionSub}>Rollarga ko'ra modullar bo'yicha ruxsat darajalari</p>
+                    </div>
                   </div>
 
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.customTable}>
                       <thead>
-                        <tr className="border-b border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase">
-                          <th className="pb-4 px-3">Modul / Funktsiya</th>
-                          <th className="pb-4 px-3 text-center">ADMIN</th>
-                          <th className="pb-4 px-3 text-center">HR MANAGER</th>
-                          <th className="pb-4 px-3 text-center">DIRECTOR</th>
-                          <th className="pb-4 px-3 text-center">DEPT HEAD</th>
-                          <th className="pb-4 px-3 text-center">EMPLOYEE</th>
+                        <tr>
+                          <th>Modul / Funktsiya</th>
+                          <th style={{ textAlign: 'center' }}>ADMIN</th>
+                          <th style={{ textAlign: 'center' }}>HR MANAGER</th>
+                          <th style={{ textAlign: 'center' }}>DIRECTOR</th>
+                          <th style={{ textAlign: 'center' }}>DEPT HEAD</th>
+                          <th style={{ textAlign: 'center' }}>EMPLOYEE</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+                      <tbody>
                         {[
                           { name: 'Dashboard & Analitika', admin: true, hr: true, dir: true, head: true, emp: false },
                           { name: 'Nomzodlar & Vakansiyalar', admin: true, hr: true, dir: true, head: false, emp: false },
@@ -551,13 +549,13 @@ export function SettingsContent() {
                           { name: 'Tizim Sozlamalari & RBAC', admin: true, hr: false, dir: false, head: false, emp: false },
                           { name: 'Telegram Bot & Xabarnomalar', admin: true, hr: true, dir: true, head: false, emp: false },
                         ].map((row, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                            <td className="py-4 px-3 font-bold text-slate-900 dark:text-white">{row.name}</td>
-                            <td className="py-4 px-3 text-center">{row.admin ? <Check className="h-5 w-5 text-emerald-500 mx-auto" /> : <X className="h-5 w-5 text-slate-300 mx-auto" />}</td>
-                            <td className="py-4 px-3 text-center">{row.hr ? <Check className="h-5 w-5 text-emerald-500 mx-auto" /> : <X className="h-5 w-5 text-slate-300 mx-auto" />}</td>
-                            <td className="py-4 px-3 text-center">{row.dir ? <Check className="h-5 w-5 text-emerald-500 mx-auto" /> : <X className="h-5 w-5 text-slate-300 mx-auto" />}</td>
-                            <td className="py-4 px-3 text-center">{row.head ? <Check className="h-5 w-5 text-emerald-500 mx-auto" /> : <X className="h-5 w-5 text-slate-300 mx-auto" />}</td>
-                            <td className="py-4 px-3 text-center">{row.emp ? <Check className="h-5 w-5 text-emerald-500 mx-auto" /> : <X className="h-5 w-5 text-slate-300 mx-auto" />}</td>
+                          <tr key={idx}>
+                            <td style={{ fontWeight: 800, color: '#0d1b3d' }}>{row.name}</td>
+                            <td style={{ textAlign: 'center' }}>{row.admin ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
+                            <td style={{ textAlign: 'center' }}>{row.hr ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
+                            <td style={{ textAlign: 'center' }}>{row.dir ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
+                            <td style={{ textAlign: 'center' }}>{row.head ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
+                            <td style={{ textAlign: 'center' }}>{row.emp ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -568,89 +566,100 @@ export function SettingsContent() {
 
               {/* TAB 4: TELEGRAM BOT INTEGRATSIYA */}
               {activeTab === 'telegram' && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-8">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                      <Send className="h-6 w-6 text-sky-500" />
-                      Telegram Bot Integratsiyasi
-                    </h2>
-                    <p className="text-sm text-slate-500 mt-1">Avtomatik bildirishnomalar va Telegram Webhook boshqaruvi</p>
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <h2 className={styles.sectionTitle} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Send size={24} color="#0284c7" />
+                        Telegram Bot Integratsiyasi
+                      </h2>
+                      <p className={styles.sectionSub}>Avtomatik bildirishnomalar va Telegram Webhook boshqaruvi</p>
+                    </div>
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase text-sky-700 dark:text-sky-300">Bot Token Holati</span>
-                      <span className="px-3 py-1 bg-emerald-500 text-white font-extrabold text-[10px] rounded-full">FAOL (CONNECTED)</span>
+                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f0f9ff', border: '1px solid #bae6fd', marginBottom: '2rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#0369a1' }}>Bot Token Holati</span>
+                      <span style={{ padding: '0.25rem 0.75rem', background: '#16a34a', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
                     </div>
-                    <code className="block p-3 bg-white dark:bg-slate-950 rounded-xl border border-sky-100 text-xs font-mono text-slate-700 dark:text-slate-300 break-all">
+                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid #e0f2fe', fontSize: '0.85rem', fontFamily: 'monospace', color: '#0369a1', wordBreak: 'break-all' }}>
                       8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk
                     </code>
                   </div>
 
                   {/* Test Message Sender */}
-                  <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white">Test Xabarnoma Yuborish</h3>
-                    <div className="space-y-3 max-w-lg">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Telegram Chat ID</label>
-                        <input 
-                          type="text" 
-                          value={testTelegramId}
-                          onChange={e => setTestTelegramId(e.target.value)}
-                          placeholder="Masalan: 1036054073" 
-                          className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-semibold"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Xabar Matni</label>
-                        <textarea 
-                          rows={3}
-                          value={testMessage}
-                          onChange={e => setTestMessage(e.target.value)}
-                          className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-medium"
-                        />
-                      </div>
-                      <button 
-                        onClick={handleSendTestTelegram}
-                        disabled={sendingTest}
-                        className="px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold shadow-md transition-all flex items-center gap-2 text-sm"
-                      >
-                        <Send className="h-4 w-4" />
-                        {sendingTest ? 'Yuborilmoqda...' : 'Test Xabarini Yuborish'}
-                      </button>
+                  <div style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <h3 className={styles.sectionTitle} style={{ fontSize: '1rem' }}>Test Xabarnoma Yuborish</h3>
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Telegram Chat ID</label>
+                      <input 
+                        type="text" 
+                        value={testTelegramId}
+                        onChange={e => setTestTelegramId(e.target.value)}
+                        placeholder="Masalan: 1036054073" 
+                        className={styles.formInput}
+                      />
                     </div>
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Xabar Matni</label>
+                      <textarea 
+                        rows={3}
+                        value={testMessage}
+                        onChange={e => setTestMessage(e.target.value)}
+                        className={styles.formInput}
+                      />
+                    </div>
+                    <button 
+                      type="button"
+                      onClick={handleSendTestTelegram}
+                      disabled={sendingTest}
+                      className={styles.btnPrimary}
+                      style={{ background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)', width: 'fit-content' }}
+                    >
+                      <Send size={18} />
+                      {sendingTest ? 'Yuborilmoqda...' : 'Test Xabarini Yuborish'}
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* TAB 5: LOGIN & SECURITY */}
               {activeTab === 'security' && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Login & Xavfsizlik Qoidalari</h2>
-                  <p className="text-sm text-slate-500">Tizimga kirish xavfsizligi va 2FA OTP sozlamalari</p>
-                  
-                  <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                  <div className={styles.sectionHeader}>
                     <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white text-sm">Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
-                      <p className="text-xs text-slate-500 mt-1">Kirishda Telegram boti orqali tasdiqlash kodini yuborish</p>
+                      <h2 className={styles.sectionTitle}>Login & Xavfsizlik Qoidalari</h2>
+                      <p className={styles.sectionSub}>Tizimga kirish xavfsizligi va 2FA OTP sozlamalari</p>
                     </div>
-                    <input type="checkbox" className="h-6 w-6 rounded text-indigo-600" defaultChecked />
+                  </div>
+                  
+                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                      <h4 style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.95rem' }}>Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
+                      <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>Kirishda Telegram boti orqali tasdiqlash kodini yuborish</p>
+                    </div>
+                    <input type="checkbox" style={{ width: '20px', height: '20px' }} defaultChecked />
                   </div>
                 </div>
               )}
 
               {/* TAB 6: COMPANY & BRANCHES */}
               {activeTab === 'company' && (
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Kompaniya & Filiallar</h2>
-                  <div className="space-y-4 max-w-lg">
+                <div>
+                  <div className={styles.sectionHeader}>
                     <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Kompaniya Nomi</label>
-                      <input type="text" className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 font-bold" defaultValue="Nexo HR Enterprise" />
+                      <h2 className={styles.sectionTitle}>Kompaniya & Filiallar</h2>
+                      <p className={styles.sectionSub}>Tizim bo'yicha kompaniya ma'lumotlari</p>
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Asosiy Til</label>
-                      <select className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 font-bold">
+                  </div>
+                  <div className={styles.formGrid} style={{ maxWidth: '500px' }}>
+                    <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                      <label className={styles.formLabel}>Kompaniya Nomi</label>
+                      <input type="text" className={styles.formInput} defaultValue="Nexo HR Enterprise" />
+                    </div>
+                    <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                      <label className={styles.formLabel}>Asosiy Til</label>
+                      <select className={styles.formInput}>
                         <option value="uz">O'zbekcha (UZ)</option>
                         <option value="ru">Русский (RU)</option>
                       </select>
@@ -664,71 +673,67 @@ export function SettingsContent() {
         </div>
       </div>
 
-      {/* ENTERPRISE USER EDIT MODAL (Matching User Screenshot) */}
+      {/* ENTERPRISE USER EDIT MODAL */}
       {editingUser && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden max-h-[90vh] flex flex-col">
-            
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/40">
-              <h3 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-wider">
-                FOYDALANUVCHINI TAHRIRLASH (ENTERPRISE)
-              </h3>
-              <button onClick={() => setEditingUser(null)} className="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <X className="h-5 w-5" />
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalCard}>
+            <div className={styles.modalHeader}>
+              <span className={styles.modalTitle}>FOYDALANUVCHINI TAHRIRLASH (ENTERPRISE)</span>
+              <button type="button" onClick={() => setEditingUser(null)} className={styles.modalClose}>
+                <X size={20} />
               </button>
             </div>
-
-            <form onSubmit={handleSaveUserModal} className="p-6 overflow-y-auto space-y-6">
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">F.I.Sh (To'liq Ism-Sharifi) *</label>
+            <form onSubmit={handleSaveUserModal} className={styles.modalBody}>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>F.I.Sh (To'liq Ism-Sharifi) *</label>
                   <input 
                     type="text" 
                     value={editingUser.firstName}
                     onChange={e => setEditingUser({...editingUser, firstName: e.target.value})}
-                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" 
+                    className={styles.formInput} 
                   />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Elektron Pochta (Email) *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Elektron Pochta (Email) *</label>
                   <input 
                     type="email" 
                     value={editingUser.email}
                     onChange={e => setEditingUser({...editingUser, email: e.target.value})}
-                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" 
+                    className={styles.formInput} 
                   />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tizim Logini *</label>
-                  <input type="text" defaultValue={editingUser.email.split('@')[0]} className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" />
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Tizim Logini *</label>
+                  <input type="text" defaultValue={editingUser.email.split('@')[0]} className={styles.formInput} />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Xodim ID (Employee ID) *</label>
-                  <input type="text" defaultValue={editingUser.employeeId} className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" />
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Xodim ID (Employee ID) *</label>
+                  <input type="text" defaultValue={editingUser.employeeId} className={styles.formInput} />
                 </div>
               </div>
 
-              {/* Password Reset Action */}
-              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 flex items-center justify-between">
-                <span className="text-xs font-bold text-amber-800 dark:text-amber-300">Foydalanuvchi Parolini Yangilash</span>
+              {/* Password Reset Action inside modal */}
+              <div style={{ padding: '1.25rem', borderRadius: '16px', background: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#92400e' }}>Foydalanuvchi Parolini Yangilash</span>
                 <button 
                   type="button"
                   onClick={() => setResetPasswordUserId(editingUser.id)}
-                  className="px-4 py-2 bg-amber-500 text-white rounded-xl font-bold text-xs shadow-sm hover:bg-amber-600 transition-all flex items-center gap-1.5"
+                  className={styles.btnPrimary}
+                  style={{ background: '#d97706', padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}
                 >
-                  <Key className="h-3.5 w-3.5" />
+                  <Key size={16} />
                   Parolni tiklash (Reset)
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Bo'lim (RBAC)</label>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Bo'lim (RBAC)</label>
                   <select 
                     value={editingUser.department} 
                     onChange={e => setEditingUser({...editingUser, department: e.target.value})}
-                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold"
+                    className={styles.formInput}
                   >
                     <option value="Administration">Raqbariyat</option>
                     <option value="HR">HR Bo'limi</option>
@@ -736,21 +741,21 @@ export function SettingsContent() {
                     <option value="QC">Sifat Nazorati (QC)</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Lavozim (Position)</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Lavozim (Position)</label>
                   <input 
                     type="text" 
                     value={editingUser.position} 
                     onChange={e => setEditingUser({...editingUser, position: e.target.value})}
-                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" 
+                    className={styles.formInput} 
                   />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Huquq Roli (RBAC)</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Huquq Roli (RBAC)</label>
                   <select 
                     value={editingUser.role} 
                     onChange={e => setEditingUser({...editingUser, role: e.target.value})}
-                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold"
+                    className={styles.formInput}
                   >
                     <option value="ADMIN">ADMIN</option>
                     <option value="HR_MANAGER">HR MANAGER</option>
@@ -759,56 +764,48 @@ export function SettingsContent() {
                     <option value="EMPLOYEE">EMPLOYEE</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tizimda Holati (Status)</label>
-                  <select className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Tizimda Holati (Status)</label>
+                  <select className={styles.formInput}>
                     <option value="ACTIVE">Faol (Active)</option>
                     <option value="DISABLED">Bloklangan (Disabled)</option>
                   </select>
                 </div>
               </div>
 
-              {/* Telegram Integration Fields (Matching User Screenshot) */}
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Telegram Integratsiya Sozlamalari</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Telegram ID (Raqamli ID)</label>
+              {/* Telegram Integration */}
+              <div style={{ paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9' }}>
+                <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem' }}>Telegram Integratsiya Sozlamalari</h4>
+                <div className={styles.formGrid}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Telegram ID (Raqamli ID)</label>
                     <input 
                       type="text" 
-                      placeholder="Masalan: 1036054073" 
+                      placeholder="1036054073" 
                       value={editingUser.telegramId}
                       onChange={e => setEditingUser({...editingUser, telegramId: e.target.value})}
-                      className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" 
+                      className={styles.formInput} 
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Telegram Username (@belgisiz)</label>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Telegram Username (@belgisiz)</label>
                     <input 
                       type="text" 
                       placeholder="Adele_nn" 
                       value={editingUser.telegramUsername}
                       onChange={e => setEditingUser({...editingUser, telegramUsername: e.target.value})}
-                      className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold" 
+                      className={styles.formInput} 
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button 
-                  type="button" 
-                  onClick={() => setEditingUser(null)}
-                  className="px-5 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm"
-                >
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                <button type="button" onClick={() => setEditingUser(null)} className={styles.btnSecondary}>
                   Bekor Qilish
                 </button>
-                <button 
-                  type="submit" 
-                  disabled={loading}
-                  className="px-6 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm shadow-md hover:bg-indigo-700 flex items-center gap-2"
-                >
-                  <Save className="h-4 w-4" />
+                <button type="submit" disabled={loading} className={styles.btnPrimary}>
+                  <Save size={18} />
                   Ma'lumotlarni Saqlash
                 </button>
               </div>
@@ -819,39 +816,41 @@ export function SettingsContent() {
 
       {/* ADMIN RESET PASSWORD MODAL */}
       {resetPasswordUserId && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-md p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Key className="h-5 w-5 text-amber-500" />
-              Foydalanuvchi Parolini Tiklash
-            </h3>
-            <p className="text-xs text-slate-500">
-              Ushbu foydalanuvchi uchun yangi parol belgilang.
-            </p>
-            <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Yangi Parol *</label>
-              <input 
-                type="password" 
-                value={newPasswordInput}
-                onChange={e => setNewPasswordInput(e.target.value)}
-                placeholder="Kamida 6 ta belgi"
-                className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-semibold" 
-              />
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalCard} style={{ maxWidth: '450px' }}>
+            <div className={styles.modalHeader}>
+              <span className={styles.modalTitle}>Foydalanuvchi Parolini Tiklash</span>
+              <button type="button" onClick={() => setResetPasswordUserId(null)} className={styles.modalClose}>
+                <X size={20} />
+              </button>
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <button 
-                onClick={() => setResetPasswordUserId(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs"
-              >
-                Bekor Qilish
-              </button>
-              <button 
-                onClick={() => handleAdminResetPassword(resetPasswordUserId)}
-                disabled={loading}
-                className="px-5 py-2.5 rounded-xl bg-amber-500 text-white font-bold text-xs shadow-md hover:bg-amber-600"
-              >
-                {loading ? 'Saqlanmoqda...' : 'Parolni O\'zgartirish'}
-              </button>
+            <div className={styles.modalBody}>
+              <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Ushbu foydalanuvchi uchun yangi parol belgilang.</p>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Yangi Parol *</label>
+                <input 
+                  type="password" 
+                  value={newPasswordInput}
+                  onChange={e => setNewPasswordInput(e.target.value)}
+                  placeholder="Kamida 6 ta belgi"
+                  className={styles.formInput} 
+                />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
+                <button type="button" onClick={() => setResetPasswordUserId(null)} className={styles.btnSecondary}>
+                  Bekor Qilish
+                </button>
+
+                <button 
+                  type="button" 
+                  onClick={() => handleAdminResetPassword(resetPasswordUserId)} 
+                  disabled={loading} 
+                  className={styles.btnPrimary}
+                  style={{ background: '#d97706' }}
+                >
+                  {loading ? 'Saqlanmoqda...' : 'Parolni O\'zgartirish'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -859,32 +858,34 @@ export function SettingsContent() {
 
       {/* CREATE NEW USER MODAL */}
       {isAddUserOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-md p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Plus className="h-5 w-5 text-indigo-600" />
-              Yangi Foydalanuvchi Yaratish
-            </h3>
-            <form onSubmit={handleCreateUser} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Ism *</label>
-                <input name="firstName" required type="text" className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold" placeholder="Alisher" />
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalCard} style={{ maxWidth: '450px' }}>
+            <div className={styles.modalHeader}>
+              <span className={styles.modalTitle}>Yangi Foydalanuvchi Yaratish</span>
+              <button type="button" onClick={() => setIsAddUserOpen(false)} className={styles.modalClose}>
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleCreateUser} className={styles.modalBody}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Ism *</label>
+                <input name="firstName" required type="text" className={styles.formInput} placeholder="Alisher" />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Familiya *</label>
-                <input name="lastName" required type="text" className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold" placeholder="Valiyev" />
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Familiya *</label>
+                <input name="lastName" required type="text" className={styles.formInput} placeholder="Valiyev" />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email *</label>
-                <input name="email" required type="email" className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold" placeholder="alisher@nexo.hr" />
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Email *</label>
+                <input name="email" required type="email" className={styles.formInput} placeholder="alisher@nexo.hr" />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Boshlang'ich Parol *</label>
-                <input name="password" required type="password" className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold" placeholder="••••••••" />
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Boshlang'ich Parol *</label>
+                <input name="password" required type="password" className={styles.formInput} placeholder="••••••••" />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Rol</label>
-                <select name="role" className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold">
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Rol</label>
+                <select name="role" className={styles.formInput}>
                   <option value="HR_MANAGER">HR MANAGER</option>
                   <option value="ADMIN">ADMIN</option>
                   <option value="DIRECTOR">DIRECTOR</option>
@@ -893,19 +894,11 @@ export function SettingsContent() {
                 </select>
               </div>
 
-              <div className="flex justify-end gap-3 pt-2">
-                <button 
-                  type="button"
-                  onClick={() => setIsAddUserOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs"
-                >
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
+                <button type="button" onClick={() => setIsAddUserOpen(false)} className={styles.btnSecondary}>
                   Bekor Qilish
                 </button>
-                <button 
-                  type="submit"
-                  disabled={loading}
-                  className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-md hover:bg-indigo-700"
-                >
+                <button type="submit" disabled={loading} className={styles.btnPrimary}>
                   {loading ? 'Saqlanmoqda...' : 'Yaratish'}
                 </button>
               </div>

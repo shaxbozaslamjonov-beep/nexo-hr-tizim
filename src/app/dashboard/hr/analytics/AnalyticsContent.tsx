@@ -127,38 +127,40 @@ export function AnalyticsContent() {
   }
 
   return (
-    <div className="p-4 sm:p-8 space-y-10 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
+    <div className="space-y-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
-      {/* Polished Header & Toolbar Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm relative overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
+      {/* Deep Navy Hero Banner matching HR Dashboard */}
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-[#0d1b3d] via-[#1f3480] to-[#2e4ba8] p-8 lg:p-10 text-white shadow-xl">
+        <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
         
-        <div className="relative z-10 flex items-center gap-4">
-          <div className="p-3 bg-primary/10 rounded-xl text-primary">
-            <Sparkles className="h-6 w-6" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {t('analytics.title')}
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[11px] font-black uppercase tracking-widest text-blue-200">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+              ANALYTICS ENGINE V2.0
+            </div>
+            <h1 className="text-3xl lg:text-4xl font-black tracking-tight text-white">
+              {t('analytics.title') || 'Аналитика найма'}
             </h1>
-            <p className="text-sm text-slate-500 mt-1 font-medium">
-              {t('analytics.description')}
+            <p className="text-sm lg:text-base text-blue-100/80 font-medium max-w-2xl">
+              {t('analytics.description') || 'Отслеживайте воронку рекрутинга, вакансии и динамику команды в реальном времени.'}
             </p>
           </div>
-        </div>
 
-        <div className="relative z-10 w-full lg:w-auto">
-          <AnalyticsToolbar 
-            onEditTimeRange={(range) => setTimeRange(range)}
-            onEditPreferences={() => setIsEditModalOpen(true)} 
-          />
+          <div className="relative z-10 w-full lg:w-auto bg-white/10 backdrop-blur-xl p-2 rounded-2xl border border-white/20">
+            <AnalyticsToolbar 
+              onEditTimeRange={(range) => setTimeRange(range)}
+              onEditPreferences={() => setIsEditModalOpen(true)} 
+            />
+          </div>
         </div>
       </div>
 
-      {/* Modern Insights Section - Elevated with wider gap */}
+      {/* Modern Insights Section - Elevated */}
       <div className="transition-all duration-700 delay-200">
         <AnalyticsInsights data={insightsData} />
       </div>
+
 
       {/* Top row stats cards - Ultra Premium */}
       <div className="transition-all duration-700 delay-300">
