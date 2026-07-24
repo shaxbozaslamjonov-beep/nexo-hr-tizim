@@ -20,9 +20,8 @@ export async function GET() {
         email: true,
         role: true,
         createdAt: true,
-        telegramChatId: true,
-        telegramUsername: true,
         employeeProfile: {
+
           select: {
             id: true,
             firstName: true,

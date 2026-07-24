@@ -55,13 +55,12 @@ export async function PATCH(
         id: true,
         email: true,
         role: true,
-        telegramChatId: true,
-        telegramUsername: true,
         employeeProfile: true,
       }
     });
 
     return NextResponse.json({ user: updatedUser, message: 'Foydalanuvchi ma\'lumotlari yangilandi' });
+
   } catch (error: any) {
     console.error('[Admin User PATCH Error]', error);
     return NextResponse.json({ error: 'Foydalanuvchini tahrirlashda xatolik' }, { status: 500 });
