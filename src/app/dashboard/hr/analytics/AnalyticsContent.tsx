@@ -23,6 +23,8 @@ import { CandidateSkillsChart } from '@/components/analytics/CandidateSkillsChar
 import { VacancyStatusChart } from '@/components/analytics/VacancyStatusChart';
 import { AnalyticsToolbar } from '@/components/analytics/AnalyticsToolbar';
 
+import dashStyles from '../dashboard.module.css';
+
 const DEFAULT_PREFERENCES: AnalyticsPreferences = {
   targets: {
     candidatesTarget: 150,
@@ -128,10 +130,11 @@ export function AnalyticsContent() {
 
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
+
       
       {/* Deep Navy Hero Banner matching HR Dashboard */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-[#0d1b3d] via-[#1f3480] to-[#2e4ba8] p-8 lg:p-10 text-white shadow-xl">
-        <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
+      <div className={dashStyles.welcomeSection} style={{ marginBottom: 0 }}>
+        <div className={dashStyles.welcomeBg} />
         
         <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
           <div className="space-y-2">
@@ -139,10 +142,10 @@ export function AnalyticsContent() {
               <Sparkles className="h-3.5 w-3.5 text-amber-400" />
               ANALYTICS ENGINE V2.0
             </div>
-            <h1 className="text-3xl lg:text-4xl font-black tracking-tight text-white">
+            <h1 className={dashStyles.welcomeTitle}>
               {t('analytics.title') || 'Аналитика найма'}
             </h1>
-            <p className="text-sm lg:text-base text-blue-100/80 font-medium max-w-2xl">
+            <p className={dashStyles.welcomeText}>
               {t('analytics.description') || 'Отслеживайте воронку рекрутинга, вакансии и динамику команды в реальном времени.'}
             </p>
           </div>
@@ -155,6 +158,7 @@ export function AnalyticsContent() {
           </div>
         </div>
       </div>
+
 
       {/* Modern Insights Section - Elevated */}
       <div className="transition-all duration-700 delay-200">

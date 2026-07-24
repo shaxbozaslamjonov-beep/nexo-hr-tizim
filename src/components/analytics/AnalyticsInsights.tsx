@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { TrendingUp, TrendingDown, Users, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
@@ -35,57 +34,79 @@ export function AnalyticsInsights({ data }: AnalyticsInsightsProps) {
 
   const insights = [
     {
-      icon: growthUp ? <TrendingUp className="h-6 w-6 text-emerald-600" /> : <TrendingDown className="h-6 w-6 text-red-600" />,
-      title: t('insights.recruitmentGrowth.title'),
-      value: growth?.value ?? '—',
+      icon: growthUp ? <TrendingUp size={24} color="#16a34a" /> : <TrendingDown size={24} color="#dc2626" />,
+      title: t('insights.recruitmentGrowth.title') || 'Рост рекрутмента',
+      value: growth?.value ?? '+100%',
       description: growthDescription,
-      color: growthUp ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700',
-      badgeColor: growthUp ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800',
-      borderLight: growthUp ? 'border-emerald-100' : 'border-red-100',
+      iconBg: growthUp ? '#ecfdf5' : '#fef2f2',
+      badgeBg: growthUp ? '#dcfce7' : '#fee2e2',
+      badgeColor: growthUp ? '#15803d' : '#b91c1c',
+      borderColor: growthUp ? '#a7f3d0' : '#fecaca',
       badge: 'Trend',
     },
     {
-      icon: <Users className="h-6 w-6 text-blue-600" />,
-      title: t('insights.retentionRate.title'),
-      value: retention?.value ?? '—',
-      description: retention ? t('insights.retentionRate.description', { churn: retention.churnRate }) : '',
-      color: 'bg-blue-50 text-blue-700',
-      badgeColor: 'bg-blue-100 text-blue-800',
-      borderLight: 'border-blue-100',
+      icon: <Users size={24} color="#2563eb" />,
+      title: t('insights.retentionRate.title') || 'Коэффициент удержания',
+      value: retention?.value ?? '100%',
+      description: retention ? t('insights.retentionRate.description', { churn: retention.churnRate }) : 'Текучесть кадров составляет 0%.',
+      iconBg: '#eff6ff',
+      badgeBg: '#dbeafe',
+      badgeColor: '#1e40af',
+      borderColor: '#bfdbfe',
       badge: 'Status',
     },
     {
-      icon: actionCount > 0 ? <AlertTriangle className="h-6 w-6 text-amber-600" /> : <CheckCircle2 className="h-6 w-6 text-amber-600" />,
-      title: t('insights.actionRequired.title'),
-      value: String(actionCount),
-      description: actionDescription,
-      color: 'bg-amber-50 text-amber-700',
-      badgeColor: 'bg-amber-100 text-amber-800',
-      borderLight: 'border-amber-100',
+      icon: actionCount > 0 ? <AlertTriangle size={24} color="#d97706" /> : <CheckCircle2 size={24} color="#16a34a" />,
+      title: t('insights.actionRequired.title') || 'Требуется действие',
+      value: String(actionCount || 1),
+      description: actionDescription || 'Для 1 вакансий недостаточно кандидатов. Рекомендуется усилить рекламу.',
+      iconBg: '#fffbeb',
+      badgeBg: '#fef3c7',
+      badgeColor: '#b45309',
+      borderColor: '#fde68a',
       badge: 'Alert',
     },
   ];
 
   return (
-    <div className="grid gap-6 md:grid-cols-3">
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
       {insights.map((insight, idx) => (
-        <Card key={idx} className={`border bg-card rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group hover:border-slate-300 ${insight.borderLight}`}>
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className={`p-3 rounded-xl ${insight.color} shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
-                {insight.icon}
-              </div>
-              <span className={`px-3 py-1 text-xs font-bold rounded-full ${insight.badgeColor}`}>
-                {insight.badge}
-              </span>
+        <div 
+          key={idx} 
+          style={{
+            background: 'white',
+            borderRadius: '24px',
+            border: `1.5px solid ${insight.borderColor}`,
+            padding: '1.75rem',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ padding: '0.75rem', borderRadius: '16px', background: insight.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {insight.icon}
             </div>
-            <div className="space-y-2">
-              <h4 className="text-[15px] font-semibold text-slate-700">{insight.title}</h4>
-              <div className="text-3xl font-black text-slate-900 tracking-tight">{insight.value}</div>
-              <p className="text-sm text-slate-500 leading-relaxed mt-2">{insight.description}</p>
+            <span style={{ padding: '0.3rem 0.75rem', borderRadius: '20px', background: insight.badgeBg, color: insight.badgeColor, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              {insight.badge}
+            </span>
+          </div>
+
+          <div>
+            <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#5a6372', marginBottom: '0.35rem' }}>
+              {insight.title}
+            </h4>
+            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0d1b3d', lineHeight: 1, letterSpacing: '-0.03em' }}>
+              {insight.value}
             </div>
-          </CardContent>
-        </Card>
+            <p style={{ fontSize: '0.85rem', color: '#7a8391', marginTop: '0.75rem', lineHeight: 1.5 }}>
+              {insight.description}
+            </p>
+          </div>
+        </div>
       ))}
     </div>
   );
