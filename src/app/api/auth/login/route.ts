@@ -64,8 +64,13 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error?.message?.includes('DATABASE') || error?.message?.includes('Prisma') 
+        ? 'Ma\'lumotlar bazasiga ulanishda xatolik (DATABASE_URL ni Vercel-da tekshiring)' 
+        : (error.message || 'Internal server error') 
+    }, { status: 500 });
   }
 }
+
