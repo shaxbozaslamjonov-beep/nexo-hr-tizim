@@ -30,6 +30,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  telegramChatId   String? @unique
+  telegramUsername String?
+  telegramLinkedAt DateTime?
+
   candidateProfile CandidateProfile?
   employeeProfile  EmployeeProfile?
   probationsEvaluated ProbationEvaluation[]
