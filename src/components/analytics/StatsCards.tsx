@@ -95,10 +95,10 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
 
                 <div className="space-y-1">
                   <div className="flex items-baseline gap-2">
-                    <h3 className="text-4xl font-black tracking-tighter text-slate-900 leading-none">{card.value}</h3>
+                    <h3 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white leading-none">{card.value}</h3>
                   </div>
                   <div className="flex items-center justify-between mt-1">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">{card.title}</p>
+                    <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{card.title}</p>
                     <ArrowRight className="h-5 w-5 text-slate-400 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
                   </div>
                 </div>

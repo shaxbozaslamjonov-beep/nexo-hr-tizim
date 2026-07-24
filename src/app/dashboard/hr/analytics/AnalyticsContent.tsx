@@ -165,58 +165,92 @@ export function AnalyticsContent() {
         <StatsCards stats={stats} targets={preferences.targets} trends={trends} />
       </div>
 
-      {/* Candidates Overview Table/Metrics */}
+      {/* Candidates Overview Table/Metrics - Fixed spacing & rich cards */}
       <div className="transition-all duration-700 delay-400">
-        <Card className="border-none shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-2xl">
-          <div className="p-6 border-b border-slate-100 dark:border-slate-800">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Users className="h-5 w-5 text-indigo-500" />
+        <Card className="border border-slate-200/80 dark:border-slate-800 shadow-md overflow-hidden bg-white dark:bg-slate-900 rounded-3xl">
+          <div className="p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <div className="p-2 bg-indigo-50 dark:bg-indigo-950/50 rounded-xl text-indigo-600 dark:text-indigo-400">
+                <Users className="h-5 w-5" />
+              </div>
               {t('metricsTitle') || "Nomzodlar statistikasi"}
             </h3>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Jonli ma'lumotlar</span>
           </div>
-          <div className="p-0">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-800">
-              <div className="p-6 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.totalCandidates')}</p>
-                <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">{stats.candidates}</h4>
+
+          <div className="p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Stat 1: Total Candidates */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4 hover:border-indigo-200 transition-all">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider leading-relaxed">
+                  {t('analytics.stats.totalCandidates') || 'Всего кандидатов'}
+                </p>
+                <div className="flex items-baseline justify-between gap-2 pt-2">
+                  <h4 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                    {stats.candidates}
+                  </h4>
                   {trends.candidates != null && (
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${trends.candidates >= 0 ? 'text-emerald-600 bg-emerald-50' : 'text-red-600 bg-red-50'}`}>
+                    <span className={`text-xs font-extrabold px-2.5 py-1 rounded-full flex items-center gap-1 ${trends.candidates >= 0 ? 'text-emerald-700 bg-emerald-100/80 dark:bg-emerald-950 dark:text-emerald-400' : 'text-red-700 bg-red-100/80 dark:bg-red-950 dark:text-red-400'}`}>
                       {trends.candidates >= 0 ? '+' : ''}{trends.candidates}%
                     </span>
                   )}
                 </div>
               </div>
-              <div className="p-6 flex flex-col justify-center bg-white hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.avgTime')}</p>
-                <div className="flex items-baseline gap-2">
+
+              {/* Stat 2: Avg Time to Fill */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4 hover:border-indigo-200 transition-all">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider leading-relaxed">
+                  {t('analytics.stats.avgTime') || 'Среднее время закрытия'}
+                </p>
+                <div className="flex items-baseline justify-between gap-2 pt-2">
                   {extra.avgDaysToFill != null ? (
-                    <h4 className="text-3xl font-black text-slate-900">{extra.avgDaysToFill}<span className="text-lg text-slate-400 font-semibold ml-1">{t('analytics.stats.days')}</span></h4>
+                    <h4 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none flex items-baseline gap-1">
+                      {extra.avgDaysToFill}
+                      <span className="text-sm text-slate-400 font-bold">{t('analytics.stats.days') || 'дней'}</span>
+                    </h4>
                   ) : (
-                    <h4 className="text-lg font-semibold text-slate-400">{t('analytics.stats.noData')}</h4>
+                    <h4 className="text-base font-bold text-slate-400 italic">
+                      {t('analytics.stats.noData') || 'Нет данных'}
+                    </h4>
                   )}
                 </div>
               </div>
-              <div className="p-6 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.offerAcceptance')}</p>
-                <div className="flex items-baseline gap-2">
+
+              {/* Stat 3: Offer Acceptance Rate */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4 hover:border-indigo-200 transition-all">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider leading-relaxed">
+                  {t('analytics.stats.offerAcceptance') || 'Принятие офферов'}
+                </p>
+                <div className="flex items-baseline justify-between gap-2 pt-2">
                   {extra.offerAcceptanceRate != null ? (
-                    <h4 className="text-3xl font-black text-slate-900">{extra.offerAcceptanceRate}%</h4>
+                    <h4 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                      {extra.offerAcceptanceRate}%
+                    </h4>
                   ) : (
-                    <h4 className="text-lg font-semibold text-slate-400">{t('analytics.stats.noData')}</h4>
+                    <h4 className="text-base font-bold text-slate-400 italic">
+                      {t('analytics.stats.noData') || 'Нет данных'}
+                    </h4>
                   )}
                 </div>
               </div>
-              <div className="p-6 flex flex-col justify-center bg-white hover:bg-slate-50 transition-colors">
-                <p className="text-sm font-medium text-slate-500 mb-1">{t('analytics.stats.positionsFilled')}</p>
-                <div className="flex items-baseline gap-2">
-                  <h4 className="text-3xl font-black text-slate-900">{extra.positionsFilled}<span className="text-lg text-slate-400 font-semibold ml-1">/{extra.positionsTotal}</span></h4>
+
+              {/* Stat 4: Positions Filled */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4 hover:border-indigo-200 transition-all">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider leading-relaxed">
+                  {t('analytics.stats.positionsFilled') || 'Закрытые позиции'}
+                </p>
+                <div className="flex items-baseline justify-between gap-2 pt-2">
+                  <h4 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none flex items-baseline">
+                    {extra.positionsFilled}
+                    <span className="text-xl text-slate-400 font-bold ml-1">/{extra.positionsTotal}</span>
+                  </h4>
                 </div>
               </div>
             </div>
           </div>
         </Card>
       </div>
+
 
       {/* Main Charts Grid - Rich Hierarchy */}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
