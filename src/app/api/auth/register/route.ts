@@ -8,11 +8,15 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, password, firstName, lastName, role } = body;
+    const { email, password, firstName, lastName, role, phone, telegramUsername } = body;
 
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !firstName || !lastName || !phone) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
+
+    const normalizedTelegramUsername = telegramUsername
+      ? String(telegramUsername).trim().replace(/^@/, '') || null
+      : null;
 
     const existingUser = await prisma.user.findUnique({
       where: { email }
@@ -32,10 +36,13 @@ export async function POST(request: Request) {
         password: hashedPassword,
         role: userRole,
         companyId,
+        phone,
+        telegramUsername: normalizedTelegramUsername,
         candidateProfile: userRole === 'CANDIDATE' ? {
           create: {
             firstName,
             lastName,
+            phone,
           }
         } : undefined,
         employeeProfile: userRole !== 'CANDIDATE' ? {

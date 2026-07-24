@@ -13,6 +13,8 @@ export default function RegisterPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [telegramUsername, setTelegramUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -25,9 +27,9 @@ export default function RegisterPage() {
       setError('Passwords do not match');
       return;
     }
-    
+
     try {
-      await register(firstName, lastName, email, password);
+      await register(firstName, lastName, email, password, phone, telegramUsername);
     } catch (err: any) {
       setError(err.message);
     }
@@ -82,6 +84,31 @@ export default function RegisterPage() {
               className={styles.input}
               placeholder="john.doe@company.com"
               required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="phone" className={styles.label}>Telefon raqami</label>
+            <input
+              id="phone"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className={styles.input}
+              placeholder="+998 90 123 45 67"
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="telegramUsername" className={styles.label}>Telegram username (ixtiyoriy)</label>
+            <input
+              id="telegramUsername"
+              type="text"
+              value={telegramUsername}
+              onChange={(e) => setTelegramUsername(e.target.value)}
+              className={styles.input}
+              placeholder="username (@ belgisiz)"
             />
           </div>
 

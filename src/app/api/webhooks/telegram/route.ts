@@ -4,11 +4,16 @@ import {
   getTelegramMainKeyboard,
   getWelcomeInlineKeyboard,
   getFAQInlineKeyboard,
+  getAiPromptInlineKeyboard,
   setTelegramCommands,
-  setTelegramWebhook
+  setTelegramWebhook,
+  tryAutoLinkByUsername
 } from '@/lib/telegram';
 import prisma from '@/lib/prisma';
 import { getDefaultCompanyId } from '@/lib/company';
+import { can } from '@/lib/rbac';
+import { buildHrSnapshot } from '@/lib/ai/context';
+import { askDeepSeek } from '@/lib/ai/deepseek';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,11 +25,24 @@ const APP_BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://nexo-hr-tizim.v
 async function resolveCompanyForChat(chatId: string | number) {
   const linkedUser = await prisma.user.findUnique({
     where: { telegramChatId: String(chatId) },
-    select: { companyId: true, role: true, email: true, employeeProfile: { select: { firstName: true, lastName: true } } },
+    select: {
+      id: true,
+      companyId: true,
+      role: true,
+      email: true,
+      telegramAiMode: true,
+      employeeProfile: { select: { firstName: true, lastName: true } },
+    },
   });
   if (linkedUser) return { companyId: linkedUser.companyId, user: linkedUser };
   return { companyId: await getDefaultCompanyId(), user: null };
 }
+
+const PERMISSION_DENIED_TEXT = `
+🔒 <b>Ruxsat yo'q</b>
+
+Ushbu bo'lim faqat tegishli huquqqa ega foydalanuvchilar uchun ochiq. Agar bu xato deb hisoblasangiz, tizim administratoriga murojaat qiling.
+`.trim();
 
 export async function POST(request: Request) {
   try {
@@ -105,6 +123,16 @@ Agar parolingizni unutgan bo'lsangiz, login sahifasidagi <i>"Parolni unutdingizm
           `.trim(),
           replyMarkup: getFAQInlineKeyboard()
         });
+      } else if (data === 'ai_cancel') {
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (linkedUser) {
+          await prisma.user.update({ where: { id: linkedUser.id }, data: { telegramAiMode: false } });
+        }
+        await sendTelegramMessage({
+          chatId,
+          text: '❌ AI Yordamchi bekor qilindi.',
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
+        });
       } else if (data === 'support_contact') {
         await sendTelegramMessage({
           chatId,
@@ -126,12 +154,61 @@ Savollaringiz yoki takliflaringiz bo'lsa:
       const chatId = body.message.chat.id;
       const text = (body.message.text || '').trim();
       const firstName = body.message.from?.first_name || 'Foydalanuvchi';
+      const username = body.message.from?.username as string | undefined;
+
+      // Registration-time linking: if this chat's @username matches a
+      // not-yet-linked account (from the "Telegram username" field on
+      // /register), connect it now and notify the user automatically.
+      await tryAutoLinkByUsername(chatId, username);
+
+      // If this chat is mid-conversation with the AI Yordamchi, treat any
+      // non-slash text as the question rather than matching menu buttons.
+      if (!text.startsWith('/')) {
+        const { user: awaitingUser, companyId: awaitingCompanyId } = await resolveCompanyForChat(chatId);
+        if (awaitingUser?.telegramAiMode) {
+          await prisma.user.update({ where: { id: awaitingUser.id }, data: { telegramAiMode: false } });
+
+          if (!can(awaitingUser, 'use_ai_assistant')) {
+            await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(awaitingUser.role) });
+            return NextResponse.json({ ok: true });
+          }
+
+          try {
+            const snapshot = await buildHrSnapshot(awaitingCompanyId);
+            const answer = await askDeepSeek([
+              {
+                role: 'system',
+                content:
+                  'Sen Nexo HR platformasining ichki AI yordamchisisan. Faqat quyida berilgan haqiqiy ma\'lumotlar asosida javob ber. ' +
+                  'Agar javob berish uchun ma\'lumot yetarli bo\'lmasa, buni ochiq ayt, hech narsani o\'ylab topma. Qisqa va aniq javob ber.\n\n' +
+                  `Joriy HR ma'lumotlari:\n${snapshot}`,
+              },
+              { role: 'user', content: text },
+            ]);
+
+            await sendTelegramMessage({
+              chatId,
+              text: `🤖 <b>AI Yordamchi:</b>\n\n${answer}`,
+              replyMarkup: getTelegramMainKeyboard(awaitingUser.role)
+            });
+          } catch (err: any) {
+            await sendTelegramMessage({
+              chatId,
+              text: `⚠️ AI Yordamchi javob bera olmadi: ${err.message || 'noma\'lum xatolik'}`,
+              replyMarkup: getTelegramMainKeyboard(awaitingUser.role)
+            });
+          }
+          return NextResponse.json({ ok: true });
+        }
+      }
 
       if (text.startsWith('/start')) {
         const { user: linkedUser } = await resolveCompanyForChat(chatId);
         const linkedName = linkedUser?.employeeProfile
           ? `${linkedUser.employeeProfile.firstName} ${linkedUser.employeeProfile.lastName}`
           : linkedUser?.email;
+
+        await setTelegramCommands({ chatId, includeAi: can(linkedUser, 'use_ai_assistant') });
 
         const replyText = linkedUser
           ? `
@@ -159,7 +236,7 @@ Ushbu bot orqali siz:
         await sendTelegramMessage({
           chatId,
           text: replyText,
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
 
         // Also send inline web app button
@@ -169,8 +246,37 @@ Ushbu bot orqali siz:
           replyMarkup: getWelcomeInlineKeyboard()
         });
       }
+      else if (text.startsWith('/ai') || text === '🤖 AI Yordamchi') {
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (!can(linkedUser, 'use_ai_assistant')) {
+          await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(linkedUser?.role) });
+        } else {
+          await prisma.user.update({ where: { id: linkedUser!.id }, data: { telegramAiMode: true } });
+          await sendTelegramMessage({
+            chatId,
+            text: `
+<b>🤖 AI Yordamchi</b>
+
+Menga tabiiy tilda savol bering — tizimning jonli ma'lumotlari (vakansiyalar, nomzodlar, arizalar, KPI, vazifalar) asosida javob beraman.
+
+<b>Masalan:</b>
+• Bugun qancha yangi ariza tushdi?
+• Qaysi vakansiyalar hali ochiq?
+• 7 kundan ortiq harakatsiz qolgan arizalar bormi?
+• Bajarilmagan vazifalar qaysilar?
+
+Savolingizni shu yerga yozing 👇
+            `.trim(),
+            replyMarkup: getAiPromptInlineKeyboard()
+          });
+        }
+      }
       else if (text.startsWith('/dashboard') || text === '📊 Dashboard va Hisobot') {
-        const { companyId } = await resolveCompanyForChat(chatId);
+        const { companyId, user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (!can(linkedUser, 'view_hr_dashboard')) {
+          await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(linkedUser?.role) });
+          return NextResponse.json({ ok: true });
+        }
         const [candidatesCount, openVacancies, closedVacancies, totalVacancies] = await Promise.all([
           prisma.candidateProfile.count({ where: { user: { companyId } } }),
           prisma.vacancy.count({ where: { companyId, status: 'OPEN' } }),
@@ -190,11 +296,15 @@ Ushbu bot orqali siz:
 🌐 To'liq jonli grafiklarni ko'rish uchun Web App ga o'ting:
 ${APP_BASE_URL}/dashboard/hr/analytics
           `.trim(),
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
       }
       else if (text.startsWith('/candidates') || text.startsWith('/vacancies') || text === '💼 Nomzodlar va Vakansiyalar') {
-        const { companyId } = await resolveCompanyForChat(chatId);
+        const { companyId, user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (!can(linkedUser, 'manage_vacancies') && !can(linkedUser, 'manage_candidates')) {
+          await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(linkedUser?.role) });
+          return NextResponse.json({ ok: true });
+        }
         const vacancies = await prisma.vacancy.findMany({
           where: { companyId, status: 'OPEN' },
           select: { title: true, _count: { select: { applications: true } } },
@@ -216,11 +326,15 @@ ${list}
 📋 Nomzodlar rezyumelarini ko'rish va suhbat belgilash:
 ${APP_BASE_URL}/dashboard/hr/candidates
           `.trim(),
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
       }
       else if (text.startsWith('/employees') || text === '👥 Xodimlar Boshqaruvi') {
-        const { companyId } = await resolveCompanyForChat(chatId);
+        const { companyId, user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (!can(linkedUser, 'manage_employees')) {
+          await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(linkedUser?.role) });
+          return NextResponse.json({ ok: true });
+        }
         const [admins, hrManagers, employees, onboarding] = await Promise.all([
           prisma.user.count({ where: { companyId, role: 'ADMIN' } }),
           prisma.user.count({ where: { companyId, role: 'HR_MANAGER' } }),
@@ -241,10 +355,15 @@ ${APP_BASE_URL}/dashboard/hr/candidates
 👥 Xodimlar ro'yxati va rollarni sozlash:
 ${APP_BASE_URL}/dashboard/hr/employees
           `.trim(),
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
       }
       else if (text === '📅 Davomat va KPI') {
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        if (!can(linkedUser, 'view_analytics')) {
+          await sendTelegramMessage({ chatId, text: PERMISSION_DENIED_TEXT, replyMarkup: getTelegramMainKeyboard(linkedUser?.role) });
+          return NextResponse.json({ ok: true });
+        }
         await sendTelegramMessage({
           chatId,
           text: `
@@ -253,7 +372,21 @@ ${APP_BASE_URL}/dashboard/hr/employees
 To'liq davomat va KPI jadvalini Web App orqali ko'ring:
 ${APP_BASE_URL}/dashboard/hr/kpi
           `.trim(),
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
+        });
+      }
+      else if (text === '👤 Mening Profilim') {
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        const profilePath = can(linkedUser, 'view_candidate_dashboard') ? '/dashboard/candidate' : '/dashboard/employee';
+        await sendTelegramMessage({
+          chatId,
+          text: `
+<b>👤 Mening Profilim</b>
+
+To'liq profilingiz, KPI va vazifalaringizni Web App orqali ko'ring:
+${APP_BASE_URL}${profilePath}
+          `.trim(),
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
       }
       else if (text.startsWith('/faq') || text === '❓ FAQ / Savol-Javoblar') {
@@ -268,6 +401,8 @@ Iltimos, o'zingizni qiziqtirgan savol tugmasini bosing:
         });
       }
       else if (text.startsWith('/help')) {
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        const aiLine = can(linkedUser, 'use_ai_assistant') ? '• <code>/ai</code> — AI Yordamchi\n' : '';
         await sendTelegramMessage({
           chatId,
           text: `
@@ -279,7 +414,7 @@ Yordam uchun buyruqlar ro'yxati:
 • <code>/candidates</code> — Nomzodlar
 • <code>/vacancies</code> — Vakansiyalar
 • <code>/employees</code> — Xodimlar
-• <code>/faq</code> — Savol-javoblar
+${aiLine}• <code>/faq</code> — Savol-javoblar
 
 📧 Administrator bilan bog'lanish: <code>admin@nexo.hr</code>
           `.trim(),
@@ -288,12 +423,13 @@ Yordam uchun buyruqlar ro'yxati:
       }
       else {
         // Fallback default message
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
         await sendTelegramMessage({
           chatId,
           text: `
 Sizning xabaringiz qabul qilindi! Quyidagi menyu tugmalaridan foydalaning yoki <code>/help</code> yuboring.
           `.trim(),
-          replyMarkup: getTelegramMainKeyboard()
+          replyMarkup: getTelegramMainKeyboard(linkedUser?.role)
         });
       }
     }

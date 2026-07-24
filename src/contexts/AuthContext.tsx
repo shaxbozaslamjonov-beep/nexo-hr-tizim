@@ -8,7 +8,7 @@ import { useToast } from './ToastContext';
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (firstName: string, lastName: string, email: string, password: string) => Promise<void>;
+  register: (firstName: string, lastName: string, email: string, password: string, phone?: string, telegramUsername?: string) => Promise<void>;
   logout: () => void;
   isAdmin: boolean;
   isLoading: boolean;
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(false);
   };
 
-  const register = async (firstName: string, lastName: string, email: string, password: string) => {
+  const register = async (firstName: string, lastName: string, email: string, password: string, phone?: string, telegramUsername?: string) => {
     setIsLoading(true);
     try {
       const response = await fetch('/api/auth/register', {
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password, phone, telegramUsername }),
       });
 
       const data = await response.json();

@@ -31,9 +31,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  phone            String?
   telegramChatId   String? @unique
   telegramUsername String?
   telegramLinkedAt DateTime?
+  telegramAiMode   Boolean @default(false)
 
   candidateProfile CandidateProfile?
   employeeProfile  EmployeeProfile?

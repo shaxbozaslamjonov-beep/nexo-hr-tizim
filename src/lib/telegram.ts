@@ -1,3 +1,5 @@
+import { can } from './rbac';
+
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk';
 const TELEGRAM_API_BASE = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
 const APP_BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://nexo-hr-tizim.vercel.app';
@@ -67,15 +69,57 @@ export async function notifyCompanyRoles(
 }
 
 /**
- * Register bot commands menu with Telegram API (/setMyCommands)
+ * Auto-links an incoming chat to a User account by matching the Telegram
+ * @username they registered with (case-insensitive). Only links accounts
+ * that aren't already connected to a chat. On success, sends the user a
+ * confirmation notification via the bot — this is the "avtomatik
+ * bildirishnoma" promised at registration time when a telegram username
+ * was provided (a chat_id can't be resolved from a bare username via the
+ * Bot API until the user actually messages the bot, so linking happens
+ * lazily on their first interaction rather than at registration).
  */
-export async function setTelegramCommands() {
+export async function tryAutoLinkByUsername(
+  chatId: string | number,
+  username: string | undefined | null
+): Promise<boolean> {
+  if (!username) return false;
+  const prisma = (await import('./prisma')).default;
+
+  const candidate = await prisma.user.findFirst({
+    where: {
+      telegramChatId: null,
+      telegramUsername: { equals: username, mode: 'insensitive' },
+    },
+  });
+  if (!candidate) return false;
+
+  await prisma.user.update({
+    where: { id: candidate.id },
+    data: { telegramChatId: String(chatId), telegramLinkedAt: new Date() },
+  });
+
+  await sendTelegramMessage({
+    chatId,
+    text: `✅ <b>Akkauntingiz avtomatik ulandi!</b>\n\nRo'yxatdan o'tishda kiritgan Telegram username'ingiz orqali aniqlandik. Endi Nexo HR'dagi muhim yangiliklar (yangi arizalar, suhbatlar va h.k.) shu chatga keladi.`,
+  });
+
+  return true;
+}
+
+/**
+ * Register bot commands menu with Telegram API (/setMyCommands).
+ * When `scope` is provided the command list is set only for that chat
+ * (so admins see `/ai` in their menu while regular users don't); with
+ * no scope it sets the global default shown to unlinked/new chats.
+ */
+export async function setTelegramCommands(scope?: { chatId: string | number; includeAi: boolean }) {
   const commands = [
     { command: 'start', description: '🚀 Tizimni ishga tushirish & Bosh menyu' },
     { command: 'dashboard', description: '📊 HR Dashboard & Analitika' },
     { command: 'candidates', description: '💼 Nomzodlar & Otkliklar' },
     { command: 'vacancies', description: '📋 Vakansiyalar ro\'yxati' },
     { command: 'employees', description: '👥 Xodimlar boshqaruvi' },
+    ...(scope?.includeAi ? [{ command: 'ai', description: '🤖 AI Yordamchi' }] : []),
     { command: 'faq', description: '❓ FAQ / Ko\'p beriladigan savollar' },
     { command: 'help', description: 'ℹ️ Yordam va Qo\'llab-quvvatlash' },
   ];
@@ -84,7 +128,10 @@ export async function setTelegramCommands() {
     const res = await fetch(`${TELEGRAM_API_BASE}/setMyCommands`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ commands }),
+      body: JSON.stringify({
+        commands,
+        scope: scope ? { type: 'chat', chat_id: scope.chatId } : undefined,
+      }),
     });
     return await res.json();
   } catch (error: any) {
@@ -93,26 +140,58 @@ export async function setTelegramCommands() {
 }
 
 /**
- * Main Persistent Keyboard Layout (Reply Keyboard)
+ * Main Persistent Keyboard Layout (Reply Keyboard).
+ * Buttons are gated per-role via rbac.ts `can()` so admins/HR/directors see
+ * management tools and the AI Yordamchi button, while employees/candidates
+ * (or unlinked chats) see a reduced, self-service menu.
  */
-export function getTelegramMainKeyboard() {
+export function getTelegramMainKeyboard(role?: string | null) {
+  const rows: any[][] = [];
+
+  if (can(role, 'view_hr_dashboard')) {
+    rows.push([{ text: '📊 Dashboard va Hisobot' }]);
+  } else if (can(role, 'view_employee_dashboard') || can(role, 'view_candidate_dashboard')) {
+    rows.push([{ text: '👤 Mening Profilim' }]);
+  }
+
+  const managementRow: any[] = [];
+  if (can(role, 'manage_vacancies') || can(role, 'manage_candidates')) {
+    managementRow.push({ text: '💼 Nomzodlar va Vakansiyalar' });
+  }
+  if (can(role, 'manage_employees')) {
+    managementRow.push({ text: '👥 Xodimlar Boshqaruvi' });
+  }
+  if (managementRow.length) rows.push(managementRow);
+
+  const toolsRow: any[] = [];
+  if (can(role, 'view_analytics')) {
+    toolsRow.push({ text: '📅 Davomat va KPI' });
+  }
+  if (can(role, 'use_ai_assistant')) {
+    toolsRow.push({ text: '🤖 AI Yordamchi' });
+  }
+  if (toolsRow.length) rows.push(toolsRow);
+
+  rows.push([
+    { text: '❓ FAQ / Savol-Javoblar' },
+    { text: '🌐 Tizimni O\'chish (Web App)', web_app: { url: `${APP_BASE_URL}/dashboard/hr` } }
+  ]);
+
   return {
-    keyboard: [
-      [
-        { text: '📊 Dashboard va Hisobot' },
-        { text: '💼 Nomzodlar va Vakansiyalar' }
-      ],
-      [
-        { text: '👥 Xodimlar Boshqaruvi' },
-        { text: '📅 Davomat va KPI' }
-      ],
-      [
-        { text: '❓ FAQ / Savol-Javoblar' },
-        { text: '🌐 Tizimni O\'chish (Web App)', web_app: { url: `${APP_BASE_URL}/dashboard/hr` } }
-      ]
-    ],
+    keyboard: rows,
     resize_keyboard: true,
     persistent: true
+  };
+}
+
+/**
+ * Inline Keyboard shown while the bot is waiting for an AI Yordamchi question.
+ */
+export function getAiPromptInlineKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: '❌ Bekor qilish', callback_data: 'ai_cancel' }]
+    ]
   };
 }
 
