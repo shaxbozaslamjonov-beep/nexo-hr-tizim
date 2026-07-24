@@ -524,15 +524,25 @@ export function SettingsContent() {
                   <div className={styles.sectionHeader}>
                     <div>
                       <h2 className={styles.sectionTitle}>Ruxsatnomalar Matritsasi (RBAC Portal)</h2>
-                      <p className={styles.sectionSub}>Rollarga ko'ra modullar bo'yicha ruxsat darajalari</p>
+                      <p className={styles.sectionSub}>Rollarga ko'ra modullar va amallar bo'yicha ruxsat darajalari</p>
                     </div>
+                  </div>
+
+                  {/* Available Roles Pills Bar */}
+                  <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>MAVJUD ROLLAR:</span>
+                    {['ADMIN', 'HR_MANAGER', 'DIRECTOR', 'DEPARTMENT_HEAD', 'EMPLOYEE', 'CANDIDATE'].map((r, i) => (
+                      <span key={i} style={{ padding: '0.35rem 0.85rem', borderRadius: '12px', background: i === 0 ? '#1d4ed8' : '#f1f5f9', color: i === 0 ? 'white' : '#475569', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}>
+                        {r}
+                      </span>
+                    ))}
                   </div>
 
                   <div className={styles.tableWrapper}>
                     <table className={styles.customTable}>
                       <thead>
                         <tr>
-                          <th>Modul / Funktsiya</th>
+                          <th>Modul / Ruxsat</th>
                           <th style={{ textAlign: 'center' }}>ADMIN</th>
                           <th style={{ textAlign: 'center' }}>HR MANAGER</th>
                           <th style={{ textAlign: 'center' }}>DIRECTOR</th>
@@ -542,27 +552,80 @@ export function SettingsContent() {
                       </thead>
                       <tbody>
                         {[
-                          { name: 'Dashboard & Analitika', admin: true, hr: true, dir: true, head: true, emp: false },
-                          { name: 'Nomzodlar & Vakansiyalar', admin: true, hr: true, dir: true, head: false, emp: false },
-                          { name: 'Xodimlar & Boshqaruv', admin: true, hr: true, dir: true, head: true, emp: false },
-                          { name: 'O\'quv Modullari & Testlar', admin: true, hr: true, dir: false, head: false, emp: true },
-                          { name: 'Tizim Sozlamalari & RBAC', admin: true, hr: false, dir: false, head: false, emp: false },
-                          { name: 'Telegram Bot & Xabarnomalar', admin: true, hr: true, dir: true, head: false, emp: false },
-                        ].map((row, idx) => (
-                          <tr key={idx}>
-                            <td style={{ fontWeight: 800, color: '#0d1b3d' }}>{row.name}</td>
-                            <td style={{ textAlign: 'center' }}>{row.admin ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
-                            <td style={{ textAlign: 'center' }}>{row.hr ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
-                            <td style={{ textAlign: 'center' }}>{row.dir ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
-                            <td style={{ textAlign: 'center' }}>{row.head ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
-                            <td style={{ textAlign: 'center' }}>{row.emp ? <Check size={20} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}</td>
-                          </tr>
+                          { category: '📊 Dashboard', permissions: [
+                            { action: 'Ko\'rish: Dashboard', admin: true, hr: true, dir: true, head: true, emp: true },
+                          ]},
+                          { category: '📋 Nomzodlar & Vakansiyalar', permissions: [
+                            { action: 'CRUD: Ko\'rish', admin: true, hr: true, dir: true, head: true, emp: false },
+                            { action: 'CRUD: Yaratish', admin: true, hr: true, dir: true, head: false, emp: false },
+                            { action: 'CRUD: O\'zgartirish', admin: true, hr: true, dir: true, head: false, emp: false },
+                            { action: 'CRUD: O\'chirish', admin: true, hr: false, dir: false, head: false, emp: false },
+                          ]},
+                          { category: '👥 Xodimlar & Boshqaruv', permissions: [
+                            { action: 'CRUD: Ko\'rish', admin: true, hr: true, dir: true, head: true, emp: false },
+                            { action: 'CRUD: Yaratish', admin: true, hr: true, dir: true, head: false, emp: false },
+                            { action: 'CRUD: O\'zgartirish', admin: true, hr: true, dir: true, head: true, emp: false },
+                            { action: 'CRUD: O\'chirish', admin: true, hr: false, dir: false, head: false, emp: false },
+                          ]},
+                          { category: '🎓 O\'quv Modullari & Testlar', permissions: [
+                            { action: 'Ko\'rish & Topshirish', admin: true, hr: true, dir: true, head: true, emp: true },
+                            { action: 'Yangi darslar yaratish', admin: true, hr: true, dir: false, head: false, emp: false },
+                          ]},
+                          { category: '⚙️ Tizim Sozlamalari & RBAC', permissions: [
+                            { action: 'Operatsiya turlari: Ko\'rish', admin: true, hr: false, dir: false, head: false, emp: false },
+                            { action: 'Operatsiya turlari: O\'zgartirish', admin: true, hr: false, dir: false, head: false, emp: false },
+                          ]},
+                        ].map((group, gIdx) => (
+                          <React.Fragment key={gIdx}>
+                            <tr style={{ background: '#f8fafc' }}>
+                              <td colSpan={6} style={{ fontWeight: 900, color: '#1e3a8a', fontSize: '0.85rem', padding: '0.75rem 1rem' }}>
+                                {group.category}
+                              </td>
+                            </tr>
+                            {group.permissions.map((p, pIdx) => (
+                              <tr key={pIdx}>
+                                <td style={{ paddingLeft: '2rem', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+                                  {p.action}
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                  <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                                    {p.admin ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                  </button>
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                  <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                                    {p.hr ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                  </button>
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                  <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                                    {p.dir ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                  </button>
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                  <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                                    {p.head ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                  </button>
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                  <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                                    {p.emp ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </React.Fragment>
                         ))}
                       </tbody>
                     </table>
                   </div>
+
+                  <p style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: '#94a3b8', fontStyle: 'italic', textAlign: 'center' }}>
+                    * Barcha ruxsatnomalarning o'zgarishi avtomatik ravishda tizim Audit log jurnaliga yozib boriladi.
+                  </p>
                 </div>
               )}
+
 
               {/* TAB 4: TELEGRAM BOT INTEGRATSIYA */}
               {activeTab === 'telegram' && (
