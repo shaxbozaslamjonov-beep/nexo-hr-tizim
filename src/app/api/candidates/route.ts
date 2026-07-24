@@ -80,7 +80,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields', code: 'missing_fields' }, { status: 400 });
     }
 
-    const vacancy = await prisma.vacancy.findUnique({ where: { id: vacancyId }, select: { companyId: true } });
+    const vacancy = await prisma.vacancy.findUnique({ where: { id: vacancyId }, select: { companyId: true, title: true } });
     if (!vacancy) {
       return NextResponse.json({ error: 'Vacancy not found', code: 'vacancy_not_found' }, { status: 404 });
     }
@@ -189,6 +189,13 @@ export async function POST(request: Request) {
         screeningScore: screeningResult.totalScore,
       },
     });
+
+    // Notify company HR/Admin/Director on Telegram (best-effort, never blocks the response)
+    const { notifyCompanyRoles } = await import('@/lib/telegram');
+    notifyCompanyRoles(
+      vacancy.companyId,
+      `🆕 <b>Yangi ariza!</b>\n\n👤 ${firstName} ${lastName}\n💼 ${vacancy.title}\n⭐ Skrining balli: <b>${screeningResult.totalScore}/100</b>\n📊 Holat: ${candidateStatus}`
+    ).catch((err) => console.error('Telegram notify error:', err));
 
     return NextResponse.json(
       {

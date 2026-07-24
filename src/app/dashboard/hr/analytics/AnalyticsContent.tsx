@@ -24,6 +24,7 @@ import { VacancyStatusChart } from '@/components/analytics/VacancyStatusChart';
 import { AnalyticsToolbar } from '@/components/analytics/AnalyticsToolbar';
 
 import dashStyles from '../dashboard.module.css';
+import fx from '@/components/analytics/effects.module.css';
 
 const DEFAULT_PREFERENCES: AnalyticsPreferences = {
   targets: {
@@ -132,7 +133,7 @@ export function AnalyticsContent() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
 
       {/* Deep Navy Hero Banner with Premium Glass Header */}
-      <div style={{
+      <div className={fx.fadeInUp} style={{
         background: 'linear-gradient(135deg, #0d1b3d 0%, #1f3480 50%, #2e4ba8 100%)',
         padding: '2.25rem 2.75rem',
         borderRadius: '24px',
@@ -202,19 +203,19 @@ export function AnalyticsContent() {
 
 
       {/* Modern Insights Section */}
-      <div>
+      <div className={`${fx.fadeInUp} ${fx.delay1}`}>
         <AnalyticsInsights data={insightsData} />
       </div>
 
 
       {/* Top row stats cards */}
-      <div>
+      <div className={`${fx.fadeInUp} ${fx.delay2}`}>
         <StatsCards stats={stats} targets={preferences.targets} trends={trends} />
       </div>
 
       {/* Candidates Overview Table/Metrics */}
-      <div>
-        <div style={{ background: 'white', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
+      <div className={`${fx.fadeInUp} ${fx.delay3}`}>
+        <div className={fx.hoverLiftSm} style={{ background: 'white', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
           <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d1b3d', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
               <div style={{ padding: '0.5rem', background: '#eff6ff', borderRadius: '12px', color: '#2563eb', display: 'flex' }}>
@@ -297,11 +298,11 @@ export function AnalyticsContent() {
       </div>
 
       {/* Main Charts Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
-        <RecruitmentFunnelChart data={funnelData} />
-        <CandidateSkillsChart data={skillsData} />
-        <VacancyStatusChart data={vacancyStatusData} />
-        <EmployeeDynamicsChart data={dynamicsData} />
+      <div className={`${fx.fadeInUp} ${fx.delay4}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+        <div className={fx.hoverLift}><RecruitmentFunnelChart data={funnelData} /></div>
+        <div className={fx.hoverLift}><CandidateSkillsChart data={skillsData} /></div>
+        <div className={fx.hoverLift}><VacancyStatusChart data={vacancyStatusData} /></div>
+        <div className={fx.hoverLift}><EmployeeDynamicsChart data={dynamicsData} /></div>
       </div>
 
 

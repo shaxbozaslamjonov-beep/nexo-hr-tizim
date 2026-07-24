@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { TrendingUp, TrendingDown, Users, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import fx from './effects.module.css';
 
 interface AnalyticsInsightsProps {
   data?: {
@@ -71,8 +72,9 @@ export function AnalyticsInsights({ data }: AnalyticsInsightsProps) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
       {insights.map((insight, idx) => (
-        <div 
-          key={idx} 
+        <div
+          key={idx}
+          className={fx.hoverLift}
           style={{
             background: 'white',
             borderRadius: '24px',
@@ -83,7 +85,6 @@ export function AnalyticsInsights({ data }: AnalyticsInsightsProps) {
             flexDirection: 'column',
             justifyContent: 'space-between',
             gap: '1rem',
-            transition: 'all 0.3s ease',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

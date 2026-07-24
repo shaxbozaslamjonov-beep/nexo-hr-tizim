@@ -1,16 +1,30 @@
 import { NextResponse } from 'next/server';
-import { 
-  sendTelegramMessage, 
-  getTelegramMainKeyboard, 
-  getWelcomeInlineKeyboard, 
+import {
+  sendTelegramMessage,
+  getTelegramMainKeyboard,
+  getWelcomeInlineKeyboard,
   getFAQInlineKeyboard,
   setTelegramCommands,
   setTelegramWebhook
 } from '@/lib/telegram';
+import prisma from '@/lib/prisma';
+import { getDefaultCompanyId } from '@/lib/company';
 
 export const dynamic = 'force-dynamic';
 
 const APP_BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://nexo-hr-tizim.vercel.app';
+
+// Resolves which company's data to show for a chat: the linked user's
+// company if this chat has been linked via Settings, otherwise the
+// single default company (matches the rest of the app pre-multi-company-onboarding).
+async function resolveCompanyForChat(chatId: string | number) {
+  const linkedUser = await prisma.user.findUnique({
+    where: { telegramChatId: String(chatId) },
+    select: { companyId: true, role: true, email: true, employeeProfile: { select: { firstName: true, lastName: true } } },
+  });
+  if (linkedUser) return { companyId: linkedUser.companyId, user: linkedUser };
+  return { companyId: await getDefaultCompanyId(), user: null };
+}
 
 export async function POST(request: Request) {
   try {
@@ -114,7 +128,20 @@ Savollaringiz yoki takliflaringiz bo'lsa:
       const firstName = body.message.from?.first_name || 'Foydalanuvchi';
 
       if (text.startsWith('/start')) {
-        const replyText = `
+        const { user: linkedUser } = await resolveCompanyForChat(chatId);
+        const linkedName = linkedUser?.employeeProfile
+          ? `${linkedUser.employeeProfile.firstName} ${linkedUser.employeeProfile.lastName}`
+          : linkedUser?.email;
+
+        const replyText = linkedUser
+          ? `
+<b>Assalomu alaykum, ${linkedName}! 👋</b>
+
+✅ Akkauntingiz ulangan (<b>${linkedUser.role}</b>). Endi yangi arizalar va boshqa muhim yangiliklar shu chatga keladi.
+
+🚀 <b>Nexo HR Platformasi Rasmiy Telegram Botiga xush kelibsiz!</b>
+          `.trim()
+          : `
 <b>Assalomu alaykum, ${firstName}! 👋</b>
 
 🚀 <b>Nexo HR Platformasi Rasmiy Telegram Botiga xush kelibsiz!</b>
@@ -125,6 +152,8 @@ Ushbu bot orqali siz:
 • Davomat, KPI va xodimlar ma'lumotlarini kuzatishingiz mumkin.
 
 🆔 Sizning Telegram Chat ID: <code>${chatId}</code>
+
+🔗 <b>Akkauntingizni ulash uchun:</b> Nexo HR'da <b>Sozlamalar → Profil → Telegram</b> bo'limiga o'ting va yuqoridagi Chat ID'ni kiriting.
         `.trim();
 
         await sendTelegramMessage({
@@ -141,31 +170,48 @@ Ushbu bot orqali siz:
         });
       }
       else if (text.startsWith('/dashboard') || text === '📊 Dashboard va Hisobot') {
+        const { companyId } = await resolveCompanyForChat(chatId);
+        const [candidatesCount, openVacancies, closedVacancies, totalVacancies] = await Promise.all([
+          prisma.candidateProfile.count({ where: { user: { companyId } } }),
+          prisma.vacancy.count({ where: { companyId, status: 'OPEN' } }),
+          prisma.vacancy.count({ where: { companyId, status: 'CLOSED' } }),
+          prisma.vacancy.count({ where: { companyId } }),
+        ]);
+
         await sendTelegramMessage({
           chatId,
           text: `
 <b>📊 Nexo HR Dashboard & Analitika</b>
 
-• <b>Jami Nomzodlar:</b> 3 ta
-• <b>Faol Vakansiyalar:</b> 3 ta
-• <b>KPI Qamrovi:</b> 100%
-• <b>O'rtacha Vaqt:</b> 4 kun
+• <b>Jami Nomzodlar:</b> ${candidatesCount} ta
+• <b>Ochiq Vakansiyalar:</b> ${openVacancies} ta
+• <b>Yopilgan Vakansiyalar:</b> ${closedVacancies}/${totalVacancies}
 
 🌐 To'liq jonli grafiklarni ko'rish uchun Web App ga o'ting:
-${APP_BASE_URL}/dashboard/hr
+${APP_BASE_URL}/dashboard/hr/analytics
           `.trim(),
           replyMarkup: getTelegramMainKeyboard()
         });
       }
       else if (text.startsWith('/candidates') || text.startsWith('/vacancies') || text === '💼 Nomzodlar va Vakansiyalar') {
+        const { companyId } = await resolveCompanyForChat(chatId);
+        const vacancies = await prisma.vacancy.findMany({
+          where: { companyId, status: 'OPEN' },
+          select: { title: true, _count: { select: { applications: true } } },
+          orderBy: { createdAt: 'desc' },
+          take: 5,
+        });
+
+        const list = vacancies.length > 0
+          ? vacancies.map((v) => `• <b>${v.title}:</b> ${v._count.applications} ta ariza`).join('\n')
+          : 'Hozircha ochiq vakansiyalar yo\'q.';
+
         await sendTelegramMessage({
           chatId,
           text: `
 <b>💼 Vakansiyalar va Nomzodlar Boshqaruvi</b>
 
-• <b>Senior Fullstack Developer:</b> 2 otklik
-• <b>HR Manager:</b> 1 otklik
-• <b>Product Designer:</b> 0 otklik
+${list}
 
 📋 Nomzodlar rezyumelarini ko'rish va suhbat belgilash:
 ${APP_BASE_URL}/dashboard/hr/candidates
@@ -174,15 +220,23 @@ ${APP_BASE_URL}/dashboard/hr/candidates
         });
       }
       else if (text.startsWith('/employees') || text === '👥 Xodimlar Boshqaruvi') {
+        const { companyId } = await resolveCompanyForChat(chatId);
+        const [admins, hrManagers, employees, onboarding] = await Promise.all([
+          prisma.user.count({ where: { companyId, role: 'ADMIN' } }),
+          prisma.user.count({ where: { companyId, role: 'HR_MANAGER' } }),
+          prisma.user.count({ where: { companyId, role: 'EMPLOYEE' } }),
+          prisma.employeeProfile.count({ where: { user: { companyId }, status: 'ONBOARDING' } }),
+        ]);
+
         await sendTelegramMessage({
           chatId,
           text: `
 <b>👥 Xodimlar va Bo'limlar</b>
 
-• Adminlar: 1 ta
-• HR Menejerlar: 1 ta
-• Xodimlar: 4 ta
-• Sinov muddatidagi xodimlar: 0 ta
+• Adminlar: ${admins} ta
+• HR Menejerlar: ${hrManagers} ta
+• Xodimlar: ${employees} ta
+• Onboarding jarayonida: ${onboarding} ta
 
 👥 Xodimlar ro'yxati va rollarni sozlash:
 ${APP_BASE_URL}/dashboard/hr/employees
@@ -196,10 +250,7 @@ ${APP_BASE_URL}/dashboard/hr/employees
           text: `
 <b>📅 Davomat (Tabel) va KPI Boshqaruvi</b>
 
-• Bugungi keldi-ketdi: 100% faol
-• Bajarilgan KPI vazifalari: 85%
-
-📊 Davomat jadvalini ochish:
+To'liq davomat va KPI jadvalini Web App orqali ko'ring:
 ${APP_BASE_URL}/dashboard/hr/kpi
           `.trim(),
           replyMarkup: getTelegramMainKeyboard()

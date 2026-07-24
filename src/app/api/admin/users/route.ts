@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { hashPassword } from '@/lib/password';
-import { getDefaultCompanyId } from '@/lib/company';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,12 +13,15 @@ export async function GET() {
     }
 
     const users = await prisma.user.findMany({
+      where: { companyId: session.companyId },
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
         email: true,
         role: true,
         createdAt: true,
+        telegramChatId: true,
+        telegramUsername: true,
         employeeProfile: {
           select: {
             id: true,
@@ -59,14 +61,13 @@ export async function POST(request: Request) {
     }
 
     const hashedPassword = await hashPassword(password);
-    const companyId = await getDefaultCompanyId();
 
     const newUser = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         role: role || 'EMPLOYEE',
-        companyId,
+        companyId: session.companyId,
         employeeProfile: {
           create: {
             firstName,

@@ -16,16 +16,18 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await request.json();
-    const { role, email, firstName, lastName, department, position } = body;
+    const { role, email, firstName, lastName, department, position, telegramChatId, telegramUsername } = body;
 
     const user = await prisma.user.findUnique({ where: { id } });
-    if (!user) {
+    if (!user || user.companyId !== session.companyId) {
       return NextResponse.json({ error: 'Foydalanuvchi topilmadi' }, { status: 404 });
     }
 
     const updateData: any = {};
     if (role) updateData.role = role;
     if (email) updateData.email = email;
+    if (telegramChatId !== undefined) updateData.telegramChatId = telegramChatId || null;
+    if (telegramUsername !== undefined) updateData.telegramUsername = telegramUsername || null;
 
     const updatedUser = await prisma.user.update({
       where: { id },
@@ -53,6 +55,8 @@ export async function PATCH(
         id: true,
         email: true,
         role: true,
+        telegramChatId: true,
+        telegramUsername: true,
         employeeProfile: true,
       }
     });
@@ -78,6 +82,11 @@ export async function DELETE(
 
     if (id === session.id) {
       return NextResponse.json({ error: 'O\'zingizning akkauntingizni o\'chira olmaysiz' }, { status: 400 });
+    }
+
+    const target = await prisma.user.findUnique({ where: { id }, select: { companyId: true } });
+    if (!target || target.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Foydalanuvchi topilmadi' }, { status: 404 });
     }
 
     // Delete associated employee profile first if exists

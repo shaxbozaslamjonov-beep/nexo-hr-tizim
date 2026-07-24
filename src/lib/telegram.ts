@@ -39,6 +39,34 @@ export async function sendTelegramMessage(options: TelegramSendMessageOptions): 
 }
 
 /**
+ * Notify every user of a company who has linked their Telegram account
+ * and holds one of the given roles (defaults to HR-facing roles).
+ * Failures for individual recipients are swallowed so one bad chat ID
+ * doesn't block the others.
+ */
+export async function notifyCompanyRoles(
+  companyId: string,
+  text: string,
+  roles: string[] = ['HR_MANAGER', 'ADMIN', 'DIRECTOR']
+): Promise<{ sent: number; failed: number }> {
+  const prisma = (await import('./prisma')).default;
+  const recipients = await prisma.user.findMany({
+    where: { companyId, role: { in: roles }, telegramChatId: { not: null } },
+    select: { telegramChatId: true },
+  });
+
+  let sent = 0;
+  let failed = 0;
+  for (const r of recipients) {
+    if (!r.telegramChatId) continue;
+    const result = await sendTelegramMessage({ chatId: r.telegramChatId, text });
+    if (result.success) sent++;
+    else failed++;
+  }
+  return { sent, failed };
+}
+
+/**
  * Register bot commands menu with Telegram API (/setMyCommands)
  */
 export async function setTelegramCommands() {

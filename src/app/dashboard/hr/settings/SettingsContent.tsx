@@ -71,6 +71,60 @@ export function SettingsContent() {
   const [testMessage, setTestMessage] = useState('Nexo HR: Test xabarnoma!');
   const [sendingTest, setSendingTest] = useState(false);
 
+  // Self-service Telegram linking (Profile tab)
+  const [myTelegram, setMyTelegram] = useState<{ telegramChatId: string | null; telegramUsername: string | null } | null>(null);
+  const [myTelegramInput, setMyTelegramInput] = useState('');
+  const [linkingTelegram, setLinkingTelegram] = useState(false);
+
+  const fetchMyTelegram = async () => {
+    try {
+      const res = await fetch('/api/settings/telegram');
+      if (res.ok) setMyTelegram(await res.json());
+    } catch (error) {
+      console.error('Failed to fetch telegram link status', error);
+    }
+  };
+
+  const handleLinkTelegram = async () => {
+    if (!myTelegramInput.trim()) {
+      showToast('Telegram Chat ID ni kiriting', 'error');
+      return;
+    }
+    setLinkingTelegram(true);
+    try {
+      const res = await fetch('/api/settings/telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chatId: myTelegramInput.trim() }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showToast('Telegram akkaunt ulandi! Botga test xabar yuborildi.', 'success');
+        setMyTelegram(data);
+        setMyTelegramInput('');
+      } else {
+        showToast(data.error || 'Ulashda xatolik', 'error');
+      }
+    } catch (error) {
+      showToast('Ulashda xatolik', 'error');
+    } finally {
+      setLinkingTelegram(false);
+    }
+  };
+
+  const handleUnlinkTelegram = async () => {
+    setLinkingTelegram(true);
+    try {
+      const res = await fetch('/api/settings/telegram', { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Telegram akkaunt uzildi', 'success');
+        setMyTelegram({ telegramChatId: null, telegramUsername: null });
+      }
+    } finally {
+      setLinkingTelegram(false);
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const res = await fetch('/api/admin/users');
@@ -87,8 +141,8 @@ export function SettingsContent() {
           position: u.employeeProfile?.position || u.role,
           employeeId: `EMP-${u.id.substring(0, 5).toUpperCase()}`,
           phone: '+998 90 123 45 67',
-          telegramId: '',
-          telegramUsername: '',
+          telegramId: u.telegramChatId || '',
+          telegramUsername: u.telegramUsername || '',
           shift: '1-smena (Morning)'
         })));
       }
@@ -101,6 +155,7 @@ export function SettingsContent() {
     if (isAdmin) {
       fetchUsers();
     }
+    fetchMyTelegram();
   }, [isAdmin]);
 
   const handleSaveOwnPassword = async (e: React.FormEvent) => {
@@ -174,6 +229,8 @@ export function SettingsContent() {
           lastName: editingUser.lastName,
           department: editingUser.department,
           position: editingUser.position,
+          telegramChatId: editingUser.telegramId,
+          telegramUsername: editingUser.telegramUsername,
         }),
       });
       if (res.ok) {
@@ -373,6 +430,47 @@ export function SettingsContent() {
                       <label className={styles.formLabel}>Elektron Pochta (Email) *</label>
                       <input type="email" className={styles.formInput} defaultValue={user?.email} disabled />
                     </div>
+                  </div>
+
+                  {/* Telegram ulash */}
+                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9' }}>
+                    <h3 className={styles.sectionTitle} style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
+                      <Send size={20} style={{ display: 'inline', marginRight: '0.5rem', color: '#2563eb' }} />
+                      Telegram
+                    </h3>
+                    <p className={styles.sectionSub} style={{ marginBottom: '1.25rem' }}>
+                      Akkauntingizni Telegram botga ulang — yangi arizalar va muhim yangiliklar shu chatga keladi.
+                    </p>
+
+                    {myTelegram?.telegramChatId ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 1rem', borderRadius: '999px', background: '#dcfce7', color: '#15803d', fontWeight: 700, fontSize: '0.85rem' }}>
+                          <CheckCircle2 size={16} /> Ulangan (Chat ID: {myTelegram.telegramChatId})
+                        </span>
+                        <button type="button" onClick={handleUnlinkTelegram} disabled={linkingTelegram} className={styles.btnSecondary}>
+                          Uzish
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ maxWidth: '480px' }}>
+                        <ol style={{ fontSize: '0.85rem', color: '#5a6372', paddingLeft: '1.1rem', marginBottom: '1rem', lineHeight: 1.7 }}>
+                          <li>Telegram'da botimizga <b>/start</b> yuboring va u sizga Chat ID'ingizni ko'rsatadi.</li>
+                          <li>Chat ID'ni quyidagi maydonga kiriting va "Ulash" tugmasini bosing.</li>
+                        </ol>
+                        <div style={{ display: 'flex', gap: '0.75rem' }}>
+                          <input
+                            type="text"
+                            value={myTelegramInput}
+                            onChange={(e) => setMyTelegramInput(e.target.value)}
+                            placeholder="Masalan: 123456789"
+                            className={styles.formInput}
+                          />
+                          <button type="button" onClick={handleLinkTelegram} disabled={linkingTelegram} className={styles.btnPrimary} style={{ whiteSpace: 'nowrap' }}>
+                            {linkingTelegram ? 'Ulanmoqda...' : 'Ulash'}
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Parolni Yangilash */}

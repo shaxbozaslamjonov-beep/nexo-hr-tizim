@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { Users, Briefcase, GraduationCap, FileText, Target, ArrowRight, TrendingUp, TrendingDown } from 'lucide-react';
+import fx from './effects.module.css';
 
 interface StatsCardsProps {
   stats: {
@@ -72,6 +73,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
         return (
           <Link key={idx} href={card.href} style={{ textDecoration: 'none', display: 'block' }}>
             <div
+              className={fx.hoverLift}
               style={{
                 background: 'white',
                 borderRadius: '24px',
@@ -82,7 +84,6 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 gap: '1.25rem',
-                transition: 'all 0.3s ease',
                 position: 'relative',
                 overflow: 'hidden',
               }}

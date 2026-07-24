@@ -1,0 +1,51 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.delay1 { animation-delay: 0.05s; }
+.delay2 { animation-delay: 0.12s; }
+.delay3 { animation-delay: 0.19s; }
+.delay4 { animation-delay: 0.26s; }
+
+.hoverLift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.hoverLift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(13, 27, 61, 0.18);
+}
+
+.hoverLiftSm {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hoverLiftSm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -8px rgba(13, 27, 61, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeInUp {
+    animation: none;
+  }
+  .hoverLift,
+  .hoverLiftSm {
+    transition: none;
+  }
+  .hoverLift:hover,
+  .hoverLiftSm:hover {
+    transform: none;
+  }
+}
