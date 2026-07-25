@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id } = await params;
-    const position = await (prisma as any).position.findUnique({
-      where: { id },
+    const position = await (prisma as any).position.findFirst({
+      where: { id, companyId: session.companyId },
     });
 
     if (!position) {
@@ -43,10 +47,19 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id } = await params;
+
+    const existing = await prisma.position.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Position not found' }, { status: 404 });
+    }
+
     const body = await request.json();
-    
+
     const position = await (prisma as any).position.update({
       where: { id },
       data: {
@@ -82,8 +95,17 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id } = await params;
+
+    const existing = await prisma.position.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Position not found' }, { status: 404 });
+    }
+
     await (prisma as any).position.delete({
       where: { id },
     });

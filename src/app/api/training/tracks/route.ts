@@ -9,6 +9,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const tracks = await prisma.trainingTrack.findMany({
+    where: { companyId: session.companyId },
     include: {
       modules: { orderBy: { id: 'asc' } },
     },
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
   }
 
   const track = await prisma.trainingTrack.create({
-    data: { title, roleTarget },
+    data: { title, roleTarget, companyId: session.companyId },
   });
 
   return NextResponse.json(track, { status: 201 });

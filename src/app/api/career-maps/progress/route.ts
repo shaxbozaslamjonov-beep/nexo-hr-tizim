@@ -1,13 +1,26 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function employeeBelongsToCompany(employeeId: string, companyId: string) {
+  const employee = await prisma.employeeProfile.findUnique({ where: { id: employeeId }, select: { user: { select: { companyId: true } } } });
+  return !!employee && employee.user.companyId === companyId;
+}
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const employeeId = searchParams.get('employeeId');
 
     if (!employeeId) {
        return NextResponse.json({ error: 'Employee ID is required' }, { status: 400 });
+    }
+
+    if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     const milestoneProgress = await (prisma as any).employeeMilestoneProgress.findMany({
@@ -28,11 +41,18 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { employeeId, type, itemId, completed } = await request.json();
 
     if (!employeeId || !type || !itemId) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     if (type === 'MILESTONE') {

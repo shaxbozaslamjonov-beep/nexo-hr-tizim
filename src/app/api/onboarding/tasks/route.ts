@@ -1,12 +1,30 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function taskBelongsToCompany(id: string, companyId: string) {
+  const task = await prisma.onboardingTask.findUnique({ where: { id }, select: { employee: { select: { user: { select: { companyId: true } } } } } });
+  return !!task && task.employee.user.companyId === companyId;
+}
+
+async function employeeBelongsToCompany(employeeId: string, companyId: string) {
+  const employee = await prisma.employeeProfile.findUnique({ where: { id: employeeId }, select: { user: { select: { companyId: true } } } });
+  return !!employee && employee.user.companyId === companyId;
+}
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const { searchParams } = new URL(request.url);
   const employeeId = searchParams.get('employeeId');
 
   if (!employeeId) {
     return NextResponse.json({ error: 'Employee ID is required' }, { status: 400 });
+  }
+
+  if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+    return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
   }
 
   try {
@@ -22,11 +40,18 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id, status } = await request.json();
 
     if (!id || !status) {
       return NextResponse.json({ error: 'ID and status are required' }, { status: 400 });
+    }
+
+    if (!(await taskBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     const updatedTask = await prisma.onboardingTask.update({
@@ -42,11 +67,18 @@ export async function PATCH(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { employeeId, title, description, dueDate, positionId } = await request.json();
 
     if (!employeeId || !title) {
       return NextResponse.json({ error: 'Employee ID and title are required' }, { status: 400 });
+    }
+
+    if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     const newTask = await (prisma as any).onboardingTask.create({
@@ -68,12 +100,19 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
       return NextResponse.json({ error: 'Task ID is required' }, { status: 400 });
+    }
+
+    if (!(await taskBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     await prisma.onboardingTask.delete({
@@ -88,11 +127,18 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id, title, description, dueDate, status, positionId } = await request.json();
 
     if (!id || !title) {
       return NextResponse.json({ error: 'ID and title are required' }, { status: 400 });
+    }
+
+    if (!(await taskBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     const updatedTask = await (prisma as any).onboardingTask.update({

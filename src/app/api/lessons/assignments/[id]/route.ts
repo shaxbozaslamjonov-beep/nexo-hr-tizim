@@ -1,18 +1,27 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function assignmentBelongsToCompany(id: string, companyId: string) {
+  const assignment = await prisma.lessonAssignment.findUnique({ where: { id }, select: { employee: { select: { user: { select: { companyId: true } } } } } });
+  return !!assignment && assignment.employee.user.companyId === companyId;
+}
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const { id } = await context.params;
   try {
+    if (!(await assignmentBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Assignment not found' }, { status: 404 });
+    }
+
     const assignment = await prisma.lessonAssignment.findUnique({
       where: { id },
       include: { employee: true }
     });
-    
-    if (!assignment) {
-      return NextResponse.json({ error: 'Assignment not found' }, { status: 404 });
-    }
-    
+
     return NextResponse.json(assignment);
   } catch (error) {
     console.error('Error fetching assignment:', error);
@@ -21,8 +30,15 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
 }
 
 export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const { id } = await context.params;
   try {
+    if (!(await assignmentBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Assignment not found' }, { status: 404 });
+    }
+
     const { status, score, submissionText, fileUrl } = await request.json();
 
     const data: any = {};
@@ -48,8 +64,15 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
 }
 
 export async function DELETE(request: Request, context: { params: Promise<{ id: string }> }) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const { id } = await context.params;
   try {
+    if (!(await assignmentBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Assignment not found' }, { status: 404 });
+    }
+
     await prisma.lessonAssignment.delete({
       where: { id },
     });

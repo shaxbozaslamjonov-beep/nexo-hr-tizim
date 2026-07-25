@@ -15,6 +15,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
+  const track = await prisma.trainingTrack.findUnique({ where: { id: trackId }, select: { companyId: true } });
+  if (!track || track.companyId !== session.companyId) {
+    return NextResponse.json({ error: 'Track not found' }, { status: 404 });
+  }
+
   const module = await prisma.trainingModule.create({
     data: {
       trackId,

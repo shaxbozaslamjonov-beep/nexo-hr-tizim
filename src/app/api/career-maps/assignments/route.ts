@@ -1,14 +1,28 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function employeeBelongsToCompany(employeeId: string, companyId: string) {
+  const employee = await prisma.employeeProfile.findUnique({ where: { id: employeeId }, select: { user: { select: { companyId: true } } } });
+  return !!employee && employee.user.companyId === companyId;
+}
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const pathId = searchParams.get('pathId');
 
     if (pathId) {
+      const path = await prisma.careerPath.findUnique({ where: { id: pathId }, select: { companyId: true } });
+      if (!path || path.companyId !== session.companyId) {
+        return NextResponse.json({ error: 'Path not found' }, { status: 404 });
+      }
+
       const employees = await prisma.employeeProfile.findMany({
-        where: { careerPathId: pathId } as any,
+        where: { careerPathId: pathId, user: { companyId: session.companyId } } as any,
         include: {
           user: {
             select: {
@@ -22,6 +36,7 @@ export async function GET(request: Request) {
 
     // Otherwise return all employees to allowed for assignment
     const employees = await prisma.employeeProfile.findMany({
+      where: { user: { companyId: session.companyId } },
       include: {
         user: {
           select: {
@@ -38,11 +53,22 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { employeeId, pathId } = await request.json();
 
     if (!employeeId || !pathId) {
       return NextResponse.json({ error: 'Employee ID and Path ID are required' }, { status: 400 });
+    }
+
+    if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
+    }
+    const pathOwnerCheck = await prisma.careerPath.findUnique({ where: { id: pathId }, select: { companyId: true } });
+    if (!pathOwnerCheck || pathOwnerCheck.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Path not found' }, { status: 404 });
     }
 
     const updatedEmployee = await prisma.employeeProfile.update({
@@ -82,12 +108,19 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const employeeId = searchParams.get('employeeId');
 
     if (!employeeId) {
       return NextResponse.json({ error: 'Employee ID is required' }, { status: 400 });
+    }
+
+    if (!(await employeeBelongsToCompany(employeeId, session.companyId))) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     const updatedEmployee = await prisma.employeeProfile.update({

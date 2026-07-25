@@ -19,6 +19,9 @@ export async function POST(req: Request) {
     });
 
     if (!candidate) return NextResponse.json({ error: 'Candidate not found' }, { status: 404 });
+    if (candidate.user.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Candidate not found' }, { status: 404 });
+    }
 
     // 1. Transaction to hire
     await prisma.$transaction([

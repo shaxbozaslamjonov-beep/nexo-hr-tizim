@@ -1,19 +1,24 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET() {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     // 1. Calculate Readiness (Average performance rating of all employee career profiles)
     const profiles = await prisma.employeeCareerProfile.findMany({
+      where: { employee: { user: { companyId: session.companyId } } },
       select: { performanceRating: true }
     });
-    const avgReadiness = profiles.length > 0 
-      ? Math.round((profiles.reduce((sum, p) => sum + (p.performanceRating || 0), 0) / profiles.length) * 10) 
+    const avgReadiness = profiles.length > 0
+      ? Math.round((profiles.reduce((sum, p) => sum + (p.performanceRating || 0), 0) / profiles.length) * 10)
       : 74; // Fallback to mock if no data
 
     // 2. Calculate Coverage (Critical positions with at least one successor)
     const criticalPositions = await (prisma as any).position.findMany({
-      where: { isCritical: true },
+      where: { isCritical: true, companyId: session.companyId },
       include: { successionPlans: true }
     });
     const totalCritical = criticalPositions.length;
@@ -21,12 +26,16 @@ export async function GET() {
     const coverage = totalCritical > 0 ? Math.round((withSuccessor / totalCritical) * 100) : 65;
 
     // 3. Talent Pool Counts
-    const talentPoolCount = await prisma.talentPool.count();
-    const readyNow = await prisma.talentPool.count({ where: { readiness: 'ready_now' } });
-    const ready6m = await prisma.talentPool.count({ where: { readiness: 'ready_6m' } });
-    const ready1y = await prisma.talentPool.count({ where: { readiness: 'ready_1y+' } });
+    const talentPoolWhere = { employee: { user: { companyId: session.companyId } } };
+    const talentPoolCount = await prisma.talentPool.count({ where: talentPoolWhere });
+    const readyNow = await prisma.talentPool.count({ where: { ...talentPoolWhere, readiness: 'ready_now' } });
+    const ready6m = await prisma.talentPool.count({ where: { ...talentPoolWhere, readiness: 'ready_6m' } });
+    const ready1y = await prisma.talentPool.count({ where: { ...talentPoolWhere, readiness: 'ready_1y+' } });
 
     // 4. Return aggregated data merged with manual rating if exists
+    // NOTE: CareerHealth is currently a hardcoded singleton row (id: "default") with no
+    // companyId column, so the manual `rating` override below is shared/global across
+    // every tenant — a schema gap that needs a migration (add companyId) to fix properly.
     const healthRecord = await (prisma as any).careerHealth.findUnique({ where: { id: 'default' } });
 
     return NextResponse.json({
@@ -50,6 +59,9 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const data = await request.json();
     

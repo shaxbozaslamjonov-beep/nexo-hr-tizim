@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const { searchParams } = new URL(request.url);
   const employeeId = searchParams.get('employeeId');
 
@@ -14,10 +18,15 @@ export async function GET(request: Request) {
       where: { id: employeeId },
       include: {
         mentor: true,
+        user: { select: { companyId: true } },
       },
     });
 
-    if (!employee || !employee.mentor) {
+    if (!employee || employee.user.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
+    if (!employee.mentor) {
       return NextResponse.json(null);
     }
 

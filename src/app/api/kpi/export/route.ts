@@ -1,13 +1,18 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 import * as xlsx from 'xlsx';
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'excel';
 
     const kpiEntries = await prisma.kPIEntry.findMany({
+      where: { employee: { user: { companyId: session.companyId } } },
       include: {
         kpi: true,
         employee: {

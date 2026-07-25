@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { id } = await params;
-    
+
     // Attempt to find in database using TrainingModule
-    const module = await prisma.trainingModule.findUnique({
-      where: { id },
+    const module = await prisma.trainingModule.findFirst({
+      where: { id, track: { companyId: session.companyId } },
       select: {
         id: true,
         type: true,

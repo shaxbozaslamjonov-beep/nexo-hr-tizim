@@ -1,9 +1,29 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function pathBelongsToCompany(pathId: string, companyId: string) {
+  const path = await prisma.careerPath.findUnique({ where: { id: pathId }, select: { companyId: true } });
+  return !!path && path.companyId === companyId;
+}
+
+async function milestoneBelongsToCompany(id: string, companyId: string) {
+  const milestone = await prisma.careerMilestone.findUnique({ where: { id }, select: { path: { select: { companyId: true } } } });
+  return !!milestone && milestone.path.companyId === companyId;
+}
+
+async function skillBelongsToCompany(id: string, companyId: string) {
+  const skill = await prisma.careerSkill.findUnique({ where: { id }, select: { path: { select: { companyId: true } } } });
+  return !!skill && skill.path.companyId === companyId;
+}
 
 export async function GET() {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const paths = await (prisma as any).careerPath.findMany({
+      where: { companyId: session.companyId },
       include: {
         milestones: {
           orderBy: {
@@ -26,23 +46,30 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const body = await request.json();
     const { type, ...data } = body;
 
     if (type === 'PATH') {
       const path = await (prisma as any).careerPath.create({
-        data: { 
+        data: {
           name: data.name,
           description: data.description || '',
           level: parseInt(data.level) || 1,
-          nextPathId: data.nextPathId || null
+          nextPathId: data.nextPathId || null,
+          companyId: session.companyId,
         },
       });
       return NextResponse.json(path);
     }
 
     if (type === 'MILESTONE') {
+      if (!(await pathBelongsToCompany(data.pathId, session.companyId))) {
+        return NextResponse.json({ error: 'Path not found' }, { status: 404 });
+      }
       const milestone = await (prisma as any).careerMilestone.create({
         data: {
           name: data.name,
@@ -55,6 +82,9 @@ export async function POST(request: Request) {
     }
 
     if (type === 'SKILL') {
+      if (!(await pathBelongsToCompany(data.pathId, session.companyId))) {
+        return NextResponse.json({ error: 'Path not found' }, { status: 404 });
+      }
       const skill = await (prisma as any).careerSkill.create({
         data: {
           name: data.name,
@@ -74,6 +104,9 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const body = await request.json();
     const { type, id, ...data } = body;
@@ -81,9 +114,12 @@ export async function PUT(request: Request) {
     if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
 
     if (type === 'PATH') {
+      if (!(await pathBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       const path = await (prisma as any).careerPath.update({
         where: { id },
-        data: { 
+        data: {
           name: data.name,
           description: data.description || '',
           level: parseInt(data.level) || 1,
@@ -94,6 +130,9 @@ export async function PUT(request: Request) {
     }
 
     if (type === 'MILESTONE') {
+      if (!(await milestoneBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       const milestone = await (prisma as any).careerMilestone.update({
         where: { id },
         data: {
@@ -106,6 +145,9 @@ export async function PUT(request: Request) {
     }
 
     if (type === 'SKILL') {
+      if (!(await skillBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       const skill = await (prisma as any).careerSkill.update({
         where: { id },
         data: {
@@ -125,6 +167,9 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -133,10 +178,19 @@ export async function DELETE(request: Request) {
     if (!id || !type) return NextResponse.json({ error: 'ID and type are required' }, { status: 400 });
 
     if (type === 'PATH') {
+      if (!(await pathBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       await (prisma as any).careerPath.delete({ where: { id } });
     } else if (type === 'MILESTONE') {
+      if (!(await milestoneBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       await (prisma as any).careerMilestone.delete({ where: { id } });
     } else if (type === 'SKILL') {
+      if (!(await skillBelongsToCompany(id, session.companyId))) {
+        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      }
       await (prisma as any).careerSkill.delete({ where: { id } });
     } else {
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 });

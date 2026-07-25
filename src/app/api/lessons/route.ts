@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET() {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const lessons = await prisma.lesson.findMany({
+      where: { companyId: session.companyId },
       orderBy: { createdAt: 'desc' }
     });
     
@@ -30,9 +35,12 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const data = await request.json();
-    
+
     const newLesson = await prisma.lesson.create({
       data: {
         titleRu: data.title.ru,
@@ -44,7 +52,8 @@ export async function POST(request: Request) {
         fileContent: data.fileAttachment?.url,
         assignmentRu: data.assignmentText?.ru,
         assignmentUz: data.assignmentText?.uz,
-        authorId: data.authorId
+        authorId: data.authorId,
+        companyId: session.companyId,
       }
     });
 

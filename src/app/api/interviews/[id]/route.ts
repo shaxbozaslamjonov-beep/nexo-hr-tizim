@@ -26,6 +26,14 @@ export async function PATCH(
   } = body;
 
   try {
+    const existing = await prisma.interview.findUnique({
+      where: { id: resolvedParams.id },
+      select: { candidate: { select: { user: { select: { companyId: true } } } } },
+    });
+    if (!existing || existing.candidate.user.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
     const interview = await prisma.interview.update({
       where: { id: resolvedParams.id },
       data: {

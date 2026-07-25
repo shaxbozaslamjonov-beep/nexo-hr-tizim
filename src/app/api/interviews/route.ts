@@ -10,6 +10,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const interviews = await prisma.interview.findMany({
+    where: { candidate: { user: { companyId: session.companyId } } },
     orderBy: { scheduledAt: 'desc' },
     include: {
       candidate: { select: { firstName: true, lastName: true } },
@@ -30,6 +31,19 @@ export async function POST(request: Request) {
 
   if (!applicationId || !candidateId || !scheduledAt) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+  }
+
+  const candidate = await prisma.candidateProfile.findUnique({
+    where: { id: candidateId },
+    select: { user: { select: { companyId: true } } },
+  });
+  if (!candidate || candidate.user.companyId !== session.companyId) {
+    return NextResponse.json({ error: 'Candidate not found' }, { status: 404 });
+  }
+
+  const application = await prisma.application.findUnique({ where: { id: applicationId }, select: { candidateId: true } });
+  if (!application || application.candidateId !== candidateId) {
+    return NextResponse.json({ error: 'Application not found' }, { status: 404 });
   }
 
   const interview = await prisma.interview.create({

@@ -815,7 +815,7 @@ export function SettingsContent() {
                       <span style={{ padding: '0.25rem 0.75rem', background: '#16a34a', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
                     </div>
                     <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid #e0f2fe', fontSize: '0.85rem', fontFamily: 'monospace', color: '#0369a1', wordBreak: 'break-all', marginBottom: '1rem' }}>
-                      8780931091:AAHW9_PWiStB0VACsJtyRPS8cF199DGHTNk
+                      ●●●●●●●●●●:●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● (server .env da saqlanadi)
                     </code>
 
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid #bae6fd' }}>

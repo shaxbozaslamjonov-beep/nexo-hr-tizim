@@ -1,15 +1,19 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const department = searchParams.get('department');
     const grade = searchParams.get('grade');
 
-    let where: any = {};
+    let where: any = { companyId: session.companyId };
     if (department) where.department = department;
     if (grade) where.grade = parseInt(grade);
 
@@ -53,11 +57,15 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const body = await request.json();
-    
+
     const position = await prisma.position.create({
       data: {
+        companyId: session.companyId,
         title: body.title,
         department: body.department,
         grade: parseInt(body.grade) || 1,
@@ -89,10 +97,18 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+
+    const existing = await prisma.position.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Position not found' }, { status: 404 });
+    }
 
     const body = await request.json();
     const position = await prisma.position.update({
@@ -129,10 +145,18 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+
+    const existing = await prisma.position.findUnique({ where: { id }, select: { companyId: true } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Position not found' }, { status: 404 });
+    }
 
     // Safeguard: Check if in use
     const relations = await Promise.all([

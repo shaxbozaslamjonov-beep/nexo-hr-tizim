@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+async function evaluationBelongsToCompany(id: string, companyId: string) {
+  const evaluation = await prisma.probationEvaluation.findUnique({ where: { id }, select: { employee: { select: { user: { select: { companyId: true } } } } } });
+  return !!evaluation && evaluation.employee.user.companyId === companyId;
+}
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const evaluations = await (prisma as any).probationEvaluation.findMany({
+      where: { employee: { user: { companyId: session.companyId } } },
       include: {
         employee: {
           include: {
@@ -23,24 +33,32 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const body = await request.json();
-    const { 
-      employeeId, 
-      evaluatorId, 
-      periodDays, 
+    const {
+      employeeId,
+      evaluatorId,
+      periodDays,
       startDate,
       endDate,
-      disciplineScore, 
-      learningScore, 
-      qualityScore, 
-      comments, 
+      disciplineScore,
+      learningScore,
+      qualityScore,
+      comments,
       result,
       positionId
     } = body;
 
     if (!employeeId || !evaluatorId || !result) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    const employee = await prisma.employeeProfile.findUnique({ where: { id: employeeId }, select: { user: { select: { companyId: true } } } });
+    if (!employee || employee.user.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     const evaluation = await (prisma as any).probationEvaluation.create({
@@ -67,12 +85,19 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
       return NextResponse.json({ error: 'Evaluation ID is required' }, { status: 400 });
+    }
+
+    if (!(await evaluationBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     const body = await request.json();
@@ -117,12 +142,19 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
       return NextResponse.json({ error: 'Evaluation ID is required' }, { status: 400 });
+    }
+
+    if (!(await evaluationBelongsToCompany(id, session.companyId))) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     await prisma.probationEvaluation.delete({

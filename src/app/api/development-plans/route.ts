@@ -1,12 +1,17 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const employeeId = searchParams.get('employeeId');
 
-    const where = employeeId ? { employeeId } : {};
+    const where: any = { employee: { user: { companyId: session.companyId } } };
+    if (employeeId) where.employeeId = employeeId;
     const plans = await (prisma as any).developmentPlan.findMany({
       where,
       include: {
@@ -36,9 +41,17 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const body = await request.json();
-    
+
+    const employee = await prisma.employeeProfile.findUnique({ where: { id: body.employeeId }, select: { user: { select: { companyId: true } } } });
+    if (!employee || employee.user.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
+    }
+
     const plan = await (prisma as any).developmentPlan.create({
       data: {
         employeeId: body.employeeId,
