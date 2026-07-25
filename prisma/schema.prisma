@@ -16,9 +16,17 @@ model Company {
   plan      String   @default("trial") // trial | starter | professional | enterprise
   createdAt DateTime @default(now())
 
-  users     User[]
-  vacancies Vacancy[]
-  aiTasks   AiTask[]
+  users          User[]
+  vacancies      Vacancy[]
+  aiTasks        AiTask[]
+  positions      Position[]
+  tests          Test[]
+  trainingTracks TrainingTrack[]
+  lessons        Lesson[]
+  careerPaths    CareerPath[]
+  careerLevels   CareerLevel[]
+  auditLogs      AuditLog[]
+  announcements  Announcement[]
 }
 
 model User {
@@ -27,7 +35,8 @@ model User {
   company   Company  @relation(fields: [companyId], references: [id])
   email     String   @unique
   password  String
-  role      String   @default("CANDIDATE") // Using string for SQLite compatibility if needed, but Prisma supports enum polyfills or we can just use String. Wait, SQLite does NOT support enums in Prisma.
+  role      String   @default("CANDIDATE")
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -134,9 +143,13 @@ model Interview {
 
 model TrainingTrack {
   id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
   title       String   
   roleTarget  String
   modules     TrainingModule[]
+
+  @@index([companyId])
 }
 
 model TrainingModule {
@@ -165,12 +178,16 @@ model TrainingAssignment {
 
 model Test {
   id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
   title       String
   description String?
   isActive    Boolean  @default(true)
   type        String   // enum TestType
   questions   Question[]
   results     TestResult[]
+
+  @@index([companyId])
 }
 
 model Question {
@@ -254,6 +271,8 @@ model EmployeeProfile {
 
 model Position {
   id                    String   @id @default(uuid())
+  companyId             String?
+  company               Company? @relation(fields: [companyId], references: [id])
   title                 String
   department            String
   grade                 Int
@@ -283,6 +302,8 @@ model Position {
   probations       ProbationEvaluation[]
   kpis             KPI[]
   successionPlans  SuccessionPlan[] @relation("PositionSuccession")
+
+  @@index([companyId])
 }
 
 model CareerHealth {
@@ -415,6 +436,8 @@ model KPIEntry {
 
 model CareerPath {
   id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
   name        String
   description String?
   level       Int      @default(1)
@@ -429,6 +452,8 @@ model CareerPath {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([companyId])
 }
 
 model CareerMilestone {
@@ -482,12 +507,16 @@ model EmployeeSkillProgress {
 
 model CareerLevel {
   id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
   role        String
   levelName   String   
   requirements String  
   order       Int      @default(0)
 
   employees   EmployeeProfile[]
+
+  @@index([companyId])
 }
 
 model ContactRequest {
@@ -528,6 +557,8 @@ model Meeting {
 
 model Lesson {
   id          String   @id @default(uuid())
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
   titleRu     String
   titleUz     String
   descRu      String?
@@ -542,6 +573,8 @@ model Lesson {
   authorId    String?
 
   assignments LessonAssignment[]
+
+  @@index([companyId])
 }
 
 model LessonAssignment {
@@ -558,4 +591,35 @@ model LessonAssignment {
   fileUrl     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  userId      String?
+  userEmail   String?
+  action      String   // e.g. "USER_CREATED", "VACANCY_UPDATED", "CANDIDATE_STAGE_CHANGED"
+  entityType  String   // e.g. "User", "Vacancy", "CandidateProfile"
+  entityId    String?
+  details     String?  // JSON string or summary text
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+
+  @@index([companyId])
+  @@index([createdAt])
+}
+
+model Announcement {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  title       String
+  content     String
+  isPublic    Boolean  @default(true)
+  authorId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([companyId])
 }

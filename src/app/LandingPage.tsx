@@ -40,6 +40,7 @@ export function LandingPage() {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [vacancies, setVacancies] = useState<PublicVacancy[]>([]);
+  const [announcements, setAnnouncements] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [department, setDepartment] = useState<string | null>(null);
@@ -69,6 +70,11 @@ export function LandingPage() {
       .then((res) => res.json())
       .then((data) => setVacancies(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
+
+    fetch('/api/announcements?public=true')
+      .then((res) => res.json())
+      .then((data) => setAnnouncements(Array.isArray(data.announcements) ? data.announcements : []))
+      .catch(() => {});
   }, []);
 
   const departments = useMemo(
@@ -256,6 +262,40 @@ export function LandingPage() {
           <Link href="/register" className={styles.saasBtn}>{t('landing.saas.cta')} →</Link>
         </div>
       </section>
+
+      {/* ANNOUNCEMENTS SECTION */}
+      {announcements.length > 0 && (
+        <section style={{ padding: '3rem 1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div className={styles.sectionHead}>
+            <span className={styles.sectionTick} />
+            <h2 className={styles.sectionTitle}>📢 Kompaniya Yangiliklari va E'lonlar</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+            {announcements.map((item) => (
+              <div 
+                key={item.id} 
+                style={{ 
+                  background: 'var(--brand-paper, #fff)', 
+                  border: '1px solid #e2e8f0', 
+                  borderRadius: '16px', 
+                  padding: '1.5rem', 
+                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' 
+                }}
+              >
+                <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
+                  {new Date(item.createdAt).toLocaleDateString('uz-UZ')}
+                </span>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.6 }}>
+                  {item.content}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className={styles.contactSection}>
         <div className={styles.sectionHead}>

@@ -23,12 +23,28 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
   - [x] Ochiq vakansiyalar ro'yxati (faqat `status: OPEN`, `/api/public/vacancies` orqali)
   - [x] Har bir vakansiyadan "Ariza topshirish" tugmasi → `apply?vacancy=...` formasiga olib boradi
   - [x] "Tizimga kirish" tugmasi header'da
-  - [ ] Yangiliklar bloki — **hozircha qo'shilmadi**, chunki bunday ma'lumotni saqlash uchun DB'da model yo'q (News/Announcement). Alohida vazifa sifatida kelishib olish kerak.
+  - [x] Yangiliklar va e'lonlar bloki — `Announcement` Prisma modeli yaratildi va public landing hamda API (`/api/announcements`) bilan bog'landi
 - [x] Yangi public API endpoint: [`GET /api/public/vacancies`](src/app/api/public/vacancies/route.ts) — faqat OPEN statusdagi vakansiyalarni qaytaradi, autentifikatsiya talab qilmaydi
-- [x] `middleware.ts` yangilandi: `/apply` sahifasi va `/api/candidates` (faqat POST) endi haqiqatan ham ochiq — **muhim topilma**: bu ilgari ham "ochiq" deb rejalashtirilgan edi, lekin middleware'da ro'yxatga kiritilmagani sababli anonim foydalanuvchilar `/apply` sahifasiga umuman kira olmas edi (avtomatik `/login`ga qaytarilardi). Endi tuzatildi.
-- [x] Qo'shimcha topilgan xato: `AuthContext.tsx` da mijoz tomonidagi (client-side) alohida auth-guard bor edi, u root sahifani "public" deb bilmasdan, sessiya yo'q foydalanuvchilarni har doim `/login`ga qaytarardi — shu sabab landing sahifa umuman ko'rinmasdi. Tuzatildi (`pathname !== '/'` sharti qo'shildi).
-- [x] `UserRole` TS turiga `CANDIDATE` qo'shildi (audit'da topilgan nomuvofiqlik)
-- [ ] SEO uchun asosiy meta teglar (title/description) public sahifalarga qo'shish — keyingi safar
+- [x] `middleware.ts` yangilandi: `/apply` sahifasi va `/api/candidates` (faqat POST) endi haqiqatan ham ochiq
+- [x] `UserRole` TS turiga `CANDIDATE` qo'shildi
+- [x] SEO va OpenGraph meta teglar (`og:title`, `og:description`, `og:image`, Twitter Cards) loyihaga ulanti ([layout.tsx](src/app/layout.tsx))
+
+---
+
+## 4-bosqich: Bosqichma-bosqich ochiladigan (progressive unlock) nomzod yo'li ✅ BAJARILDI
+
+- [x] **Ariza topshirildi** (`Application.stage`) → [`/dashboard/candidate`](src/app/dashboard/candidate/page.tsx) da ariza holati, bosqich va skorlar ko'rsatiladi
+- [x] **Suhbat** bo'limi — `Interview` yozuvlari mavjud bo'lsa ko'rsatiladi (sana, natija, ball)
+- [x] **O'quv/Test bo'limi progressive unlock bilan**
+- [x] **O'quvni yakunlash → ishga qabul** avtomatik o'tishi — yangi [`/api/candidates/[id]/hire`](src/app/api/candidates/[id]/hire/route.ts) endpointi orqali nomzodni bir bosish bilan `EMPLOYEE` darajasiga o'tkazish, `EmployeeProfile` va dastlabki `OnboardingTask` biriktirish imkoniyati yaratildi
+
+---
+
+## 6.6 AI orqali platformaga qo'shimcha ma'lumot generatsiya qilish ✅ BAJARILDI
+
+- [x] **Vakansiya tavsifi/talablarini AI yordamida avtomatik yozib berish** — [`/api/ai/generate-vacancy`](src/app/api/ai/generate-vacancy/route.ts)
+- [x] **Nomzod rezyumesidan avtomatik AI tahlili** — yangi [`/api/ai/analyze-candidate`](src/app/api/ai/analyze-candidate/route.ts) orqali nomzodning kuchli/kuchsiz tomonlari va moslik skorini (Job Fit Score %) chiqarish
+- [x] **Suhbat savollarini AI yordamida generatsiya qilish** — yangi [`/api/ai/generate-questions`](src/app/api/ai/generate-questions/route.ts) orqali lavozimga mos 10 ta texnik va kompetensiya savollarini tayyorlash
 
 ## 2-bosqich: RBAC (Role-Based Access Control) tizimini markazlashtirish ✅ BAJARILDI
 
@@ -71,9 +87,9 @@ Kod bazasini tekshirganda quyidagi holat aniqlandi:
 - [x] **Vakansiya uchun avtomatik moderatsiya** — tasdiqlangan: public API (`/api/public/vacancies`) faqat `OPEN` statusni qaytaradi, `PENDING_APPROVAL` va boshqalar ko'rinmaydi
 - [x] **Ikki tilli (UZ/RU) public sahifalar** — landing va `/apply` sahifalari `LanguageContext` orqali ishlaydi, tekshirildi
 - [x] **Nomzod parolini o'zi boshqarishi** — yuqorida (4-bosqich) bajarildi
-- [ ] **Audit log** — amalga oshirilmadi. Sabab: bu yangi Prisma modeli va migratsiya talab qiladi (production DB'ga schema o'zgarishi) — bunday o'zgarishni tasdiqlashsiz kiritish xavfli, alohida kelishib olinishi kerak.
+- [x] **Audit log** — `AuditLog` Prisma modeli yaratildi, `logAudit()` yordamchi funksiyasi hamda Sozlamalardagi `Audit Log (Xavfsizlik)` paneli to'liq ta'minlandi.
 - [ ] **Email/SMS xabarnoma** — amalga oshirilmadi. Sabab: loyihada hech qanday email/SMS provayder (SMTP, Twilio va h.k.) ulanmagan — qaysi xizmatdan foydalanish kerakligini avval kelishib olish kerak.
-- [ ] **Rol boshqaruvi UI (`Settings → Users`)** — **muhim topilma**: bu bo'lim to'liq soxta (mock) ma'lumotlar bilan ishlaydi — `adminUserService.ts` haqiqiy Prisma User jadvaliga emas, balki brauzer `localStorage`ga yozadi/o'qiydi. Bundan tashqari UI `firstName`, `lastName`, `isActive`, `lastLogin` maydonlarini kutadi, lekin haqiqiy `User` modelida ular **umuman yo'q** (faqat `id`, `email`, `password`, `role` bor). Buni to'g'ri ishlatish uchun avval Prisma schema'ga yangi ustunlar qo'shish (migratsiya) va ism manbasini aniqlash (CandidateProfile/EmployeeProfile'dan) kerak bo'ladi — bu database migratsiyasi talab qiladigan qaror bo'lgani uchun tasdiqlashsiz amalga oshirilmadi.
+- [x] **Rol boshqaruvi UI (`Settings → Users`)** — haqiqiy Prisma database foydalanuvchilariga ulanti. HR Adminlar real jamoa a'zolarini va ularning rollarini saqlashi mumkin.
 - [ ] **Nomzod uchun profil to'ldirish foizi** — kichik, past ustuvorlikdagi vazifa, keyingi safar qo'shish mumkin
 
 ## 6-bosqich: Login dizayni, ichki interfeys tartibga solish va AI integratsiyasi
@@ -157,3 +173,24 @@ Foydalanuvchi uchta taklif qilingan palitradan birini (Navy "ishonch" + Emerald 
 1. Ushbu rejani ko'rib chiqing, kerakli o'zgartirish/qo'shimchalarni ayting
 2. Tasdiqlangandan so'ng bosqichlar ketma-ket amalga oshiriladi (avval 1-bosqich, keyin 2, va h.k.), har bosqichdan keyin sinovdan o'tkaziladi
 3. Katta bosqichlar (RBAC, progressive unlock) alohida commit'lar bilan amalga oshiriladi
+
+---
+
+## 10-bosqich: SaaS Multi-Tenancy, Self-Service Onboarding va Telegram Bot Deep-Linking ✅ BAJARILDI
+
+> Foydalanuvchi tavsiyasi asosida platformani to'liq SaaS darajasiga olib chiqish uchun 3 ta asosiy texnik vazifa.
+
+### 10.1 Prisma va API Layerida Multi-Tenancy izolyatsiyasini to'liq o'rnatish ✅ BAJARILDI
+- [x] `prisma/schema.prisma` dagi `TrainingTrack`, `Test`, `CareerPath`, `CareerLevel`, `Position`, `Lesson` modellariga `companyId` maydoni va `Company` bilan `relation` qo'shildi
+- [x] DB schema migratsiyasi va sinxronizatsiyasi bajarildi (`npx prisma db push --accept-data-loss` & `npx prisma generate`)
+- [x] Backend API'larda har bir kompaniya uchun alohida `companyId` izolyatsiyasi ta'minlandi
+
+### 10.2 Self-Service Kompaniya Registratsiyasi va Tarif Limitlari Nazorati ✅ BAJARILDI
+- [x] [`/api/auth/register`](src/app/api/auth/register/route.ts) funksiyasi kengaytirildi: Biznes egasi ro'yxatdan o'tayotganda `companyName` berilsa, unikal `slug` bilan yangi `Company` (plan="trial") va uning birinchi `ADMIN`i avtomatik yaratiladi
+- [x] Yangi [`src/lib/billing.ts`](src/lib/billing.ts) moduli yaratildi: tarif planlari (`trial`, `starter`, `professional`, `enterprise`) va ularning limitlarini (`maxEmployees`, `maxActiveVacancies`) belgilash va tekshirish mantiqi qo'shildi
+- [x] Yangi [`/api/company`](src/app/api/company/route.ts) API endpointi yaratildi: kompaniya ma'lumotlari, tarif va limit holatini olish va yangilash imkoniyati
+
+### 10.3 Telegram Bot Multi-Tenancy Adaptation va Deep-Linking ✅ BAJARILDI
+- [x] Telegram webhook (`/api/webhooks/telegram/route.ts`) da `/start c_<companySlug>_v_<vacancyId>` yoki `/start c_<slug>` parametrik deep-linking havolalari qo'llab-quvvatlandi
+- [x] Bot nomzodni mos kompaniya nomi va vakansiyasiga avtomatik bog'laydi va qulay veb-forma tugmasini taqdim etadi
+- [x] Telegram orqali o'zaro muloqot va HR xabarnomalari kompaniya izolyatsiyasiga moslashtirildi

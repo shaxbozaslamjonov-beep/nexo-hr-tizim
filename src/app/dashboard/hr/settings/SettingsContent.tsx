@@ -27,7 +27,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useToast } from '@/contexts/ToastContext';
 import styles from './settings.module.css';
 
-type TabType = 'profile' | 'users' | 'rbac' | 'security' | 'telegram' | 'company';
+type TabType = 'profile' | 'users' | 'rbac' | 'security' | 'telegram' | 'company' | 'audit';
 
 interface UserItem {
   id: string;
@@ -75,6 +75,59 @@ export function SettingsContent() {
   const [myTelegram, setMyTelegram] = useState<{ telegramChatId: string | null; telegramUsername: string | null } | null>(null);
   const [myTelegramInput, setMyTelegramInput] = useState('');
   const [linkingTelegram, setLinkingTelegram] = useState(false);
+
+  // Company & Subscription state
+  const [companyData, setCompanyData] = useState<any>(null);
+  const [companyNameInput, setCompanyNameInput] = useState('');
+  const [updatingCompany, setUpdatingCompany] = useState(false);
+
+  // Audit logs state
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
+
+  const fetchAuditLogs = async () => {
+    try {
+      const res = await fetch('/api/admin/audit-logs');
+      if (res.ok) {
+        const data = await res.json();
+        setAuditLogs(data.logs || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch audit logs', err);
+    }
+  };
+
+  const fetchCompanyData = async () => {
+    try {
+      const res = await fetch('/api/company');
+      if (res.ok) {
+        const data = await res.json();
+        setCompanyData(data);
+        setCompanyNameInput(data.company?.name || '');
+      }
+    } catch (err) {
+      console.error('Failed to fetch company info', err);
+    }
+  };
+
+  const handleSaveCompany = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUpdatingCompany(true);
+    try {
+      const res = await fetch('/api/company', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: companyNameInput }),
+      });
+      if (res.ok) {
+        showToast('Kompaniya ma\'lumotlari saqlandi', 'success');
+        fetchCompanyData();
+      } else {
+        showToast('Saqlashda xatolik', 'error');
+      }
+    } finally {
+      setUpdatingCompany(false);
+    }
+  };
 
   const fetchMyTelegram = async () => {
     try {
@@ -156,7 +209,14 @@ export function SettingsContent() {
       fetchUsers();
     }
     fetchMyTelegram();
+    fetchCompanyData();
   }, [isAdmin]);
+
+  useEffect(() => {
+    if (activeTab === 'audit' && isAdmin) {
+      fetchAuditLogs();
+    }
+  }, [activeTab, isAdmin]);
 
   const handleSaveOwnPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -392,8 +452,19 @@ export function SettingsContent() {
             className={`${styles.navTab} ${activeTab === 'company' ? styles.navTabActive : ''}`}
           >
             <Building size={18} />
-            Kompaniya & Filiallar
+            Kompaniya & Obuna
           </button>
+
+          {isAdmin && (
+            <button 
+              type="button"
+              onClick={() => setActiveTab('audit')} 
+              className={`${styles.navTab} ${activeTab === 'audit' ? styles.navTabActive : ''}`}
+            >
+              <Shield size={18} />
+              Audit Log (Xavfsizlik)
+            </button>
+          )}
         </div>
 
         {/* Right Content */}
@@ -832,27 +903,184 @@ export function SettingsContent() {
                 </div>
               )}
 
-              {/* TAB 6: COMPANY & BRANCHES */}
+              {/* TAB 6: COMPANY & SUBSCRIPTION */}
               {activeTab === 'company' && (
                 <div>
                   <div className={styles.sectionHeader}>
                     <div>
-                      <h2 className={styles.sectionTitle}>Kompaniya & Filiallar</h2>
-                      <p className={styles.sectionSub}>Tizim bo'yicha kompaniya ma'lumotlari</p>
+                      <h2 className={styles.sectionTitle}>Kompaniya & Obuna (SaaS Billing)</h2>
+                      <p className={styles.sectionSub}>Tashkilot profili va tarif plani limitlari boshqaruvi</p>
                     </div>
                   </div>
-                  <div className={styles.formGrid} style={{ maxWidth: '500px' }}>
+
+                  {companyData && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+                      {/* PLAN CARD */}
+                      <div style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', borderRadius: '16px', padding: '1.5rem', color: '#fff' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#38bdf8' }}>
+                            Joriy Tarif Plani
+                          </span>
+                          <span style={{ background: '#38bdf822', color: '#38bdf8', border: '1px solid #38bdf844', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                            {companyData.plan}
+                          </span>
+                        </div>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem' }}>{companyData.limits?.name}</h3>
+                        <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
+                          {companyData.limits?.priceUzsMonth > 0
+                            ? `${companyData.limits.priceUzsMonth.toLocaleString()} UZS / oy`
+                            : 'Bepul Sinov Muddati'}
+                        </p>
+
+                        <div style={{ borderTop: '1px solid #334155', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span style={{ color: '#94a3b8' }}>AI Assistent:</span>
+                            <span style={{ color: companyData.limits?.aiAssistant ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+                              {companyData.limits?.aiAssistant ? '✅ Faol' : '❌ Nofaol'}
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span style={{ color: '#94a3b8' }}>Personal Brending:</span>
+                            <span style={{ color: companyData.limits?.customBranding ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+                              {companyData.limits?.customBranding ? '✅ Faol' : '❌ Nofaol'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* USAGE LIMITS CARD */}
+                      <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <Building size={18} color="#0284c7" />
+                          Resurslar Kvotasi
+                        </h4>
+
+                        {/* Vacancy Limit */}
+                        <div style={{ marginBottom: '1.25rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
+                            <span style={{ color: '#475569' }}>Ochiq Vakansiyalar</span>
+                            <span style={{ color: '#0f172a' }}>{companyData.usage?.activeVacancies} / {companyData.limits?.maxActiveVacancies}</span>
+                          </div>
+                          <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                            <div 
+                              style={{ 
+                                height: '100%', 
+                                width: `${Math.min(100, (companyData.usage?.activeVacancies / companyData.limits?.maxActiveVacancies) * 100)}%`,
+                                background: companyData.canCreateVacancy ? '#0284c7' : '#ef4444' 
+                              }} 
+                            />
+                          </div>
+                        </div>
+
+                        {/* Employee Limit */}
+                        <div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
+                            <span style={{ color: '#475569' }}>Xodimlar Soni</span>
+                            <span style={{ color: '#0f172a' }}>{companyData.usage?.employees} / {companyData.limits?.maxEmployees}</span>
+                          </div>
+                          <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                            <div 
+                              style={{ 
+                                height: '100%', 
+                                width: `${Math.min(100, (companyData.usage?.employees / companyData.limits?.maxEmployees) * 100)}%`,
+                                background: companyData.canAddEmployee ? '#10b981' : '#ef4444' 
+                              }} 
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* COMPANY FORM */}
+                  <form onSubmit={handleSaveCompany} className={styles.formGrid} style={{ maxWidth: '600px' }}>
                     <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
                       <label className={styles.formLabel}>Kompaniya Nomi</label>
-                      <input type="text" className={styles.formInput} defaultValue="Nexo HR Enterprise" />
+                      <input 
+                        type="text" 
+                        className={styles.formInput} 
+                        value={companyNameInput}
+                        onChange={e => setCompanyNameInput(e.target.value)}
+                        placeholder="Masalan: Enterprise HR LLC" 
+                      />
                     </div>
                     <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
-                      <label className={styles.formLabel}>Asosiy Til</label>
-                      <select className={styles.formInput}>
-                        <option value="uz">O'zbekcha (UZ)</option>
-                        <option value="ru">Русский (RU)</option>
-                      </select>
+                      <label className={styles.formLabel}>Kompaniya Identifikatori (Slug)</label>
+                      <input 
+                        type="text" 
+                        className={styles.formInput} 
+                        value={companyData?.company?.slug || ''} 
+                        disabled 
+                        style={{ background: '#f8fafc', color: '#64748b' }}
+                      />
+                      <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.25rem', display: 'block' }}>
+                        Bot va vakansiya havolalari uchun unikal kalit so'z.
+                      </span>
                     </div>
+
+                    <div style={{ gridColumn: 'span 2', marginTop: '1rem' }}>
+                      <button type="submit" disabled={updatingCompany} className={styles.btnPrimary}>
+                        <Save size={18} />
+                        {updatingCompany ? 'Saqlanmoqda...' : 'Kompaniya Ma\'lumotlarini Saqlash'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {/* TAB 7: AUDIT LOG (XAVFSIZLIK & HARAKATLAR JURNALI) */}
+              {activeTab === 'audit' && isAdmin && (
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <h2 className={styles.sectionTitle}>Audit Log (Tizim Harakatlari Jurnali)</h2>
+                      <p className={styles.sectionSub}>Xavfsizlik monitoringi va ma'lumotlar o'zgarishi jurnali</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.customTable}>
+                      <thead>
+                        <tr>
+                          <th>Vaqt</th>
+                          <th>Foydalanuvchi</th>
+                          <th>Harakat (Action)</th>
+                          <th>Ob'ekt (Entity)</th>
+                          <th>Tafsilotlar</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {auditLogs.length > 0 ? (
+                          auditLogs.map((log: any) => (
+                            <tr key={log.id}>
+                              <td style={{ fontSize: '0.8rem', color: '#64748b', whiteSpace: 'nowrap' }}>
+                                {new Date(log.createdAt).toLocaleString('uz-UZ')}
+                              </td>
+                              <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
+                                {log.userEmail || 'Tizim / Anonim'}
+                              </td>
+                              <td>
+                                <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '0.2rem 0.5rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                  {log.action}
+                                </span>
+                              </td>
+                              <td style={{ fontSize: '0.85rem', color: '#475569' }}>
+                                {log.entityType} {log.entityId ? `(#${log.entityId.substring(0, 6)})` : ''}
+                              </td>
+                              <td style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {log.details || '-'}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8' }}>
+                              Hozircha audit jurnali bo'sh.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               )}

@@ -203,12 +203,72 @@ Savollaringiz yoki takliflaringiz bo'lsa:
       }
 
       if (text.startsWith('/start')) {
+        // Deep-linking parameter handling: e.g. /start c_slug_v_id or /start v_id or /start c_slug
+        const startArgs = text.split(' ')[1] || '';
+        let targetCompanySlug: string | null = null;
+        let targetVacancyId: string | null = null;
+
+        if (startArgs.includes('v_')) {
+          const parts = startArgs.split('_');
+          const vIdx = parts.indexOf('v');
+          if (vIdx !== -1 && parts[vIdx + 1]) {
+            targetVacancyId = parts[vIdx + 1];
+          }
+          const cIdx = parts.indexOf('c');
+          if (cIdx !== -1 && parts[cIdx + 1]) {
+            targetCompanySlug = parts[cIdx + 1];
+          }
+        } else if (startArgs.startsWith('c_')) {
+          targetCompanySlug = startArgs.replace('c_', '');
+        }
+
         const { user: linkedUser } = await resolveCompanyForChat(chatId);
         const linkedName = linkedUser?.employeeProfile
           ? `${linkedUser.employeeProfile.firstName} ${linkedUser.employeeProfile.lastName}`
           : linkedUser?.email;
 
         await setTelegramCommands({ chatId, includeAi: can(linkedUser, 'use_ai_assistant') });
+
+        // If deep linked to a vacancy or company
+        if (targetVacancyId || targetCompanySlug) {
+          const vacancy = targetVacancyId
+            ? await prisma.vacancy.findUnique({
+                where: { id: targetVacancyId },
+                include: { company: true },
+              })
+            : null;
+
+          const company = targetCompanySlug
+            ? await prisma.company.findUnique({ where: { slug: targetCompanySlug } })
+            : vacancy?.company;
+
+          const companyName = company?.name || 'Nexo HR Partner';
+          const vacancyTitle = vacancy?.title ? `<b>"${vacancy.title}"</b>` : 'ochiq';
+
+          const applyUrl = vacancy
+            ? `${APP_BASE_URL}/apply?vacancy=${vacancy.id}`
+            : `${APP_BASE_URL}/apply`;
+
+          await sendTelegramMessage({
+            chatId,
+            text: `
+<b>Assalomu alaykum, ${firstName}! 👋</b>
+
+🏢 <b>${companyName}</b> kompaniyasining HR Telegram botiga xush kelibsiz!
+
+Siz ${vacancyTitle} vakansiyasiga ariza topshirish uchun keldingiz.
+
+📋 <b>Arizani to'liq topshirish uchun quyidagi tugmani bosing:</b>
+            `.trim(),
+            replyMarkup: {
+              inline_keyboard: [
+                [{ text: '📝 Ariza Topshirish (Veb-forma)', url: applyUrl }],
+                [{ text: '❓ Savol-javoblar (FAQ)', callback_data: 'faq_main' }],
+              ],
+            },
+          });
+          return NextResponse.json({ ok: true });
+        }
 
         const replyText = linkedUser
           ? `
