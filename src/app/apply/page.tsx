@@ -146,7 +146,7 @@ function ApplyForm() {
       >
         <div className={styles.header}>
           <div className={styles.logo}>
-            <div className={styles.logoIcon}>H</div>
+            <div className={styles.logoIcon}><img src="/nexo-hr-icon.svg" alt="Nexo HR" /></div>
             <span className={styles.logoText}>Nexo HR</span>
           </div>
         </div>
@@ -184,7 +184,7 @@ function ApplyForm() {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.logo}>
-          <div className={styles.logoIcon}>H</div>
+          <div className={styles.logoIcon}><img src="/nexo-hr-icon.svg" alt="Nexo HR" /></div>
           <span className={styles.logoText}>Nexo HR</span>
         </div>
         <h1 className={styles.title}>{t('apply.title')}</h1>

@@ -95,7 +95,7 @@ export function LandingPage() {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.logo}>
-          <div className={styles.logoIcon}>N</div>
+          <div className={styles.logoIcon}><img src="/nexo-hr-icon.svg" alt="Nexo HR" /></div>
           Nexo HR
         </div>
         <div className={styles.headerActions}>
@@ -285,7 +285,7 @@ export function LandingPage() {
                 <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
                   {new Date(item.createdAt).toLocaleDateString('uz-UZ')}
                 </span>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', marginBottom: '0.5rem' }}>
                   {item.title}
                 </h3>
                 <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.6 }}>

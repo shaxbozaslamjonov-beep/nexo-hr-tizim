@@ -158,7 +158,7 @@ export function Sidebar({ role, userName, collapsed, onCollapse }: {
     <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
       <div className={styles.logo}>
         <div className={styles.logoIcon}>
-          <span className={styles.logoInner}>N</span>
+          <img src="/nexo-hr-icon.svg" alt="Nexo HR" />
         </div>
         {!collapsed && (
           <div className={styles.logoText}>

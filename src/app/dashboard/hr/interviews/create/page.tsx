@@ -124,7 +124,7 @@ function CreateInterviewForm() {
         </button>
 
         <div style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #0d9488 100%)',
+          background: 'linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%)',
           borderRadius: '24px',
           padding: '2.5rem 3rem',
           color: 'white',
@@ -185,7 +185,7 @@ function CreateInterviewForm() {
                   background: '#f8fafc',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#0f172a',
+                  color: '#000000',
                   outline: 'none'
                 }}
               >
@@ -214,7 +214,7 @@ function CreateInterviewForm() {
                   background: '#f8fafc',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#0f172a',
+                  color: '#000000',
                   outline: 'none'
                 }}
               >
@@ -248,7 +248,7 @@ function CreateInterviewForm() {
                   background: '#f8fafc',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#0f172a',
+                  color: '#000000',
                   outline: 'none'
                 }}
               />
@@ -272,7 +272,7 @@ function CreateInterviewForm() {
                   background: '#f8fafc',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#0f172a',
+                  color: '#000000',
                   outline: 'none'
                 }}
               />
@@ -378,7 +378,7 @@ function CreateInterviewForm() {
                 background: '#f8fafc',
                 fontSize: '0.9rem',
                 fontWeight: 600,
-                color: '#0f172a',
+                color: '#000000',
                 outline: 'none'
               }}
             />
@@ -403,7 +403,7 @@ function CreateInterviewForm() {
                 background: '#f8fafc',
                 fontSize: '0.9rem',
                 fontWeight: 600,
-                color: '#0f172a',
+                color: '#000000',
                 outline: 'none',
                 resize: 'vertical'
               }}

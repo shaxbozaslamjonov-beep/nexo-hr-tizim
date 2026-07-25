@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className={styles.container}>
       <div className={styles.logoRow}>
-        <div className={styles.logoIcon}>N</div>
+        <div className={styles.logoIcon}><img src="/nexo-hr-icon.svg" alt="Nexo HR" /></div>
         Nexo HR
       </div>
       <div className={styles.card}>

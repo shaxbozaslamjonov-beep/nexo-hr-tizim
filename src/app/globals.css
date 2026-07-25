@@ -1,134 +1,123 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* ===== Nexo HR design system — Slate (neutral) + Teal (primary) + gamification accents ===== */
+  /* ===== Nexo HR official Brand Book v1.0 (2026) — Accent Ko'k + Feruza ===== */
 
-  /* Slate ramp — neutral base */
-  --slate-50: #F8FAFC;
-  --slate-100: #F1F5F9;
-  --slate-200: #E2E8F0;
-  --slate-300: #CBD5E1;
-  --slate-400: #94A3B8;
-  --slate-500: #64748B;
-  --slate-600: #475569;
-  --slate-700: #334155;
-  --slate-800: #1E293B;
-  --slate-900: #0F172A;
-  --slate-950: #020617;
+  /* Blue ramp — Accent Ko'k (#2E56E6), primary brand */
+  --blue-50: #EEF2FE;
+  --blue-100: #DCE4FD;
+  --blue-300: #8FA6F5;
+  --blue-500: #4A6EEA;
+  --blue-600: #2E56E6;
+  --blue-700: #2445BA;
+  --blue-800: #1B3489;
 
-  /* Teal ramp — primary brand */
-  --teal-50: #F0FDFA;
-  --teal-100: #CCFBF1;
-  --teal-300: #5EEAD4;
-  --teal-500: #14B8A6;
-  --teal-600: #0D9488;
-  --teal-700: #0F766E;
-  --teal-800: #115E59;
+  /* Turquoise ramp — Feruza (#5CE1E6), emphasis/dynamism accent */
+  --turquoise-50: #EAFDFE;
+  --turquoise-100: #CFF9FB;
+  --turquoise-300: #96EEF1;
+  --turquoise-500: #5CE1E6;
+  --turquoise-600: #34C5CB;
 
-  /* Indigo ramp — "Lesson" accent */
-  --indigo-50: #EEF2FF;
-  --indigo-100: #E0E7FF;
-  --indigo-500: #6366F1;
-  --indigo-600: #4F46E5;
-  --indigo-700: #4338CA;
+  /* Neutral ramp — brand grays (Och kulrang / Quyuq kulrang) */
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
 
-  /* Orange ramp — "Streak" accent */
-  --orange-50: #FFF7ED;
-  --orange-100: #FFEDD5;
-  --orange-500: #F97316;
-  --orange-600: #EA580C;
-
-  /* Amber ramp — "Trophy" accent */
-  --amber-50: #FFFBEB;
-  --amber-100: #FEF3C7;
-  --amber-400: #FBBF24;
-  --amber-500: #F59E0B;
-
-  /* Emerald ramp — "Success" accent */
+  /* Semantic accents (exact brand book hex) */
   --emerald-50: #ECFDF5;
   --emerald-100: #D1FAE5;
-  --emerald-300: #6EE7B7;
   --emerald-500: #10B981;
   --emerald-600: #059669;
   --emerald-700: #047857;
   --emerald-800: #065F46;
 
-  /* Red ramp — "Destructive" accent */
+  --amber-50: #FFFBEB;
+  --amber-100: #FEF3C7;
+  --amber-500: #F59E0B;
+  --amber-600: #D97706;
+
   --red-50: #FEF2F2;
   --red-100: #FEE2E2;
   --red-500: #EF4444;
   --red-600: #DC2626;
   --red-700: #B91C1C;
 
+  /* Deep navy — brand book cover/back-page background gradient */
+  --navy-deep: #16215A;
+  --navy-black: #0B1120;
+
   /* Core semantic tokens (consumed throughout the app) */
-  --primary: var(--teal-600);
-  --primary-dark: var(--teal-800);
-  --primary-light: var(--teal-300);
-  --secondary: var(--emerald-500);
-  --secondary-light: var(--emerald-300);
+  --primary: var(--blue-600);
+  --primary-dark: var(--blue-800);
+  --primary-light: var(--blue-300);
+  --secondary: var(--turquoise-500);
+  --secondary-light: var(--turquoise-300);
   --success: var(--emerald-500);
   --warning: var(--amber-500);
   --error: var(--red-500);
   --destructive: var(--red-500);
-  --info: var(--indigo-600);
-  --featured: var(--orange-500);
-
-  /* Gamification / product-specific tokens (per design system reference) */
-  --lesson: var(--indigo-600);
-  --lab: var(--teal-600);
-  --streak: var(--orange-500);
-  --trophy: var(--amber-400);
-  --muted: var(--slate-100);
+  --info: var(--blue-600);
+  --featured: var(--turquoise-500);
+  --muted: var(--gray-100);
 
   /* Backgrounds & Surfaces */
-  --background: var(--slate-50);
-  --foreground: var(--slate-900);
+  --background: #FFFFFF;
+  --foreground: #000000;
   --surface: #FFFFFF;
-  --surface-dark: var(--slate-950);
+  --surface-dark: var(--navy-black);
 
   /* Accent used for the analytics "highlight" stat variant (dashboard.module.css .accent) */
-  --stat-accent: var(--orange-500);
+  --stat-accent: var(--turquoise-500);
 
-  /* Public-facing brand tokens (landing, login, register, /apply) — single source. */
-  --brand-navy: var(--slate-900);
-  --brand-navy-2: var(--slate-700);
-  --brand-amber: var(--teal-500);
-  --brand-amber-dark: var(--teal-600);
-  --brand-paper: var(--slate-50);
-  --brand-ink: var(--slate-900);
+  /* Public-facing brand tokens (landing, login, register, /apply) — single source.
+     Dark hero sections use the brand book's cover-page navy gradient, with turquoise
+     as the accent (per the book's own "kelajagimiz" dark-card treatment — turquoise
+     reads clearly against navy, whereas the primary blue recedes into it). */
+  --brand-navy: var(--navy-deep);
+  --brand-navy-2: var(--navy-black);
+  --brand-amber: var(--turquoise-500);
+  --brand-amber-dark: var(--turquoise-600);
+  --brand-paper: #FFFFFF;
+  --brand-ink: #000000;
 
-  /* Internal dashboard sidebar — flat surface + teal accent (per design-system sidebar spec) */
+  /* Internal dashboard sidebar — flat surface + brand blue accent */
   --sidebar-bg: #ffffff;
-  --sidebar-border: var(--slate-200);
-  --sidebar-text: var(--slate-500);
-  --sidebar-text-muted: var(--slate-400);
-  --sidebar-heading: var(--slate-900);
-  --sidebar-hover-bg: var(--slate-50);
-  --sidebar-accent: var(--teal-600);
-  --sidebar-accent-bg: var(--teal-100);
-  --sidebar-accent-border: var(--teal-100);
+  --sidebar-border: var(--gray-200);
+  --sidebar-text: var(--gray-500);
+  --sidebar-text-muted: var(--gray-400);
+  --sidebar-heading: #000000;
+  --sidebar-hover-bg: var(--gray-50);
+  --sidebar-accent: var(--blue-600);
+  --sidebar-accent-bg: var(--blue-100);
+  --sidebar-accent-border: var(--blue-100);
 
   /* Glassmorphism Tokens */
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.25);
+  --glass-shadow: 0 8px 32px 0 rgba(11, 17, 32, 0.25);
 
   /* Borders & Shadows */
-  --border: var(--slate-200);
-  --input: var(--slate-200);
+  --border: var(--gray-200);
+  --input: var(--gray-200);
   --ring: var(--primary);
 
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --card-hover-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.2);
+  --card-hover-shadow: 0 20px 40px -10px rgba(46, 86, 230, 0.2);
 
-  /* Typography — Poppins for headlines, Inter for body (max 2 families, per design system) */
+  /* Typography — Poppins for headlines, Inter for body (per Brand Book §04) */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Poppins', var(--font-sans);
 
-  --text-primary: var(--slate-900);
-  --text-secondary: var(--slate-500);
-  --text-light: var(--slate-400);
-  --bg-muted: var(--slate-100);
+  --text-primary: #000000;
+  --text-secondary: var(--gray-700);
+  --text-light: var(--gray-400);
+  --bg-muted: var(--gray-100);
 
   /* Layout */
   --sidebar-width: 280px;
@@ -140,10 +129,11 @@
   --radius-2xl: 2rem;
 
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, var(--teal-600) 0%, var(--teal-800) 100%);
-  --grad-sidebar: linear-gradient(135deg, var(--slate-900) 0%, var(--teal-700) 100%);
-  --grad-welcome: linear-gradient(135deg, var(--slate-900) 0%, var(--teal-700) 100%);
+  --grad-primary: linear-gradient(135deg, var(--blue-600) 0%, var(--turquoise-500) 100%); /* "Brend gradienti", Brand Book p.5 */
+  --grad-sidebar: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy-black) 100%);
+  --grad-welcome: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy-black) 100%);
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+  --grad-hero-network: url('/network-pattern.svg'), linear-gradient(160deg, var(--navy-deep) 0%, var(--navy-black) 100%);
 }
 
 :root[data-theme="dark"] {
@@ -172,9 +162,9 @@
   --sidebar-text-muted: #64748b;
   --sidebar-heading: #f1f5f9;
   --sidebar-hover-bg: rgba(148, 163, 184, 0.08);
-  --sidebar-accent: var(--teal-300);
-  --sidebar-accent-bg: rgba(94, 234, 212, 0.12);
-  --sidebar-accent-border: rgba(94, 234, 212, 0.3);
+  --sidebar-accent: var(--turquoise-300);
+  --sidebar-accent-bg: rgba(92, 225, 230, 0.12);
+  --sidebar-accent-border: rgba(92, 225, 230, 0.3);
 
   color-scheme: dark;
 }
@@ -312,14 +302,14 @@ input, button, textarea, select {
 }
 
 .badge-open { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
-.badge-pending { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
-.badge-pending_approval { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+.badge-pending { background: var(--amber-50); color: var(--amber-600); border: 1px solid var(--amber-100); }
+.badge-pending_approval { background: var(--amber-50); color: var(--amber-600); border: 1px solid var(--amber-100); }
 .badge-closed { background: var(--bg-muted); color: var(--text-secondary); border: 1px solid var(--border); }
-.badge-passed { background: var(--teal-50); color: var(--teal-700); border: 1px solid var(--teal-100); }
-.badge-training { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+.badge-passed { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-100); }
+.badge-training { background: var(--amber-50); color: var(--amber-600); border: 1px solid var(--amber-100); }
 .badge-error { background: var(--red-50); color: var(--red-700); border: 1px solid var(--red-100); }
-.badge-screening { background: var(--teal-50); color: var(--teal-700); border: 1px solid var(--teal-100); }
-.badge-interview { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+.badge-screening { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-100); }
+.badge-interview { background: var(--amber-50); color: var(--amber-600); border: 1px solid var(--amber-100); }
 .badge-offer { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
 .badge-rejected { background: var(--red-50); color: var(--red-700); border: 1px solid var(--red-100); }
 .badge-hired { background: var(--emerald-100); color: var(--emerald-800); border: 2px solid var(--emerald-500); }

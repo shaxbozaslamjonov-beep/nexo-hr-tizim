@@ -134,7 +134,7 @@ export function AnalyticsContent() {
 
       {/* Deep Navy Hero Banner with Premium Glass Header */}
       <div className={fx.fadeInUp} style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #0d9488 100%)',
+        background: 'linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%)',
         padding: '2.25rem 2.75rem',
         borderRadius: '24px',
         color: 'white',
@@ -217,7 +217,7 @@ export function AnalyticsContent() {
       <div className={`${fx.fadeInUp} ${fx.delay3}`}>
         <div className={fx.hoverLiftSm} style={{ background: 'white', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
           <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
               <div style={{ padding: '0.5rem', background: '#eff6ff', borderRadius: '12px', color: '#2563eb', display: 'flex' }}>
                 <Users size={20} />
               </div>
@@ -234,7 +234,7 @@ export function AnalyticsContent() {
                   {t('analytics.stats.totalCandidates') || 'Всего кандидатов'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
-                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#0f172a', margin: 0, lineHeight: 1 }}>
+                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
                     {stats.candidates}
                   </h4>
                   {trends.candidates != null && (
@@ -252,7 +252,7 @@ export function AnalyticsContent() {
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
                   {extra.avgDaysToFill != null ? (
-                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#0f172a', margin: 0, lineHeight: 1 }}>
+                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
                       {extra.avgDaysToFill} <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 700 }}>{t('analytics.stats.days') || 'дней'}</span>
                     </h4>
                   ) : (
@@ -270,7 +270,7 @@ export function AnalyticsContent() {
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
                   {extra.offerAcceptanceRate != null ? (
-                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#0f172a', margin: 0, lineHeight: 1 }}>
+                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
                       {extra.offerAcceptanceRate}%
                     </h4>
                   ) : (
@@ -287,7 +287,7 @@ export function AnalyticsContent() {
                   {t('analytics.stats.positionsFilled') || 'Закрытые позиции'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
-                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#0f172a', margin: 0, lineHeight: 1 }}>
+                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
                     {extra.positionsFilled} <span style={{ fontSize: '1.1rem', color: '#94a3b8', fontWeight: 700 }}>/{extra.positionsTotal}</span>
                   </h4>
                 </div>

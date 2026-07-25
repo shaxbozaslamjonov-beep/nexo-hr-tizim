@@ -6,7 +6,7 @@
 }
 
 .heroBanner {
-  background: linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #0d9488 100%);
+  background: linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%);
   border-radius: 24px;
   padding: 2.5rem 3rem;
   color: white;
@@ -137,7 +137,7 @@
 .sectionTitle {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #000000;
 }
 
 .sectionSub {
@@ -160,7 +160,7 @@
   background: #f8fafc;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #000000;
   outline: none;
   transition: all 0.2s;
 }
@@ -232,7 +232,7 @@
 .userName {
   font-weight: 800;
   font-size: 0.95rem;
-  color: #0f172a;
+  color: #000000;
 }
 
 .userSub {
@@ -360,7 +360,7 @@
   background: #f8fafc;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #000000;
   outline: none;
   transition: all 0.2s;
 }
@@ -412,7 +412,7 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #0f172a;
+  color: #000000;
 }
 
 .modalClose {
@@ -427,7 +427,7 @@
 
 .modalClose:hover {
   background: #e2e8f0;
-  color: #0f172a;
+  color: #000000;
 }
 
 .modalBody {

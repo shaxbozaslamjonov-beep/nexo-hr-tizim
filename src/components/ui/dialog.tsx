@@ -101,7 +101,7 @@ const DialogTitle = React.forwardRef<
 >(({ style, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    style={{ fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.2, color: '#0f172a', ...style }}
+    style={{ fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.2, color: '#000000', ...style }}
     {...props}
   />
 ))

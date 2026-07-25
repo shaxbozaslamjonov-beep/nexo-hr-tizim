@@ -134,14 +134,14 @@ export function TaskKanbanBoard() {
             <ListChecks size={18} color="#4f46e5" />
           </div>
           <div>
-            <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.95rem' }}>Vazifalar taxtasi</div>
+            <div style={{ fontWeight: 800, color: '#000000', fontSize: '0.95rem' }}>Vazifalar taxtasi</div>
             <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>AI yordamchi shu vazifalardan xabardor</div>
           </div>
         </div>
         <button
           type="button"
           onClick={() => setShowForm((v) => !v)}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0.9rem', borderRadius: '10px', border: 'none', background: '#0f172a', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0.9rem', borderRadius: '10px', border: 'none', background: '#000000', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
         >
           <Plus size={15} /> Yangi vazifa
         </button>
@@ -158,7 +158,7 @@ export function TaskKanbanBoard() {
           />
           {fileName ? (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 0.75rem', borderRadius: '8px', background: 'white', border: '1px solid #e2e8f0' }}>
-              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#0f172a' }}>📎 {fileName}</span>
+              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#000000' }}>📎 {fileName}</span>
               <button type="button" onClick={() => { setFileName(''); setFileUrl(''); }} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: '#94a3b8', display: 'flex' }}>
                 <X size={14} />
               </button>
@@ -179,7 +179,7 @@ export function TaskKanbanBoard() {
               type="button"
               onClick={handleCreate}
               disabled={!title.trim() || submitting}
-              style={{ padding: '0.55rem 1rem', borderRadius: '9px', border: 'none', background: '#0f172a', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: title.trim() ? 'pointer' : 'not-allowed', opacity: title.trim() ? 1 : 0.5 }}
+              style={{ padding: '0.55rem 1rem', borderRadius: '9px', border: 'none', background: '#000000', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: title.trim() ? 'pointer' : 'not-allowed', opacity: title.trim() ? 1 : 0.5 }}
             >
               {submitting ? 'Qo\'shilmoqda...' : 'Qo\'shish'}
             </button>
@@ -218,7 +218,7 @@ export function TaskKanbanBoard() {
                   )}
                   {colTasks.map((task) => (
                     <div key={task.id} style={{ background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '0.75rem', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a', marginBottom: task.description ? '0.3rem' : 0 }}>{task.title}</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#000000', marginBottom: task.description ? '0.3rem' : 0 }}>{task.title}</div>
                       {task.description && (
                         <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.5rem', lineHeight: 1.4 }}>{task.description}</div>
                       )}

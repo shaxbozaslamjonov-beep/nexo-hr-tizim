@@ -103,7 +103,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
 
               {/* Number + Title */}
               <div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', lineHeight: 1, letterSpacing: '-0.03em' }}>
+                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#000000', lineHeight: 1, letterSpacing: '-0.03em' }}>
                   {card.value}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.5rem' }}>
@@ -121,7 +121,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
                     <Target size={14} />
                     TARGET: {card.target}
                   </span>
-                  <span style={{ color: '#0f172a' }}>{progress.toFixed(0)}%</span>
+                  <span style={{ color: '#000000' }}>{progress.toFixed(0)}%</span>
                 </div>
                 <div style={{ height: '10px', width: '100%', background: '#f1f5f9', borderRadius: '10px', overflow: 'hidden' }}>
                   <div

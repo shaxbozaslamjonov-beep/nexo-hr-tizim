@@ -895,7 +895,7 @@ export function SettingsContent() {
                   
                   <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
-                      <h4 style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.95rem' }}>Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
+                      <h4 style={{ fontWeight: 800, color: '#000000', fontSize: '0.95rem' }}>Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
                       <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>Kirishda Telegram boti orqali tasdiqlash kodini yuborish</p>
                     </div>
                     <input type="checkbox" style={{ width: '20px', height: '20px' }} defaultChecked />
@@ -916,7 +916,7 @@ export function SettingsContent() {
                   {companyData && (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
                       {/* PLAN CARD */}
-                      <div style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', borderRadius: '16px', padding: '1.5rem', color: '#fff' }}>
+                      <div style={{ background: 'linear-gradient(135deg, #0B1120 0%, #16215A 100%)', borderRadius: '16px', padding: '1.5rem', color: '#fff' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                           <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#38bdf8' }}>
                             Joriy Tarif Plani
@@ -950,7 +950,7 @@ export function SettingsContent() {
 
                       {/* USAGE LIMITS CARD */}
                       <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-                        <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#000000', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                           <Building size={18} color="#0284c7" />
                           Resurslar Kvotasi
                         </h4>
@@ -959,7 +959,7 @@ export function SettingsContent() {
                         <div style={{ marginBottom: '1.25rem' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
                             <span style={{ color: '#475569' }}>Ochiq Vakansiyalar</span>
-                            <span style={{ color: '#0f172a' }}>{companyData.usage?.activeVacancies} / {companyData.limits?.maxActiveVacancies}</span>
+                            <span style={{ color: '#000000' }}>{companyData.usage?.activeVacancies} / {companyData.limits?.maxActiveVacancies}</span>
                           </div>
                           <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
                             <div 
@@ -976,7 +976,7 @@ export function SettingsContent() {
                         <div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
                             <span style={{ color: '#475569' }}>Xodimlar Soni</span>
-                            <span style={{ color: '#0f172a' }}>{companyData.usage?.employees} / {companyData.limits?.maxEmployees}</span>
+                            <span style={{ color: '#000000' }}>{companyData.usage?.employees} / {companyData.limits?.maxEmployees}</span>
                           </div>
                           <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
                             <div 
@@ -1056,7 +1056,7 @@ export function SettingsContent() {
                               <td style={{ fontSize: '0.8rem', color: '#64748b', whiteSpace: 'nowrap' }}>
                                 {new Date(log.createdAt).toLocaleString('uz-UZ')}
                               </td>
-                              <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
+                              <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#000000' }}>
                                 {log.userEmail || 'Tizim / Anonim'}
                               </td>
                               <td>

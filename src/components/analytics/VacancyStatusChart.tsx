@@ -43,7 +43,7 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
     if (active && payload && payload.length) {
       return (
         <div style={{ background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '0.85rem' }}>
-          <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', margin: '0 0 0.25rem 0' }}>{payload[0].payload.localName}</p>
+          <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#000000', textTransform: 'uppercase', margin: '0 0 0.25rem 0' }}>{payload[0].payload.localName}</p>
           <div style={{ fontSize: '0.9rem', fontWeight: 900, color: '#2563eb' }}>
             {payload[0].value} ta vakansiya
           </div>
@@ -71,7 +71,7 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
           <Filter size={22} color="white" />
         </div>
         <div>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', margin: 0, lineHeight: 1.2 }}>
             {t('analytics.vacancyStatus.title') || 'Статус вакансий'}
           </h3>
           <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
