@@ -60,7 +60,7 @@ export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
           <BrainCircuit size={22} color="white" />
         </div>
         <div>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d1b3d', margin: 0, lineHeight: 1.2 }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
             {t('analytics.candidateSkills.title') || "Уровень компьютерной грамотности"}
           </h3>
           <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>

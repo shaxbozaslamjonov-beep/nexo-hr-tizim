@@ -124,13 +124,13 @@ function CreateInterviewForm() {
         </button>
 
         <div style={{
-          background: 'linear-gradient(135deg, #0d1b3d 0%, #1f3480 50%, #2e4ba8 100%)',
+          background: 'linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #0d9488 100%)',
           borderRadius: '24px',
           padding: '2.5rem 3rem',
           color: 'white',
           position: 'relative',
           overflow: 'hidden',
-          boxShadow: '0 10px 30px rgba(13, 27, 61, 0.15)'
+          boxShadow: '0 10px 30px rgba(15, 23, 42, 0.15)'
         }}>
           <div style={{
             position: 'absolute',

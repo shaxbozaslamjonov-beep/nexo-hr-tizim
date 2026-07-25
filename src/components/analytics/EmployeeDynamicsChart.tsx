@@ -47,7 +47,7 @@ export function EmployeeDynamicsChart({ data }: EmployeeDynamicsChartProps) {
             <Activity size={22} color="white" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d1b3d', margin: 0, lineHeight: 1.2 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
               {t('careerMaps.stats.monthlyGrowth') || 'Ежемесячный рост'}
             </h3>
             <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
@@ -93,7 +93,7 @@ export function EmployeeDynamicsChart({ data }: EmployeeDynamicsChartProps) {
             <Tooltip 
               contentStyle={{ borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)', backgroundColor: 'white', padding: '12px' }}
               itemStyle={{ fontSize: '13px', fontWeight: 800 }}
-              labelStyle={{ color: '#0d1b3d', marginBottom: '8px', fontWeight: 900, fontSize: '14px' }}
+              labelStyle={{ color: '#0f172a', marginBottom: '8px', fontWeight: 900, fontSize: '14px' }}
             />
             <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 800, paddingBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}/>
             <Area 

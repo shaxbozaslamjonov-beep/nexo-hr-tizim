@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
         {error && <div className={styles.error}>{error}</div>}
 
         {submitted ? (
-          <div className={styles.formGroup} style={{ color: 'rgba(247, 245, 239, 0.75)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+          <div className={styles.formGroup} style={{ color: 'rgba(248, 250, 252, 0.75)', fontSize: '0.9rem', lineHeight: 1.5 }}>
             {message}
           </div>
         ) : (

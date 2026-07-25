@@ -100,7 +100,7 @@ export function AnalyticsInsights({ data }: AnalyticsInsightsProps) {
             <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#5a6372', marginBottom: '0.35rem' }}>
               {insight.title}
             </h4>
-            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0d1b3d', lineHeight: 1, letterSpacing: '-0.03em' }}>
+            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', lineHeight: 1, letterSpacing: '-0.03em' }}>
               {insight.value}
             </div>
             <p style={{ fontSize: '0.85rem', color: '#7a8391', marginTop: '0.75rem', lineHeight: 1.5 }}>

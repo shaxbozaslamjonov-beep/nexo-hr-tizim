@@ -1,99 +1,134 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* ===== Nexo HR design system — Navy (trust) + Emerald (growth) + Bronze (opportunity) ===== */
+  /* ===== Nexo HR design system — Slate (neutral) + Teal (primary) + gamification accents ===== */
 
-  /* Navy ramp — primary brand */
-  --navy-50: #F5F7FC;
-  --navy-100: #E8ECFB;
-  --navy-200: #D4DFF7;
-  --navy-300: #B4C7F1;
-  --navy-400: #8BA8E8;
-  --navy-500: #5A7FD4;
-  --navy-600: #4169C9;
-  --navy-700: #2E4BA8;
-  --navy-800: #1F3480;
-  --navy-900: #0D1B3D;
+  /* Slate ramp — neutral base */
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --slate-950: #020617;
 
-  /* Emerald ramp — growth / success accent */
-  --emerald-50: #F0F8F5;
-  --emerald-100: #DDEEE8;
-  --emerald-300: #99C4B3;
-  --emerald-500: #449B78;
-  --emerald-600: #2D8659;
-  --emerald-700: #1E6B48;
-  --emerald-800: #125034;
+  /* Teal ramp — primary brand */
+  --teal-50: #F0FDFA;
+  --teal-100: #CCFBF1;
+  --teal-300: #5EEAD4;
+  --teal-500: #14B8A6;
+  --teal-600: #0D9488;
+  --teal-700: #0F766E;
+  --teal-800: #115E59;
 
-  /* Bronze ramp — featured / premium accent */
-  --bronze-50: #FEF7F0;
-  --bronze-100: #FBE8D8;
-  --bronze-300: #EDB88C;
-  --bronze-500: #D97F36;
-  --bronze-600: #C9651E;
-  --bronze-700: #A84F0E;
-  --bronze-800: #7E3A05;
+  /* Indigo ramp — "Lesson" accent */
+  --indigo-50: #EEF2FF;
+  --indigo-100: #E0E7FF;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;
+  --indigo-700: #4338CA;
+
+  /* Orange ramp — "Streak" accent */
+  --orange-50: #FFF7ED;
+  --orange-100: #FFEDD5;
+  --orange-500: #F97316;
+  --orange-600: #EA580C;
+
+  /* Amber ramp — "Trophy" accent */
+  --amber-50: #FFFBEB;
+  --amber-100: #FEF3C7;
+  --amber-400: #FBBF24;
+  --amber-500: #F59E0B;
+
+  /* Emerald ramp — "Success" accent */
+  --emerald-50: #ECFDF5;
+  --emerald-100: #D1FAE5;
+  --emerald-300: #6EE7B7;
+  --emerald-500: #10B981;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+  --emerald-800: #065F46;
+
+  /* Red ramp — "Destructive" accent */
+  --red-50: #FEF2F2;
+  --red-100: #FEE2E2;
+  --red-500: #EF4444;
+  --red-600: #DC2626;
+  --red-700: #B91C1C;
 
   /* Core semantic tokens (consumed throughout the app) */
-  --primary: var(--navy-600);
-  --primary-dark: var(--navy-800);
-  --primary-light: var(--navy-300);
+  --primary: var(--teal-600);
+  --primary-dark: var(--teal-800);
+  --primary-light: var(--teal-300);
   --secondary: var(--emerald-500);
   --secondary-light: var(--emerald-300);
   --success: var(--emerald-500);
-  --warning: var(--bronze-500);
-  --error: #E74C3C;
-  --info: var(--navy-500);
-  --featured: var(--bronze-500);
+  --warning: var(--amber-500);
+  --error: var(--red-500);
+  --destructive: var(--red-500);
+  --info: var(--indigo-600);
+  --featured: var(--orange-500);
+
+  /* Gamification / product-specific tokens (per design system reference) */
+  --lesson: var(--indigo-600);
+  --lab: var(--teal-600);
+  --streak: var(--orange-500);
+  --trophy: var(--amber-400);
+  --muted: var(--slate-100);
 
   /* Backgrounds & Surfaces */
-  --background: #FAFBFC;
-  --foreground: var(--navy-900);
-  --surface: #ffffff;
+  --background: var(--slate-50);
+  --foreground: var(--slate-900);
+  --surface: #FFFFFF;
+  --surface-dark: var(--slate-950);
 
   /* Accent used for the analytics "highlight" stat variant (dashboard.module.css .accent) */
-  --stat-accent: var(--bronze-500);
+  --stat-accent: var(--orange-500);
 
-  /* Public-facing brand tokens (landing, login, register, /apply) — single source,
-     now aligned to the Navy/Emerald identity instead of the old industrial navy/amber. */
-  --brand-navy: var(--navy-900);
-  --brand-navy-2: var(--navy-600);
-  --brand-amber: var(--emerald-500);
-  --brand-amber-dark: var(--emerald-600);
-  --brand-paper: #FAFBFC;
-  --brand-ink: var(--navy-900);
+  /* Public-facing brand tokens (landing, login, register, /apply) — single source. */
+  --brand-navy: var(--slate-900);
+  --brand-navy-2: var(--slate-700);
+  --brand-amber: var(--teal-500);
+  --brand-amber-dark: var(--teal-600);
+  --brand-paper: var(--slate-50);
+  --brand-ink: var(--slate-900);
 
-  /* Internal dashboard sidebar — flat surface + navy accent (per design-system sidebar spec) */
+  /* Internal dashboard sidebar — flat surface + teal accent (per design-system sidebar spec) */
   --sidebar-bg: #ffffff;
-  --sidebar-border: var(--navy-200);
-  --sidebar-text: #5A6372;
-  --sidebar-text-muted: #7A8391;
-  --sidebar-heading: var(--navy-900);
-  --sidebar-hover-bg: var(--navy-50);
-  --sidebar-accent: var(--navy-600);
-  --sidebar-accent-bg: var(--navy-100);
-  --sidebar-accent-border: var(--navy-200);
+  --sidebar-border: var(--slate-200);
+  --sidebar-text: var(--slate-500);
+  --sidebar-text-muted: var(--slate-400);
+  --sidebar-heading: var(--slate-900);
+  --sidebar-hover-bg: var(--slate-50);
+  --sidebar-accent: var(--teal-600);
+  --sidebar-accent-bg: var(--teal-100);
+  --sidebar-accent-border: var(--teal-100);
 
   /* Glassmorphism Tokens */
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-shadow: 0 8px 32px 0 rgba(13, 27, 61, 0.25);
+  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.25);
 
   /* Borders & Shadows */
-  --border: #E8EAED;
-  --input: #E8EAED;
+  --border: var(--slate-200);
+  --input: var(--slate-200);
   --ring: var(--primary);
 
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --card-hover-shadow: 0 20px 40px -10px rgba(65, 105, 201, 0.2);
+  --card-hover-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.2);
 
   /* Typography — Poppins for headlines, Inter for body (max 2 families, per design system) */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Poppins', var(--font-sans);
 
-  --text-primary: var(--navy-900);
-  --text-secondary: #5A6372;
-  --text-light: #7A8391;
-  --bg-muted: #F3F5F7;
+  --text-primary: var(--slate-900);
+  --text-secondary: var(--slate-500);
+  --text-light: var(--slate-400);
+  --bg-muted: var(--slate-100);
 
   /* Layout */
   --sidebar-width: 280px;
@@ -105,9 +140,9 @@
   --radius-2xl: 2rem;
 
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, var(--navy-600) 0%, var(--navy-800) 100%);
-  --grad-sidebar: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-600) 100%);
-  --grad-welcome: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-600) 100%);
+  --grad-primary: linear-gradient(135deg, var(--teal-600) 0%, var(--teal-800) 100%);
+  --grad-sidebar: linear-gradient(135deg, var(--slate-900) 0%, var(--teal-700) 100%);
+  --grad-welcome: linear-gradient(135deg, var(--slate-900) 0%, var(--teal-700) 100%);
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
 }
 
@@ -137,9 +172,9 @@
   --sidebar-text-muted: #64748b;
   --sidebar-heading: #f1f5f9;
   --sidebar-hover-bg: rgba(148, 163, 184, 0.08);
-  --sidebar-accent: var(--navy-400);
-  --sidebar-accent-bg: rgba(139, 168, 232, 0.12);
-  --sidebar-accent-border: rgba(139, 168, 232, 0.3);
+  --sidebar-accent: var(--teal-300);
+  --sidebar-accent-bg: rgba(94, 234, 212, 0.12);
+  --sidebar-accent-border: rgba(94, 234, 212, 0.3);
 
   color-scheme: dark;
 }
@@ -277,16 +312,16 @@ input, button, textarea, select {
 }
 
 .badge-open { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
-.badge-pending { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
-.badge-pending_approval { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-pending { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+.badge-pending_approval { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
 .badge-closed { background: var(--bg-muted); color: var(--text-secondary); border: 1px solid var(--border); }
-.badge-passed { background: var(--navy-50); color: var(--navy-700); border: 1px solid var(--navy-100); }
-.badge-training { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
-.badge-error { background: rgba(231, 76, 60, 0.1); color: #C0392B; border: 1px solid rgba(231, 76, 60, 0.2); }
-.badge-screening { background: var(--navy-50); color: var(--navy-700); border: 1px solid var(--navy-100); }
-.badge-interview { background: var(--bronze-50); color: var(--bronze-700); border: 1px solid var(--bronze-100); }
+.badge-passed { background: var(--teal-50); color: var(--teal-700); border: 1px solid var(--teal-100); }
+.badge-training { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+.badge-error { background: var(--red-50); color: var(--red-700); border: 1px solid var(--red-100); }
+.badge-screening { background: var(--teal-50); color: var(--teal-700); border: 1px solid var(--teal-100); }
+.badge-interview { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
 .badge-offer { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-100); }
-.badge-rejected { background: rgba(231, 76, 60, 0.1); color: #C0392B; border: 1px solid rgba(231, 76, 60, 0.2); }
+.badge-rejected { background: var(--red-50); color: var(--red-700); border: 1px solid var(--red-100); }
 .badge-hired { background: var(--emerald-100); color: var(--emerald-800); border: 2px solid var(--emerald-500); }
 
 /* Scrollbar Customization */

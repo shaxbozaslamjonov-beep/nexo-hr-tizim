@@ -68,7 +68,7 @@ function ResetPasswordForm() {
       {error && <div className={styles.error}>{error}</div>}
 
       {done ? (
-        <div className={styles.formGroup} style={{ color: 'rgba(247, 245, 239, 0.75)', fontSize: '0.9rem' }}>
+        <div className={styles.formGroup} style={{ color: 'rgba(248, 250, 252, 0.75)', fontSize: '0.9rem' }}>
           {t('resetPasswordSuccess')}
         </div>
       ) : (

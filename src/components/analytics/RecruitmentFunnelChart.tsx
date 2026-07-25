@@ -58,11 +58,11 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
       return (
         <div style={{ background: 'rgba(255, 255, 255, 0.98)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.12)', padding: '1rem', border: '1px solid #e2e8f0', minWidth: '180px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0d1b3d', textTransform: 'uppercase' }}>{data.localName}</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase' }}>{data.localName}</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: '#5a6372' }}>
             <span>Nomzodlar:</span>
-            <span style={{ color: '#0d1b3d', fontWeight: 900 }}>{data.value} ta</span>
+            <span style={{ color: '#0f172a', fontWeight: 900 }}>{data.value} ta</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: '#2563eb', marginTop: '0.25rem' }}>
             <span>Konversiya:</span>
@@ -93,7 +93,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
             <Users size={22} color="white" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d1b3d', margin: 0, lineHeight: 1.2 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
               {t('recruitmentFunnel') || 'Воронка рекрутмента'}
             </h3>
             <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
@@ -156,7 +156,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
                 {formattedData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}
-                <LabelList dataKey="value" position="right" fill="#0d1b3d" fontSize={13} fontWeight={900} offset={12} />
+                <LabelList dataKey="value" position="right" fill="#0f172a" fontSize={13} fontWeight={900} offset={12} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>

@@ -6,13 +6,13 @@
 }
 
 .heroBanner {
-  background: linear-gradient(135deg, #0d1b3d 0%, #1f3480 50%, #2e4ba8 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #0d9488 100%);
   border-radius: 24px;
   padding: 2.5rem 3rem;
   color: white;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(13, 27, 61, 0.15);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
 
 .heroBgGlow {
@@ -102,7 +102,7 @@
 
 .navTab:hover {
   background: #f1f5f9;
-  color: #1f3480;
+  color: #1e293b;
   transform: translateX(4px);
 }
 
@@ -137,7 +137,7 @@
 .sectionTitle {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #0d1b3d;
+  color: #0f172a;
 }
 
 .sectionSub {
@@ -160,7 +160,7 @@
   background: #f8fafc;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #0d1b3d;
+  color: #0f172a;
   outline: none;
   transition: all 0.2s;
 }
@@ -232,7 +232,7 @@
 .userName {
   font-weight: 800;
   font-size: 0.95rem;
-  color: #0d1b3d;
+  color: #0f172a;
 }
 
 .userSub {
