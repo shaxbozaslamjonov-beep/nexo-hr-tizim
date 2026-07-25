@@ -10,6 +10,8 @@ export default function RegisterPage() {
   const { register, isLoading } = useAuth();
   const { t } = useLanguage();
   
+  const [mode, setMode] = useState<'employee' | 'company'>('employee');
+  const [companyName, setCompanyName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -29,7 +31,7 @@ export default function RegisterPage() {
     }
 
     try {
-      await register(firstName, lastName, email, password, phone, telegramUsername);
+      await register(firstName, lastName, email, password, phone, telegramUsername, mode === 'company' ? companyName : undefined);
     } catch (err: any) {
       setError(err.message);
     }
@@ -47,7 +49,39 @@ export default function RegisterPage() {
 
         {error && <div className={styles.error}>{error}</div>}
 
+        <div className={styles.modeSwitch}>
+          <button
+            type="button"
+            className={`${styles.modeTab} ${mode === 'employee' ? styles.modeTabActive : ''}`}
+            onClick={() => setMode('employee')}
+          >
+            {t('registerAsEmployee')}
+          </button>
+          <button
+            type="button"
+            className={`${styles.modeTab} ${mode === 'company' ? styles.modeTabActive : ''}`}
+            onClick={() => setMode('company')}
+          >
+            {t('registerAsCompany')}
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
+          {mode === 'company' && (
+            <div className={styles.formGroup}>
+              <label htmlFor="companyName" className={styles.label}>{t('companyName')}</label>
+              <input
+                id="companyName"
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className={styles.input}
+                placeholder={t('companyNamePlaceholder')}
+                required
+              />
+            </div>
+          )}
+
           <div className={styles.formGroup}>
             <label htmlFor="firstName" className={styles.label}>{t('firstName')}</label>
             <input

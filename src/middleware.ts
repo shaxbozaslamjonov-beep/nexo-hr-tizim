@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { verifyToken } from './lib/jwt';
 import { rolesWithPermission, type Action } from './lib/rbac';
 
-const publicRoutes = ['/login', '/register', '/', '/api/auth/login', '/api/auth/register'];
+const publicRoutes = ['/login', '/register', '/', '/api/auth/login', '/api/auth/register', '/api/auth/forgot-password', '/api/auth/reset-password'];
 // Prefixes that are always public regardless of HTTP method
 const publicRoutePrefixes = ['/apply', '/login'];
 // Routes public only for specific HTTP methods (e.g. anonymous candidate self-submission)

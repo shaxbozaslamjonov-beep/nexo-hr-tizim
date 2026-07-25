@@ -49,6 +49,7 @@ model User {
   candidateProfile CandidateProfile?
   employeeProfile  EmployeeProfile?
   probationsEvaluated ProbationEvaluation[]
+  passwordResetTokens PasswordResetToken[]
 
   @@index([companyId])
 }
@@ -608,6 +609,18 @@ model AuditLog {
 
   @@index([companyId])
   @@index([createdAt])
+}
+
+model PasswordResetToken {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  tokenHash   String   @unique
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Announcement {
