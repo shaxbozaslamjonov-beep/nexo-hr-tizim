@@ -167,7 +167,7 @@ export default function AdvancedCareerMapPage() {
                   padding: '0.6rem 1.25rem', borderRadius: '11px', border: 'none', cursor: 'pointer',
                   fontSize: '0.85rem', fontWeight: 700, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   background: activeFilter === filter.id ? 'white' : 'transparent',
-                  color: activeFilter === filter.id ? '#6366f1' : '#94a3b8',
+                  color: activeFilter === filter.id ? '#2E56E6' : '#94a3b8',
                   boxShadow: activeFilter === filter.id ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
                 }}
               >
@@ -176,7 +176,7 @@ export default function AdvancedCareerMapPage() {
                   <span style={{
                     marginLeft: '0.5rem', fontSize: '0.7rem', fontWeight: 900,
                     padding: '0.15rem 0.5rem', borderRadius: '20px',
-                    background: '#6366f1', color: 'white',
+                    background: '#2E56E6', color: 'white',
                   }}>
                     {filteredPositions.length}
                   </span>
@@ -199,7 +199,7 @@ export default function AdvancedCareerMapPage() {
                   boxShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.02)',
                   transition: 'border-color 0.2s',
                 }}
-                onFocus={(e) => e.currentTarget.style.borderColor = '#6366f1'}
+                onFocus={(e) => e.currentTarget.style.borderColor = '#2E56E6'}
                 onBlur={(e) => e.currentTarget.style.borderColor = '#edf2f7'}
               />
             </div>
@@ -208,7 +208,7 @@ export default function AdvancedCareerMapPage() {
               onClick={handleCreatePosition}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.7rem 1.25rem', background: 'var(--primary, #6366f1)', color: 'white',
+                padding: '0.7rem 1.25rem', background: 'var(--primary, #2E56E6)', color: 'white',
                 border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(99,102,241,0.3)', fontSize: '0.85rem',
                 transition: 'all 0.2s',
@@ -234,7 +234,7 @@ export default function AdvancedCareerMapPage() {
           {loading ? (
             <div style={{ gridColumn: '1 / -1', padding: '8rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
               <div className="relative">
-                <Loader2 className="animate-spin" size={48} color="#6366f1" />
+                <Loader2 className="animate-spin" size={48} color="#2E56E6" />
                 <div className="absolute inset-0 blur-2xl bg-primary/20 animate-pulse" />
               </div>
               <p style={{ color: '#94a3b8', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.01em' }}>Ma'lumotlar yuklanmoqda...</p>
@@ -258,7 +258,7 @@ export default function AdvancedCareerMapPage() {
               <button 
                 onClick={handleCreatePosition}
                 style={{ 
-                  marginTop: '0.5rem', padding: '0.8rem 2rem', background: '#6366f1', 
+                  marginTop: '0.5rem', padding: '0.8rem 2rem', background: '#2E56E6', 
                   border: 'none', borderRadius: '14px', color: 'white', fontWeight: 800, 
                   cursor: 'pointer', boxShadow: '0 10px 15px -3px rgba(99,102,241,0.2)',
                   transition: 'all 0.2s'

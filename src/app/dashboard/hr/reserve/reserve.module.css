@@ -142,7 +142,7 @@
 }
 
 .actionBtn:hover {
-  background: #f8fafc;
+  background: var(--gray-50);
   color: var(--primary);
   border-color: var(--primary-light);
 }

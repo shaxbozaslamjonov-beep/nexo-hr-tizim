@@ -215,7 +215,7 @@ export function AnalyticsContent() {
 
       {/* Candidates Overview Table/Metrics */}
       <div className={`${fx.fadeInUp} ${fx.delay3}`}>
-        <div className={fx.hoverLiftSm} style={{ background: 'white', borderRadius: '24px', border: '1px solid var(--gray-200)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
+        <div className={fx.hoverLiftSm} style={{ background: 'var(--surface)', borderRadius: '24px', border: '1px solid var(--gray-200)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
           <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border)', background: 'var(--gray-50)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
               <div style={{ padding: '0.5rem', background: 'var(--blue-50)', borderRadius: '12px', color: 'var(--primary)', display: 'flex' }}>

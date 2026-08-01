@@ -44,16 +44,16 @@ export function TabsNavigation({ handleAction, children }: { handleAction: () =>
     <Tabs defaultValue="overview" className="w-full mt-8">
       <style>{`
         .tab-button[data-state="active"] {
-          background-color: rgba(99, 102, 241, 0.1) !important;
-          border-color: #6366f1 !important;
-          color: #6366f1 !important;
+          background-color: rgba(46, 86, 230, 0.1) !important;
+          border-color: #2E56E6 !important;
+          color: #2E56E6 !important;
         }
         .tab-button[data-state="active"] svg {
-          color: #6366f1 !important;
+          color: #2E56E6 !important;
         }
         .tab-button:hover {
-          background-color: rgba(99, 102, 241, 0.05) !important;
-          border-color: rgba(99, 102, 241, 0.3) !important;
+          background-color: rgba(46, 86, 230, 0.05) !important;
+          border-color: rgba(46, 86, 230, 0.3) !important;
         }
       `}</style>
       <div 

@@ -156,7 +156,7 @@ export default function VacanciesPage() {
                 fontSize: '0.85rem',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                boxShadow: activeFilter === status ? '0 4px 12px rgba(99, 102, 241, 0.3)' : '0 2px 4px rgba(0,0,0,0.05)',
+                boxShadow: activeFilter === status ? '0 4px 12px rgba(46, 86, 230, 0.3)' : '0 2px 4px rgba(0,0,0,0.05)',
               }}
             >
               {t(`vacancies.status.${status}`)}

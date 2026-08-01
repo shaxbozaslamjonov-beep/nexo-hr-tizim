@@ -56,7 +56,7 @@ export function PositionCard({
       {/* Header: icon + title + actions */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', minWidth: 0 }}>
-          <div style={{ padding: '0.6rem', borderRadius: '12px', background: 'linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%)', color: '#6366f1', flexShrink: 0, boxShadow: '0 2px 4px rgba(99,102,241,0.05)' }}>
+          <div style={{ padding: '0.6rem', borderRadius: '12px', background: 'linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%)', color: '#2E56E6', flexShrink: 0, boxShadow: '0 2px 4px rgba(99,102,241,0.05)' }}>
             <Briefcase size={20} />
           </div>
           <div style={{ minWidth: 0 }}>

@@ -271,12 +271,12 @@ export function PositionFormModal({ isOpen, onClose, onSave, initialData, title 
                     padding: '0.6rem 1.5rem',
                     borderRadius: '10px',
                     border: 'none',
-                    background: 'var(--primary, #6366f1)',
+                    background: 'var(--primary, #2E56E6)',
                     color: 'white',
                     fontWeight: 700,
                     cursor: loading ? 'not-allowed' : 'pointer',
                     fontSize: '0.85rem',
-                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)',
+                    boxShadow: '0 4px 12px rgba(46, 86, 230, 0.2)',
                     opacity: loading ? 0.7 : 1,
                   }}
                 >

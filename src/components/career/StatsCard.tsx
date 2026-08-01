@@ -56,10 +56,10 @@ export function StatsCard({ title, value, subtitle, progress, progressLabel, foo
         <div style={{ marginTop: '0.75rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', fontWeight: 600, marginBottom: '0.4rem' }}>
             <span style={{ color: '#94a3b8' }}>{progressLabel || 'Progress'}</span>
-            <span style={{ color: '#6366f1', fontWeight: 700 }}>{progress}%</span>
+            <span style={{ color: '#2E56E6', fontWeight: 700 }}>{progress}%</span>
           </div>
           <div style={{ height: '6px', background: 'var(--bg-muted)', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(90deg, #6366f1 0%, #a855f7 100%)', borderRadius: '3px' }} />
+            <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(90deg, #2E56E6 0%, #a855f7 100%)', borderRadius: '3px' }} />
           </div>
         </div>
       )}

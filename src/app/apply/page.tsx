@@ -164,7 +164,7 @@ function ApplyForm() {
               {t('apply.success.nextStep')}
             </p>
             {result.account && (
-              <div style={{ marginTop: '1.5rem', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid rgba(99, 102, 241, 0.2)', borderRadius: '1rem', padding: '1.25rem', textAlign: 'left' }}>
+              <div style={{ marginTop: '1.5rem', background: 'rgba(46, 86, 230, 0.08)', border: '1px solid rgba(46, 86, 230, 0.2)', borderRadius: '1rem', padding: '1.25rem', textAlign: 'left' }}>
                 <p style={{ fontWeight: 700, marginBottom: '0.5rem' }}>{t('apply.success.accountCreated')}</p>
                 <p style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>{t('apply.fields.email')}: <strong>{result.account.email}</strong></p>
                 <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem' }}>{t('apply.success.tempPassword')}: <strong>{result.account.tempPassword}</strong></p>

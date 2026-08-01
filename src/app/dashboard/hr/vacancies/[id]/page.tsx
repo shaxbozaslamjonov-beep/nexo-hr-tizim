@@ -111,8 +111,8 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
               padding: '0.6rem 1.25rem', 
               borderRadius: '12px', 
               border: '1px solid var(--border)', 
-              background: '#f0f9ff',
-              color: '#0ea5e9',
+              background: 'var(--blue-50)',
+              color: 'var(--primary)',
               fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
@@ -141,8 +141,8 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
               padding: '0.6rem 1.25rem', 
               borderRadius: '12px', 
               border: 'none', 
-              background: '#fee2e2',
-              color: '#ef4444',
+              background: 'var(--red-100)',
+              color: 'var(--error)',
               fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
@@ -212,7 +212,7 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
             </div>
 
             {interviews.length === 0 ? (
-              <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--background)', borderRadius: '16px', color: '#94a3b8' }}>
+              <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--background)', borderRadius: '16px', color: 'var(--text-secondary)' }}>
                 No interviews scheduled for this vacancy yet
               </div>
             ) : (
@@ -246,27 +246,27 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
                 style={{ overflow: 'hidden', borderTop: '1px solid var(--border)', paddingTop: '2.5rem' }}
               >
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Activity size={24} color="#0ea5e9" />
+                  <Activity size={24} color="var(--primary)" />
                   Chuqurlashtirilgan Analiz
                 </h2>
                 
                 {loadingAnalytics ? (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+                  <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading...</div>
                 ) : analyticsData && (
                   <div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
                       <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
-                        <Eye size={24} color="#6366f1" style={{ marginBottom: '0.5rem' }} />
+                        <Eye size={24} color="var(--primary)" style={{ marginBottom: '0.5rem' }} />
                         <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.views}</div>
                         <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Ko'rishlar</div>
                       </div>
                       <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
-                        <FileText size={24} color="#10b981" style={{ marginBottom: '0.5rem' }} />
+                        <FileText size={24} color="var(--success)" style={{ marginBottom: '0.5rem' }} />
                         <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.applicationsCount}</div>
                         <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Arizalar</div>
                       </div>
                       <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
-                        <Clock size={24} color="#f59e0b" style={{ marginBottom: '0.5rem' }} />
+                        <Clock size={24} color="var(--warning)" style={{ marginBottom: '0.5rem' }} />
                         <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{analyticsData.avgTimeToFill} Kun</div>
                         <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>O'rtacha vaqt</div>
                       </div>
@@ -276,13 +276,13 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
                       <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>Nomzodlar Funnel Diagrammasi</h3>
                       <ResponsiveContainer width="100%" height="80%">
                         <BarChart data={analyticsData.funnelData} layout="vertical" margin={{ top: 0, right: 0, left: 30, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
-                          <XAxis type="number" axisLine={false} tickLine={false} />
-                          <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} fontWeight={600} />
-                          <RechartsTooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} />
+                          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
+                          <XAxis type="number" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-secondary)' }} />
+                          <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} fontWeight={600} tick={{ fill: 'var(--text-secondary)' }} />
+                          <RechartsTooltip cursor={{ fill: 'var(--gray-50)' }} contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }} />
                           <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={32}>
                             {analyticsData.funnelData.map((d: any, index: number) => (
-                              <Cell key={`cell-${index}`} fill={['#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6'][index % 5]} />
+                              <Cell key={`cell-${index}`} fill={['var(--blue-500)', 'var(--primary)', 'var(--success)', 'var(--warning)', 'var(--blue-800)'][index % 5]} />
                             ))}
                           </Bar>
                         </BarChart>
@@ -306,7 +306,7 @@ export default function VacancyDetailsPage({ params }: { params: Promise<{ id: s
               fontWeight: 800, 
               fontSize: '1rem',
               cursor: 'pointer',
-              boxShadow: '0 10px 25px rgba(99, 102, 241, 0.3)'
+              boxShadow: '0 10px 25px rgba(46, 86, 230, 0.3)'
             }} className="hover-lift">
               {t('vacancies.viewApplications')}
             </button>

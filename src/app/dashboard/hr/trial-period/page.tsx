@@ -241,7 +241,7 @@ export default function ProbationPage() {
         {isAdmin && (
           <button
             onClick={() => openModal()}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 14px rgba(79, 70, 229, 0.4)' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 14px rgba(46, 86, 230, 0.4)' }}
           >
             <Plus size={20} /> {t('training.addNew') || '+ Yangi sinov muddati'}
           </button>

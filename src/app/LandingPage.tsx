@@ -274,21 +274,21 @@ export function LandingPage() {
             {announcements.map((item) => (
               <div 
                 key={item.id} 
-                style={{ 
-                  background: 'var(--brand-paper, #fff)', 
-                  border: '1px solid #e2e8f0', 
-                  borderRadius: '16px', 
-                  padding: '1.5rem', 
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' 
+                style={{
+                  background: 'var(--surface)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '16px',
+                  padding: '1.5rem',
+                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
                 }}
               >
-                <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
                   {new Date(item.createdAt).toLocaleDateString('uz-UZ')}
                 </span>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', marginBottom: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                   {item.title}
                 </h3>
-                <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.6 }}>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                   {item.content}
                 </p>
               </div>

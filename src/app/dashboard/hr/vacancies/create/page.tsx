@@ -370,7 +370,7 @@ export default function CreateVacancyPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.75rem',
-                boxShadow: '0 10px 20px rgba(99, 102, 241, 0.2)'
+                boxShadow: '0 10px 20px rgba(46, 86, 230, 0.2)'
               }}
               className="hover-lift"
             >

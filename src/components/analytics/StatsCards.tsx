@@ -32,7 +32,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
       value: stats.candidates ?? 0,
       target: targets.candidatesTarget || 150,
       icon: <Users size={22} color="white" />,
-      gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
+      gradient: "var(--grad-primary)",
       trend: trends?.candidates ?? null,
       href: "/dashboard/hr/candidates",
     },
@@ -41,7 +41,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
       value: stats.vacancies ?? 0,
       target: targets.vacanciesTarget || 12,
       icon: <Briefcase size={22} color="white" />,
-      gradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)",
+      gradient: "linear-gradient(135deg, var(--emerald-500) 0%, var(--emerald-700) 100%)",
       trend: trends?.vacancies ?? null,
       href: "/dashboard/hr/vacancies",
     },
@@ -50,7 +50,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
       value: stats.lessons ?? 0,
       target: targets.lessonsTarget || 60,
       icon: <GraduationCap size={22} color="white" />,
-      gradient: "linear-gradient(135deg, #f59e0b 0%, #b45309 100%)",
+      gradient: "linear-gradient(135deg, var(--amber-500) 0%, var(--amber-600) 100%)",
       trend: null,
       href: "/dashboard/hr/lessons",
     },
@@ -59,7 +59,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
       value: stats.testResults ?? 0,
       target: targets.testResultsTarget || 200,
       icon: <FileText size={22} color="white" />,
-      gradient: "linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)",
+      gradient: "linear-gradient(135deg, var(--turquoise-500) 0%, var(--turquoise-600) 100%)",
       trend: null,
       href: "/dashboard/hr/tests",
     }
@@ -75,9 +75,9 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
             <div
               className={fx.hoverLift}
               style={{
-                background: 'white',
+                background: 'var(--surface)',
                 borderRadius: '24px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border)',
                 padding: '1.75rem',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
                 display: 'flex',
@@ -94,7 +94,7 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
                   {card.icon}
                 </div>
                 {card.trend !== null && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.3rem 0.65rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, background: trendUp ? '#dcfce7' : '#fee2e2', color: trendUp ? '#15803d' : '#b91c1c' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.3rem 0.65rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, background: trendUp ? 'var(--emerald-100)' : 'var(--red-100)', color: trendUp ? 'var(--emerald-700)' : 'var(--red-700)' }}>
                     {trendUp ? '+' : ''}{card.trend}%
                     {trendUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                   </div>
@@ -103,27 +103,27 @@ export function StatsCards({ stats, targets, trends }: StatsCardsProps) {
 
               {/* Number + Title */}
               <div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#000000', lineHeight: 1, letterSpacing: '-0.03em' }}>
+                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1, letterSpacing: '-0.03em' }}>
                   {card.value}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#5a6372', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     {card.title}
                   </span>
-                  <ArrowRight size={18} color="#94a3b8" />
+                  <ArrowRight size={18} color="var(--text-secondary)" />
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div style={{ marginTop: '0.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', marginBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                     <Target size={14} />
                     TARGET: {card.target}
                   </span>
-                  <span style={{ color: '#000000' }}>{progress.toFixed(0)}%</span>
+                  <span style={{ color: 'var(--text-primary)' }}>{progress.toFixed(0)}%</span>
                 </div>
-                <div style={{ height: '10px', width: '100%', background: '#f1f5f9', borderRadius: '10px', overflow: 'hidden' }}>
+                <div style={{ height: '10px', width: '100%', background: 'var(--border)', borderRadius: '10px', overflow: 'hidden' }}>
                   <div
                     style={{
                       height: '100%',

@@ -258,7 +258,7 @@ export function TestsContent() {
               >
                 <div className={styles.cardTop}>
                   <div className={styles.categoryTag}>{test.category}</div>
-                  <div className={styles.statusDot} style={{ background: test.status === 'active' ? '#10b981' : '#94a3b8' }} />
+                  <div className={styles.statusDot} style={{ background: test.status === 'active' ? 'var(--success)' : 'var(--text-secondary)' }} />
                 </div>
 
                 <div className={styles.cardMain}>
@@ -437,20 +437,20 @@ export function TestsContent() {
               </div>
 
               {loadingAnalytics ? (
-                <div style={{ padding: '4rem', textAlign: 'center', color: '#94a3b8' }}>Loading analytics...</div>
+                <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading analytics...</div>
               ) : analyticsData ? (
                 <div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
                     <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0ea5e9' }}>{analyticsData.totalAttempts}</div>
+                      <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary)' }}>{analyticsData.totalAttempts}</div>
                       <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Total Attempts</div>
                     </div>
                     <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', fontWeight: 800, color: '#f59e0b' }}>{analyticsData.averageScore}%</div>
+                      <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--warning)' }}>{analyticsData.averageScore}%</div>
                       <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Average Score</div>
                     </div>
                     <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{analyticsData.successRate}%</div>
+                      <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--success)' }}>{analyticsData.successRate}%</div>
                       <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.9rem' }}>Success Rate</div>
                     </div>
                   </div>
@@ -460,11 +460,11 @@ export function TestsContent() {
                       <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Score Distribution</h3>
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={analyticsData.distribution}>
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                           <XAxis dataKey="range" axisLine={false} tickLine={false} />
                           <YAxis axisLine={false} tickLine={false} allowDecimals={false} />
-                          <RechartsTooltip cursor={{ fill: '#f1f5f9' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} />
-                          <Bar dataKey="count" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                          <RechartsTooltip cursor={{ fill: 'var(--gray-50)' }} contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }} />
+                          <Bar dataKey="count" fill="var(--primary)" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>

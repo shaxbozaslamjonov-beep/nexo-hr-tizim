@@ -21,9 +21,9 @@ interface CandidateSkillsChartProps {
 }
 
 const SKILL_COLORS: Record<string, string> = {
-  none: '#cbd5e1',
-  basic: '#60a5fa',
-  advanced: '#2563eb',
+  none: 'var(--gray-300)',
+  basic: 'var(--blue-500)',
+  advanced: 'var(--primary)',
 };
 
 export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
@@ -44,9 +44,9 @@ export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '24px',
-      border: '1px solid #e2e8f0',
+      border: '1px solid var(--border)',
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
       overflow: 'hidden',
       display: 'flex',
@@ -55,15 +55,15 @@ export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
       minHeight: '420px',
     }}>
       {/* Header */}
-      <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-        <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(139, 92, 246, 0.25)' }}>
+      <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'var(--grad-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(46, 86, 230, 0.25)' }}>
           <BrainCircuit size={22} color="white" />
         </div>
         <div>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', margin: 0, lineHeight: 1.2 }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
             {t('analytics.candidateSkills.title') || "Уровень компьютерной грамотности"}
           </h3>
-          <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
+          <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
             Skill Breakdown
           </p>
         </div>
@@ -72,21 +72,21 @@ export function CandidateSkillsChart({ data }: CandidateSkillsChartProps) {
       {/* Body */}
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '300px' }}>
         {!hasData ? (
-          <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600 }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600 }}>
             {t('analytics.noData') || 'Nomzod ko\'nikmalari bo\'yicha ma\'lumot yo\'q'}
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={chartData} margin={{ top: 20, right: 20, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="label" tick={{ fill: '#475569', fontSize: 12, fontWeight: 700 }} axisLine={false} tickLine={false} />
-              <YAxis allowDecimals={false} tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 700 }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: 'var(--text-secondary)', fontSize: 12, fontWeight: 700 }} axisLine={false} tickLine={false} />
+              <YAxis allowDecimals={false} tick={{ fill: 'var(--text-secondary)', fontSize: 11, fontWeight: 700 }} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', backgroundColor: 'white' }}
+                contentStyle={{ borderRadius: '14px', border: '1px solid var(--border)', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }}
               />
               <Bar dataKey="value" radius={[10, 10, 0, 0]} maxBarSize={50}>
                 {chartData.map((entry) => (
-                  <Cell key={entry.name} fill={SKILL_COLORS[entry.name] || '#2563eb'} />
+                  <Cell key={entry.name} fill={SKILL_COLORS[entry.name] || 'var(--primary)'} />
                 ))}
               </Bar>
             </BarChart>

@@ -109,7 +109,7 @@ function CreateInterviewForm() {
             padding: '0.6rem 1.25rem',
             borderRadius: '14px',
             border: '1px solid var(--gray-200)',
-            background: 'white',
+            background: 'var(--surface)',
             fontSize: '0.85rem',
             fontWeight: 800,
             color: 'var(--text-secondary)',
@@ -158,7 +158,7 @@ function CreateInterviewForm() {
 
       {/* Main Form Card */}
       <div style={{
-        background: 'white',
+        background: 'var(--surface)',
         borderRadius: '28px',
         border: '1px solid var(--gray-200)',
         boxShadow: '0 4px 25px rgba(0, 0, 0, 0.04)',
@@ -417,7 +417,7 @@ function CreateInterviewForm() {
               onClick={() => router.back()}
               style={{
                 padding: '0.75rem 1.75rem',
-                background: 'white',
+                background: 'var(--surface)',
                 color: 'var(--text-secondary)',
                 border: '1px solid var(--gray-300)',
                 borderRadius: '14px',

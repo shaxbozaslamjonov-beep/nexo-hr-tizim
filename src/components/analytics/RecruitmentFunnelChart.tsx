@@ -34,7 +34,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
   const formattedData = data.map(item => {
     let localName = item.name;
     const stageKey = item.name.toLowerCase() as keyof typeof COLORS;
-    const color = COLORS[item.name as keyof typeof COLORS] || '#94a3b8';
+    const color = COLORS[item.name as keyof typeof COLORS] || 'var(--text-secondary)';
     
     const trans = t(`funnel.stages.${stageKey}`);
     if (trans && trans !== `funnel.stages.${stageKey}`) {

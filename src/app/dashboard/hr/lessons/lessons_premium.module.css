@@ -68,7 +68,7 @@
 
 .searchInput:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 4px rgba(46, 86, 230, 0.1);
 }
 
 .addBtn {
@@ -129,7 +129,7 @@
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(46, 86, 230, 0.1);
   color: var(--primary);
   display: flex;
   align-items: center;

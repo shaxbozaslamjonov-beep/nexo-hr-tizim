@@ -166,7 +166,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
         <div style={{ display: 'grid', gap: '2rem' }}>
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} style={detailCardStyle}>
             <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '80px', height: '80px', borderRadius: '50%', background: 'var(--grad-primary)', color: 'white', marginBottom: '1rem', boxShadow: '0 10px 20px rgba(99, 102, 241, 0.3)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '80px', height: '80px', borderRadius: '50%', background: 'var(--grad-primary)', color: 'white', marginBottom: '1rem', boxShadow: '0 10px 20px rgba(46, 86, 230, 0.3)' }}>
                 <Award size={40} />
               </div>
               <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)' }}>{app.score || 0}</h2>

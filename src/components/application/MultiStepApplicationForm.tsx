@@ -346,7 +346,7 @@ const primaryButtonStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
-  boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
+  boxShadow: '0 4px 12px rgba(46, 86, 230, 0.2)'
 };
 
 const secondaryButtonStyle: React.CSSProperties = {

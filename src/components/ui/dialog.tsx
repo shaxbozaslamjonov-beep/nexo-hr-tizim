@@ -19,7 +19,9 @@ const DialogOverlay = React.forwardRef<
       position: 'fixed',
       inset: 0,
       zIndex: 50,
-      background: 'rgba(0, 0, 0, 0.6)',
+      background: 'rgba(15, 23, 42, 0.6)',
+      backdropFilter: 'blur(8px)',
+      WebkitBackdropFilter: 'blur(8px)',
       ...style,
     }}
     {...props}
@@ -48,7 +50,8 @@ const DialogContent = React.forwardRef<
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-        background: 'white',
+        background: 'var(--surface)',
+        border: '1px solid var(--border)',
         borderRadius: '16px',
         padding: '1.5rem',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
@@ -67,7 +70,7 @@ const DialogContent = React.forwardRef<
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
-          color: '#94a3b8',
+          color: 'var(--text-secondary)',
           display: 'flex',
         }}
       >
@@ -101,7 +104,7 @@ const DialogTitle = React.forwardRef<
 >(({ style, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    style={{ fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.2, color: '#000000', ...style }}
+    style={{ fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.2, color: 'var(--text-primary)', ...style }}
     {...props}
   />
 ))
@@ -113,7 +116,7 @@ const DialogDescription = React.forwardRef<
 >(({ style, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    style={{ fontSize: '0.85rem', color: '#64748b', ...style }}
+    style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', ...style }}
     {...props}
   />
 ))

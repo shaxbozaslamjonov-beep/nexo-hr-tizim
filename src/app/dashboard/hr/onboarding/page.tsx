@@ -357,7 +357,7 @@ export default function OnboardingPage() {
                 borderRadius: '12px', 
                 fontWeight: 700, 
                 cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(79, 70, 229, 0.4)',
+                boxShadow: '0 4px 14px rgba(46, 86, 230, 0.4)',
                 transition: 'all 0.2s'
               }}
               onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}

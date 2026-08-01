@@ -336,9 +336,9 @@ export function HRDashboardContent() {
                   width={100}
                   tick={{ fill: 'var(--text-secondary)', fontSize: 10, fontWeight: 600 }}
                 />
-                <Tooltip 
+                <Tooltip
                   cursor={{ fill: 'var(--gray-50)' }}
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: 'var(--shadow-lg)' }}
+                  contentStyle={{ borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }}
                 />
                 <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={30}>
                   {funnelData.map((entry, index) => (
@@ -375,8 +375,8 @@ export function HRDashboardContent() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
-                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: 'var(--shadow-lg)' }}
+                <Tooltip
+                   contentStyle={{ borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -501,7 +501,7 @@ export function HRDashboardContent() {
                      65%
                   </span>
                 </div>
-                <div style={{ height: '10px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ height: '10px', background: 'rgba(46, 86, 230, 0.1)', borderRadius: '5px', overflow: 'hidden' }}>
                   <motion.div 
                     initial={{ width: 0 }}
                     whileInView={{ width: '65%' }}

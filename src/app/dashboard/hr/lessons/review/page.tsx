@@ -104,7 +104,7 @@ export default function AssignmentReviewPage() {
   ];
 
   const cardStyle: React.CSSProperties = {
-    background: 'white',
+    background: 'var(--surface)',
     borderRadius: '20px',
     border: '1px solid var(--gray-200)',
     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
@@ -157,7 +157,7 @@ export default function AssignmentReviewPage() {
 
       {/* Filters + Search */}
       <div className={`${fx.fadeInUp} ${fx.delay2}`} style={{ ...cardStyle, background: 'var(--gray-50)', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.35rem', padding: '0.3rem', background: 'white', borderRadius: '12px', border: '1px solid var(--gray-200)' }}>
+        <div style={{ display: 'flex', gap: '0.35rem', padding: '0.3rem', background: 'var(--surface)', borderRadius: '12px', border: '1px solid var(--gray-200)' }}>
           {[
             { id: 'ALL', label: 'Barchasi' },
             { id: 'SUBMITTED', label: 'Yangi' },
@@ -190,7 +190,7 @@ export default function AssignmentReviewPage() {
             placeholder="Xodim bo'yicha qidirish..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ ...inputStyle, paddingLeft: '2.5rem', background: 'white' }}
+            style={{ ...inputStyle, paddingLeft: '2.5rem', background: 'var(--surface)' }}
           />
         </div>
       </div>
@@ -331,7 +331,7 @@ export default function AssignmentReviewPage() {
                             <button
                               type="button"
                               onClick={() => setGradingId(null)}
-                              style={{ padding: '0.65rem 1rem', borderRadius: '10px', border: '1px solid var(--gray-200)', background: 'white', color: 'var(--text-secondary)', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                              style={{ padding: '0.65rem 1rem', borderRadius: '10px', border: '1px solid var(--gray-200)', background: 'var(--surface)', color: 'var(--text-secondary)', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
                             >
                               Bekor
                             </button>
@@ -352,7 +352,7 @@ export default function AssignmentReviewPage() {
                               padding: '0.65rem',
                               borderRadius: '10px',
                               border: '1px solid var(--gray-200)',
-                              background: 'white',
+                              background: 'var(--surface)',
                               color: a.fileUrl ? 'var(--text-primary)' : 'var(--gray-300)',
                               fontWeight: 700,
                               fontSize: '0.8rem',

@@ -814,7 +814,7 @@ export function SettingsContent() {
                       <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--blue-700)' }}>Bot Token Holati</span>
                       <span style={{ padding: '0.25rem 0.75rem', background: 'var(--emerald-600)', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
                     </div>
-                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid var(--blue-50)', fontSize: '0.85rem', fontFamily: 'monospace', color: 'var(--blue-700)', wordBreak: 'break-all', marginBottom: '1rem' }}>
+                    <code style={{ display: 'block', padding: '0.85rem', background: 'var(--surface)', borderRadius: '12px', border: '1px solid var(--blue-50)', fontSize: '0.85rem', fontFamily: 'monospace', color: 'var(--blue-700)', wordBreak: 'break-all', marginBottom: '1rem' }}>
                       ●●●●●●●●●●:●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● (server .env da saqlanadi)
                     </code>
 

@@ -144,7 +144,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                 {/* Main Metrics */}
                 <div style={{ gridColumn: 'span 2' }}>
-                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#6366f1', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
+                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#2E56E6', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
                      ASOSIY METRIKALAR
                    </h3>
                 </div>
@@ -214,7 +214,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
 
                 {/* Readiness Levels */}
                 <div style={{ gridColumn: 'span 2', marginTop: '1rem' }}>
-                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#6366f1', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
+                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#2E56E6', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
                      TAYYORLIK DARAJALARI
                    </h3>
                 </div>
@@ -293,12 +293,12 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
                     padding: '0.6rem 1.5rem',
                     borderRadius: '10px',
                     border: 'none',
-                    background: 'var(--primary, #6366f1)',
+                    background: 'var(--primary, #2E56E6)',
                     color: 'white',
                     fontWeight: 700,
                     cursor: loading ? 'not-allowed' : 'pointer',
                     fontSize: '0.85rem',
-                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)',
+                    boxShadow: '0 4px 12px rgba(46, 86, 230, 0.2)',
                     opacity: loading ? 0.7 : 1,
                   }}
                 >

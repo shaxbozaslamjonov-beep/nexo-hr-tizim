@@ -125,7 +125,7 @@ export default function ApplicationsPage() {
               fontWeight: 700,
               fontSize: '0.85rem',
               cursor: 'pointer',
-              boxShadow: activeFilter === status ? '0 4px 12px rgba(99, 102, 241, 0.2)' : '0 2px 4px rgba(0,0,0,0.05)',
+              boxShadow: activeFilter === status ? '0 4px 12px rgba(46, 86, 230, 0.2)' : '0 2px 4px rgba(0,0,0,0.05)',
               transition: 'all 0.2s'
             }}
           >
