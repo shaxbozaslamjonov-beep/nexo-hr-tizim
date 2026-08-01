@@ -115,6 +115,7 @@ async function main() {
         data: {
           title: track.title,
           roleTarget: track.roleTarget,
+          companyId: company.id,
           modules: {
             create: track.modules,
           },
@@ -135,7 +136,7 @@ async function main() {
   for (const level of levels) {
     const existing = await prisma.careerLevel.findFirst({ where: { levelName: level.levelName } });
     if (!existing) {
-      await prisma.careerLevel.create({ data: level });
+      await prisma.careerLevel.create({ data: { ...level, companyId: company.id } });
       console.log(`  ✅ Created career level: ${level.levelName}`);
     }
   }
@@ -230,7 +231,7 @@ async function main() {
       ];
 
       for (const ld of lessonsData) {
-        const lesson = await prisma.lesson.create({ data: ld });
+        const lesson = await prisma.lesson.create({ data: { ...ld, companyId: company.id } });
         console.log(`  ✅ Created lesson: ${ld.titleUz}`);
 
         // Assign to all employees

@@ -52,17 +52,17 @@ export function CareerHealthCard() {
 
   if (loading && !data) {
     return (
-      <div style={{ background: 'var(--surface)', borderRadius: '16px', padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', border: '1px solid #f1f5f9' }}>
+      <div style={{ background: 'var(--surface)', borderRadius: '16px', padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', border: '1px solid var(--border)' }}>
         <Loader2 className="animate-spin text-primary" size={32} />
       </div>
     );
   }
 
   const mainMetrics = [
-    { label: t('careerMaps.careerHealth.readiness') || 'Tayyorgarlik', value: `${data?.readiness}%`, icon: Target, color: '#6366f1' },
-    { label: t('careerMaps.careerHealth.coverage') || 'Qoplama', value: `${data?.coverage}%`, icon: BookOpen, color: '#10b981' },
-    { label: t('careerMaps.careerHealth.talentPool') || 'Iste’dodlar zaxirasi', value: data?.talentPool, icon: Users, color: '#f59e0b' },
-    { label: t('careerMaps.careerHealth.filledRoles') || 'Toʻldirilgan rollar', value: `${data?.filledRoles}/${data?.totalRoles}`, icon: Calendar, color: '#ec4899' },
+    { label: t('careerMaps.careerHealth.readiness') || 'Tayyorgarlik', value: `${data?.readiness}%`, icon: Target, color: 'var(--primary)' },
+    { label: t('careerMaps.careerHealth.coverage') || 'Qoplama', value: `${data?.coverage}%`, icon: BookOpen, color: 'var(--emerald-500)' },
+    { label: t('careerMaps.careerHealth.talentPool') || 'Iste’dodlar zaxirasi', value: data?.talentPool, icon: Users, color: 'var(--amber-500)' },
+    { label: t('careerMaps.careerHealth.filledRoles') || 'Toʻldirilgan rollar', value: `${data?.filledRoles}/${data?.totalRoles}`, icon: Calendar, color: 'var(--turquoise-600)' },
   ];
 
   const readinessLevels = [
@@ -76,23 +76,23 @@ export function CareerHealthCard() {
       background: 'var(--surface)',
       borderRadius: '20px',
       padding: '1.5rem',
-      border: '1px solid #f1f5f9',
-      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
+      border: '1px solid var(--border)',
+      boxShadow: 'var(--card-shadow)',
     }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', paddingBottom: '0.75rem', borderBottom: '1px solid #f8fafc' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ padding: '0.5rem', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '10px' }}>
-            <Target size={18} color="#6366f1" />
+          <div style={{ padding: '0.5rem', background: 'rgba(46, 86, 230, 0.1)', borderRadius: '10px' }}>
+            <Target size={18} color="var(--primary)" />
           </div>
           <h2 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
             {t('careerMaps.careerHealth.title') || 'KARYERA HOLATI'}
           </h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: 'var(--background)', padding: '0.4rem 0.8rem', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ background: 'var(--bg-muted)', padding: '0.4rem 0.8rem', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)' }}>HOLAT:</span>
-             <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#6366f1' }}>{data?.rating}</span>
+             <span style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--primary)' }}>{data?.rating}</span>
           </div>
           {isAdmin && (
             <button 
@@ -108,8 +108,8 @@ export function CareerHealthCard() {
                 alignItems: 'center',
                 transition: 'all 0.2s',
               }}
-              onMouseOver={(e) => e.currentTarget.style.borderColor = '#6366f1'}
-              onMouseOut={(e) => e.currentTarget.style.borderColor = '#e2e8f0'}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
             >
               <Edit2 size={16} />
             </button>
@@ -134,10 +134,10 @@ export function CareerHealthCard() {
             overflow: 'hidden',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-               <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.01em' }}>
+               <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.01em' }}>
                  {metric.label}
                </span>
-               <div style={{ padding: '0.4rem', borderRadius: '8px', background: `${metric.color}10` }}>
+               <div style={{ padding: '0.4rem', borderRadius: '8px', background: 'var(--bg-muted)' }}>
                  <metric.icon size={14} color={metric.color} />
                </div>
             </div>
@@ -153,10 +153,10 @@ export function CareerHealthCard() {
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
         gap: '1.5rem',
-        background: 'var(--background)',
+        background: 'var(--bg-muted)',
         padding: '1.5rem',
         borderRadius: '16px',
-        border: '1px solid #f1f5f9'
+        border: '1px solid var(--border)'
       }}>
         {readinessLevels.map((level, idx) => (
           <div key={idx} style={{ textAlign: 'center' }}>
@@ -172,12 +172,12 @@ export function CareerHealthCard() {
 
       {/* Footer */}
       <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.65rem', color: '#94a3b8', fontWeight: 500 }}>
+        <span style={{ fontSize: '0.65rem', color: 'var(--text-light)', fontWeight: 500 }}>
           {t('careerMaps.careerHealth.lastUpdated')}: {new Date(data?.lastUpdated).toLocaleDateString()}
         </span>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-           <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }} />
-           <span style={{ fontSize: '0.65rem', color: '#10b981', fontWeight: 700, textTransform: 'uppercase' }}>Live Data</span>
+           <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--emerald-500)' }} />
+           <span style={{ fontSize: '0.65rem', color: 'var(--emerald-500)', fontWeight: 700, textTransform: 'uppercase' }}>Live Data</span>
         </div>
       </div>
 

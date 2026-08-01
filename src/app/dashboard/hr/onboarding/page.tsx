@@ -308,8 +308,8 @@ export default function OnboardingPage() {
     fontSize: '0.8rem',
     cursor: 'pointer',
     transition: 'all 0.2s',
-    background: active ? '#4f46e5' : '#f1f5f9',
-    color: active ? 'white' : '#64748b',
+    background: active ? 'var(--primary)' : 'var(--border)',
+    color: active ? 'white' : 'var(--text-secondary)',
   });
 
   return (
@@ -318,7 +318,7 @@ export default function OnboardingPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem', gap: '2rem', flexWrap: 'wrap' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-            <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(120, 75, 160, 0.3)' }}>
+            <div style={{ padding: '0.6rem', background: 'var(--grad-primary)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(120, 75, 160, 0.3)' }}>
               <Rocket size={24} color="white" />
             </div>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{t('onboarding')}</h1>
@@ -327,7 +327,7 @@ export default function OnboardingPage() {
           
           {isAdmin && (
             <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <label style={{ fontWeight: 700, color: '#475569', fontSize: '0.9rem' }}>Select Employee:</label>
+              <label style={{ fontWeight: 700, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Select Employee:</label>
               <select 
                 value={selectedEmployeeId} 
                 onChange={(e) => setSelectedEmployeeId(e.target.value)}
@@ -373,11 +373,11 @@ export default function OnboardingPage() {
               {t('onboardingPage.progress')}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'flex-end' }}>
-              <div style={{ width: '100px', height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: '100px', height: '8px', background: 'var(--gray-200)', borderRadius: '4px', overflow: 'hidden' }}>
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  style={{ height: '100%', background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)' }}
+                  style={{ height: '100%', background: 'var(--grad-primary)' }}
                 />
               </div>
               <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{Math.round(progress)}%</span>
@@ -389,9 +389,9 @@ export default function OnboardingPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2.5rem' }}>
         {/* Left: Task list */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
             {/* Header with filters */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
                <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>{t('onboardingPage.checklist')}</h2>
             </div>
 
@@ -402,7 +402,7 @@ export default function OnboardingPage() {
               <button onClick={() => setFilter('COMPLETED')} style={filterBtnStyle(filter === 'COMPLETED')}>{t('onboardingPage.completed')}</button>
               <div style={{ flex: 1 }} />
               <div style={{ position: 'relative' }}>
-                <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
                 <input 
                   type="text" 
                   placeholder={(t('onboardingPage.search') as string) || 'Search tasks...'} 
@@ -414,10 +414,10 @@ export default function OnboardingPage() {
             </div>
             
             {loading ? (
-              <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>{t('onboardingPage.loading')}</div>
+              <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>{t('onboardingPage.loading')}</div>
             ) : filteredTasks.length === 0 ? (
               <div style={{ padding: '3rem', textAlign: 'center' }}>
-                <div style={{ color: '#94a3b8', marginBottom: '1rem' }}>
+                <div style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
                   {tasks.length === 0 ? t('onboardingPage.noTasks') : 'No matching tasks found.'}
                 </div>
               </div>
@@ -435,9 +435,9 @@ export default function OnboardingPage() {
                       style={{ 
                         padding: '1.25rem', 
                         borderRadius: '16px', 
-                        background: task.status === 'COMPLETED' ? '#f8fafc' : 'white',
+                        background: task.status === 'COMPLETED' ? 'var(--gray-50)' : 'white',
                         border: '1px solid',
-                        borderColor: isOverdue(task.dueDate) && task.status !== 'COMPLETED' ? '#fca5a5' : isDueSoon(task.dueDate) && task.status !== 'COMPLETED' ? '#fde68a' : task.status === 'COMPLETED' ? '#e2e8f0' : '#f1f5f9',
+                        borderColor: isOverdue(task.dueDate) && task.status !== 'COMPLETED' ? 'rgba(239, 68, 68, 0.5)' : isDueSoon(task.dueDate) && task.status !== 'COMPLETED' ? 'var(--amber-100)' : task.status === 'COMPLETED' ? 'var(--gray-200)' : 'var(--border)',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '1rem',
@@ -445,28 +445,28 @@ export default function OnboardingPage() {
                         transition: 'all 0.2s ease',
                         boxShadow: task.status === 'COMPLETED' ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)'
                       }}
-                      whileHover={{ x: 3, borderColor: '#cbd5e1' }}
+                      whileHover={{ x: 3, borderColor: 'var(--gray-300)' }}
                     >
                       {task.status === 'COMPLETED' ? (
-                        <div style={{ color: '#10b981' }}><CheckCircle2 size={24} /></div>
+                        <div style={{ color: 'var(--success)' }}><CheckCircle2 size={24} /></div>
                       ) : (
-                        <div style={{ color: '#cbd5e1' }}><Circle size={24} /></div>
+                        <div style={{ color: 'var(--gray-300)' }}><Circle size={24} /></div>
                       )}
                       <div style={{ flex: 1 }}>
                         <h3 style={{ 
                           fontSize: '1rem', 
                           fontWeight: 600, 
-                          color: task.status === 'COMPLETED' ? '#94a3b8' : '#1e293b',
+                          color: task.status === 'COMPLETED' ? 'var(--text-secondary)' : 'var(--text-primary)',
                           textDecoration: task.status === 'COMPLETED' ? 'line-through' : 'none',
                           margin: 0
                         }}>
                           {task.title}
                         </h3>
-                        {task.description && <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0.25rem 0 0 0' }}>{task.description}</p>}
+                        {task.description && <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>{task.description}</p>}
                       </div>
                       
                       {task.dueDate && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: isOverdue(task.dueDate) && task.status !== 'COMPLETED' ? '#ef4444' : isDueSoon(task.dueDate) && task.status !== 'COMPLETED' ? '#f59e0b' : '#94a3b8', fontSize: '0.8rem', marginRight: '1rem', fontWeight: 600 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: isOverdue(task.dueDate) && task.status !== 'COMPLETED' ? 'var(--error)' : isDueSoon(task.dueDate) && task.status !== 'COMPLETED' ? 'var(--warning)' : 'var(--text-secondary)', fontSize: '0.8rem', marginRight: '1rem', fontWeight: 600 }}>
                           <Clock size={14} />
                           {new Date(task.dueDate).toLocaleDateString()}
                         </div>
@@ -474,10 +474,10 @@ export default function OnboardingPage() {
                       
                       {isAdmin && (
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
-                           <button onClick={(e) => { e.stopPropagation(); openModal(task); }} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '0.25rem', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = '#4f46e5')} onMouseOut={e => (e.currentTarget.style.color = '#94a3b8')}>
+                           <button onClick={(e) => { e.stopPropagation(); openModal(task); }} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = 'var(--primary)')} onMouseOut={e => (e.currentTarget.style.color = 'var(--text-secondary)')}>
                               <Edit2 size={16} />
                            </button>
-                           <button onClick={(e) => handleDeleteTask(task.id, e)} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '0.25rem', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = '#ef4444')} onMouseOut={e => (e.currentTarget.style.color = '#94a3b8')}>
+                           <button onClick={(e) => handleDeleteTask(task.id, e)} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = 'var(--error)')} onMouseOut={e => (e.currentTarget.style.color = 'var(--text-secondary)')}>
                               <Trash2 size={16} />
                            </button>
                         </div>
@@ -493,39 +493,39 @@ export default function OnboardingPage() {
         {/* Right: Mentor + Meeting */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Mentor Card */}
-          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
             <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {t('onboardingPage.mentor')}
             </h2>
             {mentor ? (
               <>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  <div style={{ width: '64px', height: '64px', borderRadius: '20px', background: 'linear-gradient(135deg, #e0e7ff, #f1f5f9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <UserCircle size={36} color="#4f46e5" />
+                  <div style={{ width: '64px', height: '64px', borderRadius: '20px', background: 'linear-gradient(135deg, var(--blue-50), var(--gray-50))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <UserCircle size={36} color="var(--primary)" />
                   </div>
                   <div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{mentor.firstName} {mentor.lastName}</h3>
-                    <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>{mentor.position}</p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>{mentor.position}</p>
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   <a 
                     href={mentor.email ? `mailto:${mentor.email}` : '#'} 
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', width: '100%', padding: '0.75rem 1rem', background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '12px', color: '#475569', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', transition: 'all 0.2s' }}
-                    onMouseOver={e => { e.currentTarget.style.background = '#e0e7ff'; e.currentTarget.style.borderColor = '#4f46e5'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', width: '100%', padding: '0.75rem 1rem', background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', transition: 'all 0.2s' }}
+                    onMouseOver={e => { e.currentTarget.style.background = 'var(--blue-50)'; e.currentTarget.style.borderColor = 'var(--primary)'; }}
+                    onMouseOut={e => { e.currentTarget.style.background = 'var(--gray-50)'; e.currentTarget.style.borderColor = 'var(--gray-200)'; }}
                   >
                     <Mail size={16} /> {t('onboardingPage.writeEmail')}
                   </a>
                 </div>
               </>
             ) : (
-              <p style={{ color: '#94a3b8' }}>{t('onboardingPage.noMentor')}</p>
+              <p style={{ color: 'var(--text-secondary)' }}>{t('onboardingPage.noMentor')}</p>
             )}
           </div>
 
           {/* Meeting Card */}
-          <div style={{ padding: '2rem', borderRadius: '24px', background: 'linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%)', color: 'white' }}>
+          <div style={{ padding: '2rem', borderRadius: '24px', background: 'var(--grad-primary)', color: 'white' }}>
             <Calendar size={32} style={{ marginBottom: '1rem' }} />
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>{t('onboardingPage.internalMeet')}</h3>
             {meeting ? (
@@ -539,7 +539,7 @@ export default function OnboardingPage() {
                     href={meeting.joinUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--surface)', color: '#FF6A88', border: 'none', padding: '0.6rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'none', transition: 'transform 0.2s' }}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--surface)', color: 'var(--primary)', border: 'none', padding: '0.6rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'none', transition: 'transform 0.2s' }}
                     onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
                     onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
                   >
@@ -573,28 +573,28 @@ export default function OnboardingPage() {
                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>
                      {editingTask ? t('onboardingPage.editTask') : t('onboardingPage.newTask')}
                    </h2>
-                   <button onClick={() => setIsModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = '#1e293b')} onMouseOut={e => (e.currentTarget.style.color = '#94a3b8')}>
+                   <button onClick={() => setIsModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', transition: 'color 0.2s' }} onMouseOver={e => (e.currentTarget.style.color = 'var(--text-primary)')} onMouseOut={e => (e.currentTarget.style.color = 'var(--text-secondary)')}>
                      <X size={24}/>
                    </button>
                 </div>
 
                 <form onSubmit={saveTask} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                    <div>
-                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.title')} *</label>
-                     <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="e.g. Set up laptop" />
+                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{t('onboardingPage.title')} *</label>
+                     <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = 'var(--primary)')} onBlur={e => (e.target.style.borderColor = 'var(--gray-200)')} placeholder="e.g. Set up laptop" />
                    </div>
                    <div>
-                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.description')}</label>
-                     <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', minHeight: '80px', fontFamily: 'inherit', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = '#4f46e5')} onBlur={e => (e.target.style.borderColor = '#e2e8f0')} placeholder="Detailed instructions..." />
+                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{t('onboardingPage.description')}</label>
+                     <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', minHeight: '80px', fontFamily: 'inherit', transition: 'border-color 0.2s' }} onFocus={e => (e.target.style.borderColor = 'var(--primary)')} onBlur={e => (e.target.style.borderColor = 'var(--gray-200)')} placeholder="Detailed instructions..." />
                    </div>
                    <div>
-                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>{t('onboardingPage.dueDate')}</label>
+                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{t('onboardingPage.dueDate')}</label>
                      <input type="date" value={formData.dueDate} onChange={e => setFormData({...formData, dueDate: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none' }} />
                    </div>
 
                    {isAdmin && (
                      <div>
-                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>Assigned To *</label>
+                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Assigned To *</label>
                        <select 
                          required
                          value={formData.employeeId} 
@@ -611,7 +611,7 @@ export default function OnboardingPage() {
 
                    {isAdmin && (
                      <div>
-                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>Relates to Position (Optional)</label>
+                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Relates to Position (Optional)</label>
                        <select 
                          value={formData.positionId} 
                          onChange={e => setFormData({...formData, positionId: e.target.value})}
@@ -625,7 +625,7 @@ export default function OnboardingPage() {
                      </div>
                    )}
 
-                   <button type="submit" disabled={!formData.title || (isAdmin && !formData.employeeId)} style={{ marginTop: '1rem', width: '100%', padding: '0.875rem', background: (formData.title && (!isAdmin || formData.employeeId)) ? '#4f46e5' : '#cbd5e1', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (formData.title && (!isAdmin || formData.employeeId)) ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}>
+                   <button type="submit" disabled={!formData.title || (isAdmin && !formData.employeeId)} style={{ marginTop: '1rem', width: '100%', padding: '0.875rem', background: (formData.title && (!isAdmin || formData.employeeId)) ? 'var(--primary)' : 'var(--gray-300)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (formData.title && (!isAdmin || formData.employeeId)) ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}>
                       {editingTask ? t('onboardingPage.saveChanges') : t('onboardingPage.createTask')}
                    </button>
                 </form>

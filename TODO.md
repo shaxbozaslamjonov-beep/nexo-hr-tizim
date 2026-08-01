@@ -2,6 +2,16 @@
 
 > Ushbu fayl — kelishilgan ish rejasi. Amalga oshirishdan oldin har bir bosqichni ko'rib chiqing va tasdiqlang. Status belgilari: `[ ]` bajarilmagan, `[~]` jarayonda, `[x]` bajarilgan.
 
+## MUHIM STRATEGIK QAROR — bosqichlar tartibi (2026-07-30)
+
+> **Kelishilgan qaror:** Global SaaS'ga (`NEXO_HR_GLOBAL_SAAS_STRATEGY.md`) o'tishdan oldin, tizim **dastlab bitta korxona uchun to'liq yaratiladi va sinovdan o'tkaziladi**. Faqat shu sinov xatoliksiz o'tgandan keyingina to'lov tizimi (Stripe/Payme) va boshqa SaaS bosqichlari (Faza A va undan keyingisi) boshlanadi.
+>
+> - [ ] 1-bosqich: Bitta korxona (pilot) uchun tizimni to'liq ishlab chiqish — barcha asosiy modullar (ishga olish, o'qitish/darslar, KPI, karyera, onboarding) shu korxonada haqiqiy ishlatilib sinovdan o'tkaziladi
+> - [ ] 2-bosqich: Sinov davomida topilgan xatoliklar/kamchiliklar tuzatiladi, real foydalanish tajribasi asosida tuzatishlar kiritiladi
+> - [ ] Faqat sinov **xatoliksiz** deb topilgandan keyin → `NEXO_HR_GLOBAL_SAAS_STRATEGY.md` Faza A (to'lov tizimi, email/SMS, xavfsizlik auditi va h.k.) boshlanadi
+>
+> Shu sababli, ushbu qaror tasdiqlanmaguncha to'lov tizimi (Stripe/Payme) yoki boshqa ko'p-kompaniyali (multi-tenant SaaS) ishlarini oldinga surmaslik kerak.
+
 ## 0. Joriy holat (audit natijasi)
 
 Kod bazasini tekshirganda quyidagi holat aniqlandi:

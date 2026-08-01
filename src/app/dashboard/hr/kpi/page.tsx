@@ -67,7 +67,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: '0.82rem',
   fontWeight: 700,
-  color: '#475569',
+  color: 'var(--text-secondary)',
   marginBottom: '0.4rem',
   textTransform: 'uppercase',
   letterSpacing: '0.04em',
@@ -283,7 +283,7 @@ export default function KPIPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-            <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(255, 106, 136, 0.3)' }}>
+            <div style={{ padding: '0.6rem', background: 'var(--grad-primary)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(46, 86, 230, 0.3)' }}>
               <Trophy size={24} color="white" />
             </div>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{t('kpiPerformance')}</h1>
@@ -296,24 +296,24 @@ export default function KPIPage() {
             <>
               {/* Export buttons */}
               <button onClick={() => handleExport('excel')} style={{ padding: '0.6rem 1rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                <Download size={16} color="#10b981" /> Excel
+                <Download size={16} color="var(--success)" /> Excel
               </button>
               <button onClick={() => handleExport('pdf')} style={{ padding: '0.6rem 1rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                <Download size={16} color="#ef4444" /> PDF
+                <Download size={16} color="var(--error)" /> PDF
               </button>
               {/* Create new KPI button */}
               <button
                 onClick={() => openDefModal()}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 14px rgba(79, 70, 229, 0.4)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 14px rgba(46, 86, 230, 0.4)' }}
               >
                 <Plus size={18} /> New KPI
               </button>
             </>
           )}
-          <div style={{ background: 'var(--surface)', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ padding: '0.5rem', background: '#ecfdf5', color: '#10b981', borderRadius: '10px' }}><Award size={20} /></div>
+          <div style={{ background: 'var(--surface)', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid var(--border)', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ padding: '0.5rem', background: 'var(--emerald-50)', color: 'var(--success)', borderRadius: '10px' }}><Award size={20} /></div>
             <div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase' }}>Monthly Rating</div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Monthly Rating</div>
               <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>Rank A+</div>
             </div>
           </div>
@@ -323,11 +323,11 @@ export default function KPIPage() {
       {/* ── KPI Cards grid ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
         {loading ? (
-          <div style={{ color: '#94a3b8', gridColumn: '1/-1', textAlign: 'center', padding: '3rem' }}>Loading KPI data...</div>
+          <div style={{ color: 'var(--text-secondary)', gridColumn: '1/-1', textAlign: 'center', padding: '3rem' }}>Loading KPI data...</div>
         ) : kpis.length === 0 ? (
-          <div style={{ gridColumn: '1 / -1', padding: '4rem', textAlign: 'center', background: 'var(--surface)', borderRadius: '24px', border: '2px dashed #e2e8f0' }}>
-            <BarChart3 size={48} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
-            <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>No KPI definitions yet.</p>
+          <div style={{ gridColumn: '1 / -1', padding: '4rem', textAlign: 'center', background: 'var(--surface)', borderRadius: '24px', border: '2px dashed var(--border)' }}>
+            <BarChart3 size={48} color="var(--gray-300)" style={{ marginBottom: '1rem' }} />
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>No KPI definitions yet.</p>
             {isAdmin && (
               <button onClick={() => openDefModal()} style={{ padding: '0.75rem 1.75rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Plus size={16} /> Create your first KPI
@@ -344,29 +344,29 @@ export default function KPIPage() {
             <motion.div
               key={kpi.id}
               whileHover={{ y: -5 }}
-              style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column' }}
+              style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column' }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
                 <div style={{ padding: '0.75rem', background: 'var(--background)', borderRadius: '12px' }}>
-                  <Activity size={20} color="#6366f1" />
+                  <Activity size={20} color="var(--primary)" />
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: hasGrowth ? '#10b981' : '#ef4444', fontWeight: 700, fontSize: '0.85rem', background: hasGrowth ? '#f0fdf4' : '#fef2f2', padding: '0.25rem 0.6rem', borderRadius: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: hasGrowth ? 'var(--success)' : 'var(--error)', fontWeight: 700, fontSize: '0.85rem', background: hasGrowth ? 'var(--emerald-50)' : 'var(--red-50)', padding: '0.25rem 0.6rem', borderRadius: '20px' }}>
                     {hasGrowth ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                     {latestEntry && prevEntry ? `${Math.abs(Math.round(((latestEntry.value - prevEntry.value) / prevEntry.value) * 100))}%` : '—'}
                   </div>
                   {isAdmin && (
-                    <button onClick={() => openEntryModal(kpi.id)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: '#e0e7ff', color: '#4f46e5', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, fontSize: '0.8rem' }} title="Add data-point">
+                    <button onClick={() => openEntryModal(kpi.id)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: 'var(--blue-50)', color: 'var(--primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, fontSize: '0.8rem' }} title="Add data-point">
                       <Plus size={14} /> Add
                     </button>
                   )}
                   {isAdmin && (
-                    <button onClick={() => openDefModal(kpi)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: '#f0fdf4', color: '#10b981', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, fontSize: '0.8rem' }} title="Edit KPI definition">
+                    <button onClick={() => openDefModal(kpi)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: 'var(--emerald-50)', color: 'var(--success)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, fontSize: '0.8rem' }} title="Edit KPI definition">
                       <Edit2 size={14} />
                     </button>
                   )}
                   {isAdmin && (
-                    <button onClick={() => handleDeleteKpi(kpi.id)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: '#fef2f2', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', fontWeight: 600, fontSize: '0.8rem' }} title="Delete KPI">
+                    <button onClick={() => handleDeleteKpi(kpi.id)} style={{ padding: '0.35rem 0.6rem', borderRadius: '8px', border: 'none', background: 'var(--red-50)', color: 'var(--error)', cursor: 'pointer', display: 'flex', alignItems: 'center', fontWeight: 600, fontSize: '0.8rem' }} title="Delete KPI">
                       <Trash2 size={14} />
                     </button>
                   )}
@@ -376,14 +376,14 @@ export default function KPIPage() {
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{kpi.name}</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '2rem' }}>
                 <span style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>{latestEntry?.value ?? 0}</span>
-                <span style={{ color: '#94a3b8', fontWeight: 600 }}>/ {kpi.targetValue} {kpi.unit}</span>
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>/ {kpi.targetValue} {kpi.unit}</span>
               </div>
 
               {latestEntry && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--background)', padding: '0.75rem 1rem', borderRadius: '12px', marginBottom: '1.5rem', fontSize: '0.8rem' }}>
                   <div style={{ color: 'var(--text-secondary)' }}>Latest: <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{new Date(latestEntry.periodDate).toLocaleDateString()}</span></div>
                   {isAdmin && (
-                    <button onClick={() => handleDeleteEntry(latestEntry.id)} style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center' }} title="Delete latest entry">
+                    <button onClick={() => handleDeleteEntry(latestEntry.id)} style={{ border: 'none', background: 'transparent', color: 'var(--error)', cursor: 'pointer', display: 'flex', alignItems: 'center' }} title="Delete latest entry">
                       <Trash2 size={14} />
                     </button>
                   )}
@@ -395,14 +395,14 @@ export default function KPIPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 600 }}>
                     <Target size={14} /> Progress to Target
                   </div>
-                  <div style={{ fontWeight: 800, color: '#6366f1' }}>{Math.round(percentage)}%</div>
+                  <div style={{ fontWeight: 800, color: 'var(--primary)' }}>{Math.round(percentage)}%</div>
                 </div>
                 <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden', marginTop: '0.75rem' }}>
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${percentage}%` }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}
-                    style={{ height: '100%', background: 'linear-gradient(90deg, #6366f1 0%, #a855f7 100%)' }}
+                    style={{ height: '100%', background: 'var(--grad-primary)' }}
                   />
                 </div>
               </div>
@@ -413,33 +413,33 @@ export default function KPIPage() {
 
       {/* ── Bottom section: Chart + Milestones ── */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2.5rem' }}>
-        <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+        <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Efficiency Trend</h2>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 600 }}>Weekly</button>
-              <button style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: 'none', background: '#1e293b', color: 'white', fontSize: '0.8rem', fontWeight: 600 }}>Monthly</button>
+              <button style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: 'none', background: 'var(--gray-900)', color: 'white', fontSize: '0.8rem', fontWeight: 600 }}>Monthly</button>
             </div>
           </div>
-          <div style={{ height: '300px', width: '100%', borderBottom: '2px solid #f1f5f9', borderLeft: '2px solid #f1f5f9', position: 'relative', display: 'flex', alignItems: 'flex-end', gap: '10%', padding: '0 5%' }}>
+          <div style={{ height: '300px', width: '100%', borderBottom: '2px solid var(--border)', borderLeft: '2px solid var(--border)', position: 'relative', display: 'flex', alignItems: 'flex-end', gap: '10%', padding: '0 5%' }}>
             {[40, 65, 55, 80, 75, 90, 85].map((val, idx) => (
               <div key={idx} style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <motion.div
                   initial={{ height: 0 }}
                   animate={{ height: `${val}%` }}
                   transition={{ duration: 0.5, delay: idx * 0.07 }}
-                  style={{ width: '100%', maxWidth: '30px', background: 'linear-gradient(to top, #6366f1, #a855f7)', borderRadius: '8px 8px 0 0' }}
+                  style={{ width: '100%', maxWidth: '30px', background: 'var(--grad-primary)', borderRadius: '8px 8px 0 0' }}
                 />
-                <span style={{ position: 'absolute', bottom: '-25px', color: '#94a3b8', fontSize: '0.7rem', fontWeight: 700 }}>M{idx + 1}</span>
+                <span style={{ position: 'absolute', bottom: '-25px', color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 700 }}>M{idx + 1}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <div style={{ padding: '2rem', borderRadius: '24px', background: 'var(--surface)', border: '1px solid #f1f5f9', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
+          <div style={{ padding: '2rem', borderRadius: '24px', background: 'var(--surface)', border: '1px solid var(--border)', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <TrendingUp size={18} color="#6366f1" /> Upcoming Milestones
+              <TrendingUp size={18} color="var(--primary)" /> Upcoming Milestones
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {[
@@ -448,13 +448,13 @@ export default function KPIPage() {
                 { title: 'Submit Q1 Report', badge: 'Bonus', date: 'Mar 31' },
               ].map((m, i) => (
                 <div key={i} style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ width: '4px', background: i === 0 ? '#6366f1' : '#e2e8f0', borderRadius: '2px' }} />
+                  <div style={{ width: '4px', background: i === 0 ? 'var(--primary)' : 'var(--border)', borderRadius: '2px' }} />
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
                       <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>{m.title}</h4>
-                      <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', background: '#f5f3ff', color: '#6366f1' }}>{m.badge}</span>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', background: 'var(--blue-50)', color: 'var(--primary)' }}>{m.badge}</span>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                       <Calendar size={12} /> {m.date}
                     </div>
                   </div>
@@ -463,7 +463,7 @@ export default function KPIPage() {
             </div>
           </div>
 
-          <div style={{ padding: '2rem', borderRadius: '24px', background: 'linear-gradient(135deg, #a8caba 0%, #5d4157 100%)', color: 'white' }}>
+          <div style={{ padding: '2rem', borderRadius: '24px', background: 'var(--grad-sidebar)', color: 'white' }}>
             <Layers size={32} style={{ marginBottom: '1rem', opacity: 0.8 }} />
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>Performance Insight</h3>
             <p style={{ fontSize: '0.9rem', opacity: 0.9 }}>You're currently in the top 10% of efficiency this month. Keep up the great work!</p>
@@ -488,7 +488,7 @@ export default function KPIPage() {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>Record Data-Point</h2>
-                <button onClick={() => setIsEntryModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><X size={24} /></button>
+                <button onClick={() => setIsEntryModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}><X size={24} /></button>
               </div>
 
               <form onSubmit={handleSaveEntry} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -527,7 +527,7 @@ export default function KPIPage() {
 
                 <button
                   type="submit" disabled={!entryForm.employeeId}
-                  style={{ marginTop: '0.5rem', width: '100%', padding: '0.875rem', background: entryForm.employeeId ? '#4f46e5' : '#cbd5e1', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: entryForm.employeeId ? 'pointer' : 'not-allowed' }}
+                  style={{ marginTop: '0.5rem', width: '100%', padding: '0.875rem', background: entryForm.employeeId ? 'var(--primary)' : 'var(--gray-300)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: entryForm.employeeId ? 'pointer' : 'not-allowed' }}
                 >
                   Publish Entry
                 </button>
@@ -557,11 +557,11 @@ export default function KPIPage() {
                   <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>
                     {editingKpi ? 'Edit KPI' : 'New KPI'}
                   </h2>
-                  <p style={{ color: '#94a3b8', fontSize: '0.85rem', margin: '0.35rem 0 0 0' }}>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.35rem 0 0 0' }}>
                     {editingKpi ? 'Update definition details.' : 'Define a new performance indicator.'}
                   </p>
                 </div>
-                <button onClick={() => setIsDefModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><X size={24} /></button>
+                <button onClick={() => setIsDefModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}><X size={24} /></button>
               </div>
 
               <form onSubmit={handleSaveDef} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -639,7 +639,7 @@ export default function KPIPage() {
                 <button
                   type="submit"
                   disabled={!kpiForm.name || !kpiForm.unit}
-                  style={{ marginTop: '0.5rem', width: '100%', padding: '0.875rem', background: (kpiForm.name && kpiForm.unit) ? '#4f46e5' : '#cbd5e1', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (kpiForm.name && kpiForm.unit) ? 'pointer' : 'not-allowed' }}
+                  style={{ marginTop: '0.5rem', width: '100%', padding: '0.875rem', background: (kpiForm.name && kpiForm.unit) ? 'var(--primary)' : 'var(--gray-300)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (kpiForm.name && kpiForm.unit) ? 'pointer' : 'not-allowed' }}
                 >
                   {editingKpi ? 'Save Changes' : 'Create KPI'}
                 </button>

@@ -9,7 +9,7 @@
   color: white;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-accent);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
 
 .headerBg {
@@ -41,7 +41,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1.75rem;
-  background: white;
+  background: var(--surface);
   color: var(--primary);
   border: none;
   border-radius: 14px;
@@ -65,7 +65,7 @@
 }
 
 .card {
-  background: white;
+  background: var(--surface);
   border-radius: var(--radius-2xl);
   padding: 2rem;
   border: 1px solid var(--border);
@@ -89,7 +89,7 @@
   right: 0;
   width: 120px;
   height: 120px;
-  background: rgba(99, 102, 241, 0.03);
+  background: rgba(46, 86, 230, 0.03);
   border-radius: 0 0 0 100%;
   z-index: 0;
 }
@@ -105,7 +105,7 @@
 
 .iconBox {
   padding: 0.85rem;
-  background: rgba(99, 102, 241, 0.08);
+  background: rgba(46, 86, 230, 0.08);
   border-radius: 16px;
   color: var(--primary);
   transition: all 0.3s;
@@ -144,7 +144,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  background: #f8fafc;
+  background: var(--bg-muted);
   border-radius: 16px;
   margin: 1.5rem 0;
 }
@@ -171,7 +171,7 @@
 
 .postedAt {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -191,24 +191,24 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 6px 16px rgba(46, 86, 230, 0.25);
 }
 
 .primaryAction:hover {
-  background: var(--primary-hover);
+  background: var(--blue-700);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  box-shadow: var(--card-hover-shadow);
 }
 
 .secondaryAction {
   height: 52px;
   border-radius: 14px;
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -216,5 +216,5 @@
 .secondaryAction:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: #f8fafc;
+  background: var(--bg-muted);
 }

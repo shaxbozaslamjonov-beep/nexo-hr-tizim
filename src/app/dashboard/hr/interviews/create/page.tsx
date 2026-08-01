@@ -108,11 +108,11 @@ function CreateInterviewForm() {
             gap: '0.5rem',
             padding: '0.6rem 1.25rem',
             borderRadius: '14px',
-            border: '1px solid #e2e8f0',
+            border: '1px solid var(--gray-200)',
             background: 'white',
             fontSize: '0.85rem',
             fontWeight: 800,
-            color: '#334155',
+            color: 'var(--text-secondary)',
             cursor: 'pointer',
             marginBottom: '1.5rem',
             boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
@@ -124,7 +124,7 @@ function CreateInterviewForm() {
         </button>
 
         <div style={{
-          background: 'linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%)',
+          background: 'linear-gradient(135deg, var(--navy-black) 0%, var(--primary) 55%, var(--secondary) 100%)',
           borderRadius: '24px',
           padding: '2.5rem 3rem',
           color: 'white',
@@ -138,12 +138,12 @@ function CreateInterviewForm() {
             right: '-10%',
             width: '350px',
             height: '350px',
-            background: 'rgba(65, 105, 201, 0.3)',
+            background: 'rgba(46, 86, 230, 0.3)',
             borderRadius: '50%',
             filter: 'blur(80px)',
             pointerEvents: 'none'
           }} />
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.85rem', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, color: '#93c5fd', marginBottom: '0.75rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.85rem', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, color: 'var(--primary-light)', marginBottom: '0.75rem' }}>
             <Sparkles size={14} />
             INTERVIEW SCHEDULER
           </div>
@@ -160,7 +160,7 @@ function CreateInterviewForm() {
       <div style={{
         background: 'white',
         borderRadius: '28px',
-        border: '1px solid #e2e8f0',
+        border: '1px solid var(--gray-200)',
         boxShadow: '0 4px 25px rgba(0, 0, 0, 0.04)',
         padding: '2.5rem'
       }}>
@@ -169,8 +169,8 @@ function CreateInterviewForm() {
           {/* Row 1: Candidate & Duration */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <User size={16} color="#2563eb" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <User size={16} color="var(--primary)" />
                 Nomzodni Tanlash *
               </label>
               <select 
@@ -181,11 +181,11 @@ function CreateInterviewForm() {
                   width: '100%',
                   padding: '0.85rem 1.1rem',
                   borderRadius: '14px',
-                  border: '1px solid #cbd5e1',
-                  background: '#f8fafc',
+                  border: '1px solid var(--gray-300)',
+                  background: 'var(--gray-50)',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#000000',
+                  color: 'var(--text-primary)',
                   outline: 'none'
                 }}
               >
@@ -199,8 +199,8 @@ function CreateInterviewForm() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Clock size={16} color="#2563eb" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Clock size={16} color="var(--primary)" />
                 Suhbat Davomiyligi (daqiqa) *
               </label>
               <select 
@@ -210,11 +210,11 @@ function CreateInterviewForm() {
                   width: '100%',
                   padding: '0.85rem 1.1rem',
                   borderRadius: '14px',
-                  border: '1px solid #cbd5e1',
-                  background: '#f8fafc',
+                  border: '1px solid var(--gray-300)',
+                  background: 'var(--gray-50)',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#000000',
+                  color: 'var(--text-primary)',
                   outline: 'none'
                 }}
               >
@@ -231,8 +231,8 @@ function CreateInterviewForm() {
           {/* Row 2: Date & Time */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Calendar size={16} color="#2563eb" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Calendar size={16} color="var(--primary)" />
                 Suhbat Sanasi *
               </label>
               <input 
@@ -244,19 +244,19 @@ function CreateInterviewForm() {
                   width: '100%',
                   padding: '0.85rem 1.1rem',
                   borderRadius: '14px',
-                  border: '1px solid #cbd5e1',
-                  background: '#f8fafc',
+                  border: '1px solid var(--gray-300)',
+                  background: 'var(--gray-50)',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#000000',
+                  color: 'var(--text-primary)',
                   outline: 'none'
                 }}
               />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Clock size={16} color="#2563eb" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Clock size={16} color="var(--primary)" />
                 Suhbat Vaqti *
               </label>
               <input 
@@ -268,11 +268,11 @@ function CreateInterviewForm() {
                   width: '100%',
                   padding: '0.85rem 1.1rem',
                   borderRadius: '14px',
-                  border: '1px solid #cbd5e1',
-                  background: '#f8fafc',
+                  border: '1px solid var(--gray-300)',
+                  background: 'var(--gray-50)',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#000000',
+                  color: 'var(--text-primary)',
                   outline: 'none'
                 }}
               />
@@ -281,10 +281,10 @@ function CreateInterviewForm() {
 
           {/* Row 3: Interview Type Switcher Pills */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Suhbat Turi (Format) *
             </label>
-            <div style={{ display: 'flex', gap: '0.75rem', background: '#f1f5f9', padding: '0.4rem', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', background: 'var(--border)', padding: '0.4rem', borderRadius: '16px' }}>
               <button 
                 type="button"
                 onClick={() => setFormData({ ...formData, type: 'online' })}
@@ -297,8 +297,8 @@ function CreateInterviewForm() {
                   padding: '0.75rem',
                   borderRadius: '12px',
                   border: 'none',
-                  background: formData.type === 'online' ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'transparent',
-                  color: formData.type === 'online' ? 'white' : '#64748b',
+                  background: formData.type === 'online' ? 'linear-gradient(135deg, var(--primary) 0%, var(--blue-700) 100%)' : 'transparent',
+                  color: formData.type === 'online' ? 'white' : 'var(--text-secondary)',
                   fontSize: '0.85rem',
                   fontWeight: 800,
                   cursor: 'pointer',
@@ -321,8 +321,8 @@ function CreateInterviewForm() {
                   padding: '0.75rem',
                   borderRadius: '12px',
                   border: 'none',
-                  background: formData.type === 'offline' ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'transparent',
-                  color: formData.type === 'offline' ? 'white' : '#64748b',
+                  background: formData.type === 'offline' ? 'linear-gradient(135deg, var(--primary) 0%, var(--blue-700) 100%)' : 'transparent',
+                  color: formData.type === 'offline' ? 'white' : 'var(--text-secondary)',
                   fontSize: '0.85rem',
                   fontWeight: 800,
                   cursor: 'pointer',
@@ -345,8 +345,8 @@ function CreateInterviewForm() {
                   padding: '0.75rem',
                   borderRadius: '12px',
                   border: 'none',
-                  background: formData.type === 'phone' ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)' : 'transparent',
-                  color: formData.type === 'phone' ? 'white' : '#64748b',
+                  background: formData.type === 'phone' ? 'linear-gradient(135deg, var(--primary) 0%, var(--blue-700) 100%)' : 'transparent',
+                  color: formData.type === 'phone' ? 'white' : 'var(--text-secondary)',
                   fontSize: '0.85rem',
                   fontWeight: 800,
                   cursor: 'pointer',
@@ -361,8 +361,8 @@ function CreateInterviewForm() {
 
           {/* Row 4: Location / Meeting Link */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              {formData.type === 'online' ? <Video size={16} color="#2563eb" /> : formData.type === 'offline' ? <MapPin size={16} color="#2563eb" /> : <Phone size={16} color="#2563eb" />}
+            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              {formData.type === 'online' ? <Video size={16} color="var(--primary)" /> : formData.type === 'offline' ? <MapPin size={16} color="var(--primary)" /> : <Phone size={16} color="var(--primary)" />}
               {formData.type === 'online' ? 'Video Havola (Zoom / Google Meet URL)' : formData.type === 'offline' ? 'Ofis Manzili / Xona Nomeri' : 'Telefon Raqami'}
             </label>
             <input 
@@ -374,11 +374,11 @@ function CreateInterviewForm() {
                 width: '100%',
                 padding: '0.85rem 1.1rem',
                 borderRadius: '14px',
-                border: '1px solid #cbd5e1',
-                background: '#f8fafc',
+                border: '1px solid var(--gray-300)',
+                background: 'var(--gray-50)',
                 fontSize: '0.9rem',
                 fontWeight: 600,
-                color: '#000000',
+                color: 'var(--text-primary)',
                 outline: 'none'
               }}
             />
@@ -386,8 +386,8 @@ function CreateInterviewForm() {
 
           {/* Row 5: Notes */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <FileText size={16} color="#2563eb" />
+            <label style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <FileText size={16} color="var(--primary)" />
               Suhbat bo'yicha qo'shimcha izohlar
             </label>
             <textarea 
@@ -399,11 +399,11 @@ function CreateInterviewForm() {
                 width: '100%',
                 padding: '0.85rem 1.1rem',
                 borderRadius: '14px',
-                border: '1px solid #cbd5e1',
-                background: '#f8fafc',
+                border: '1px solid var(--gray-300)',
+                background: 'var(--gray-50)',
                 fontSize: '0.9rem',
                 fontWeight: 600,
-                color: '#000000',
+                color: 'var(--text-primary)',
                 outline: 'none',
                 resize: 'vertical'
               }}
@@ -411,15 +411,15 @@ function CreateInterviewForm() {
           </div>
 
           {/* Submit Action Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #f1f5f9' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)' }}>
             <button 
               type="button"
               onClick={() => router.back()}
               style={{
                 padding: '0.75rem 1.75rem',
                 background: 'white',
-                color: '#475569',
-                border: '1px solid #cbd5e1',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--gray-300)',
                 borderRadius: '14px',
                 fontWeight: 800,
                 fontSize: '0.9rem',
@@ -433,7 +433,7 @@ function CreateInterviewForm() {
               disabled={submitting}
               style={{
                 padding: '0.75rem 2rem',
-                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                background: 'linear-gradient(135deg, var(--primary) 0%, var(--blue-700) 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '14px',
@@ -462,7 +462,7 @@ export default function CreateInterviewPage() {
   return (
     <Suspense fallback={
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px' }}>
-        <div style={{ width: '40px', height: '40px', border: '3px solid #cbd5e1', borderTopColor: '#2563eb', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+        <div style={{ width: '40px', height: '40px', border: '3px solid var(--gray-300)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
       </div>
     }>
       <CreateInterviewForm />

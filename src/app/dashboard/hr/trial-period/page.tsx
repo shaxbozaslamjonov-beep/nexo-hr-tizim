@@ -78,7 +78,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: '0.82rem',
   fontWeight: 700,
-  color: '#475569',
+  color: 'var(--text-secondary)',
   marginBottom: '0.4rem',
   textTransform: 'uppercase',
   letterSpacing: '0.04em',
@@ -194,10 +194,10 @@ export default function ProbationPage() {
 
   const getResultBadge = (result: string) => {
     switch (result) {
-      case 'PASSED':   return { color: '#10b981', bg: '#ecfdf5', icon: <CheckCircle size={14} />, label: 'Passed' };
-      case 'EXTENDED': return { color: '#f59e0b', bg: '#fffbeb', icon: <AlertCircle size={14} />, label: 'Extended' };
-      case 'FAILED':   return { color: '#ef4444', bg: '#fef2f2', icon: <XCircle size={14} />, label: 'Failed' };
-      default:         return { color: 'var(--text-secondary)', bg: '#f8fafc', icon: null, label: result };
+      case 'PASSED':   return { color: 'var(--success)', bg: 'var(--emerald-50)', icon: <CheckCircle size={14} />, label: 'Passed' };
+      case 'EXTENDED': return { color: 'var(--warning)', bg: 'var(--amber-50)', icon: <AlertCircle size={14} />, label: 'Extended' };
+      case 'FAILED':   return { color: 'var(--error)', bg: 'var(--red-50)', icon: <XCircle size={14} />, label: 'Failed' };
+      default:         return { color: 'var(--text-secondary)', bg: 'var(--gray-50)', icon: null, label: result };
     }
   };
 
@@ -208,15 +208,15 @@ export default function ProbationPage() {
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
           <label style={{ ...labelStyle, marginBottom: 0 }}>{label}</label>
-          <span style={{ fontSize: '1rem', fontWeight: 800, color: '#4f46e5' }}>{formData[field]}</span>
+          <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--primary)' }}>{formData[field]}</span>
         </div>
         <input
           type="range" min={1} max={5} step={1}
           value={formData[field]}
           onChange={(e) => setFormData({ ...formData, [field]: parseInt(e.target.value) })}
-          style={{ width: '100%', accentColor: '#4f46e5' }}
+          style={{ width: '100%', accentColor: 'var(--primary)' }}
         />
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', marginTop: '0.15rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>
           <span>1 (Poor)</span><span>2</span><span>3 (Average)</span><span>4</span><span>5 (Excellent)</span>
         </div>
       </div>
@@ -230,7 +230,7 @@ export default function ProbationPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-            <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(247, 107, 28, 0.3)' }}>
+            <div style={{ padding: '0.6rem', background: 'var(--grad-primary)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(247, 107, 28, 0.3)' }}>
               <Timer size={24} color="white" />
             </div>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{t('probation')}</h1>
@@ -252,16 +252,16 @@ export default function ProbationPage() {
       {evaluations.length > 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '2.5rem' }}>
           {[
-            { label: 'Passed', value: evaluations.filter(e => e.result === 'PASSED').length, color: '#10b981', bg: '#ecfdf5' },
-            { label: 'Extended', value: evaluations.filter(e => e.result === 'EXTENDED').length, color: '#f59e0b', bg: '#fffbeb' },
-            { label: 'Failed', value: evaluations.filter(e => e.result === 'FAILED').length, color: '#ef4444', bg: '#fef2f2' },
+            { label: 'Passed', value: evaluations.filter(e => e.result === 'PASSED').length, color: 'var(--success)', bg: 'var(--emerald-50)' },
+            { label: 'Extended', value: evaluations.filter(e => e.result === 'EXTENDED').length, color: 'var(--warning)', bg: 'var(--amber-50)' },
+            { label: 'Failed', value: evaluations.filter(e => e.result === 'FAILED').length, color: 'var(--error)', bg: 'var(--red-50)' },
           ].map((stat) => (
-            <div key={stat.label} style={{ background: 'var(--surface)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <div key={stat.label} style={{ background: 'var(--surface)', borderRadius: '20px', padding: '1.5rem', border: '1px solid var(--border)', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: stat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontSize: '1.4rem', fontWeight: 900, color: stat.color }}>{stat.value}</span>
               </div>
               <div>
-                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>evaluations</div>
               </div>
             </div>
@@ -270,18 +270,18 @@ export default function ProbationPage() {
       )}
 
       {/* ── Evaluations list ── */}
-      <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+      <div style={{ background: 'var(--surface)', borderRadius: '24px', padding: '2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid var(--border)' }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           Recent Evaluations
           <span style={{ fontSize: '0.8rem', fontWeight: 500, background: 'var(--bg-muted)', color: 'var(--text-secondary)', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>{evaluations.length} total</span>
         </h2>
 
         {loading ? (
-          <div style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>Loading records...</div>
+          <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading records...</div>
         ) : evaluations.length === 0 ? (
-          <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--background)', borderRadius: '20px', border: '2px dashed #e2e8f0' }}>
-            <AlertCircle size={48} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
-            <p style={{ color: '#94a3b8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>No evaluations recorded yet.</p>
+          <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--background)', borderRadius: '20px', border: '2px dashed var(--gray-200)' }}>
+            <AlertCircle size={48} color="var(--gray-300)" style={{ marginBottom: '1rem' }} />
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>No evaluations recorded yet.</p>
             {isAdmin && (
               <button onClick={() => openModal()} style={{ padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Plus size={16} /> Create first evaluation
@@ -303,7 +303,7 @@ export default function ProbationPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     whileHover={{ scale: 1.005, boxShadow: '0 10px 20px -5px rgba(0,0,0,0.06)' }}
-                    style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--surface)', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}
+                    style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}
                   >
                     {/* Employee avatar */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '200px', flex: '1 1 200px' }}>
@@ -312,7 +312,7 @@ export default function ProbationPage() {
                         <h4 style={{ margin: 0, fontWeight: 700, color: 'var(--text-primary)' }}>
                           {ev.employee?.firstName || 'Unknown'} {ev.employee?.lastName || ''}
                         </h4>
-                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#94a3b8' }}>
+                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                           {ev.position?.title || ev.employee?.position || 'Employee'}
                         </p>
                       </div>
@@ -320,12 +320,12 @@ export default function ProbationPage() {
 
                     {/* Score bar */}
                     <div style={{ flex: '2 1 240px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.4rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
                         <span>Average Score</span>
                         <span>{avg.toFixed(1)} / 5.0</span>
                       </div>
                       <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden' }}>
-                        <div style={{ width: `${(avg / 5) * 100}%`, height: '100%', background: avg > 4 ? '#10b981' : avg > 3 ? '#f59e0b' : '#ef4444', borderRadius: '4px', transition: 'width 0.5s ease' }} />
+                        <div style={{ width: `${(avg / 5) * 100}%`, height: '100%', background: avg > 4 ? 'var(--success)' : avg > 3 ? 'var(--warning)' : 'var(--error)', borderRadius: '4px', transition: 'width 0.5s ease' }} />
                       </div>
                       {ev.comments && (
                         <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginTop: '0.5rem', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '280px' }}>
@@ -335,7 +335,7 @@ export default function ProbationPage() {
                     </div>
 
                     {/* Date */}
-                    <div style={{ color: '#94a3b8', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', whiteSpace: 'nowrap' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', whiteSpace: 'nowrap' }}>
                       <Calendar size={14} />
                       {new Date(ev.evaluatedAt).toLocaleDateString()}
                     </div>
@@ -351,18 +351,18 @@ export default function ProbationPage() {
                         <button
                           onClick={() => openModal(ev)}
                           title="Edit"
-                          style={{ background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '10px', color: '#0ea5e9', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', transition: 'all 0.2s' }}
-                          onMouseOver={(e) => { e.currentTarget.style.background = '#bae6fd'; }}
-                          onMouseOut={(e) => { e.currentTarget.style.background = '#f0f9ff'; }}
+                          style={{ background: 'var(--blue-50)', border: '1px solid var(--blue-100)', borderRadius: '10px', color: 'var(--primary)', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', transition: 'all 0.2s' }}
+                          onMouseOver={(e) => { e.currentTarget.style.background = 'var(--blue-100)'; }}
+                          onMouseOut={(e) => { e.currentTarget.style.background = 'var(--blue-50)'; }}
                         >
                           <Edit2 size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(ev.id)}
                           title="Delete"
-                          style={{ background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '10px', color: '#ef4444', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', transition: 'all 0.2s' }}
-                          onMouseOver={(e) => { e.currentTarget.style.background = '#fee2e2'; }}
-                          onMouseOut={(e) => { e.currentTarget.style.background = '#fef2f2'; }}
+                          style={{ background: 'var(--red-50)', border: '1px solid var(--red-100)', borderRadius: '10px', color: 'var(--error)', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', transition: 'all 0.2s' }}
+                          onMouseOver={(e) => { e.currentTarget.style.background = 'var(--red-100)'; }}
+                          onMouseOut={(e) => { e.currentTarget.style.background = 'var(--red-50)'; }}
                         >
                           <Trash2 size={16} />
                         </button>
@@ -396,11 +396,11 @@ export default function ProbationPage() {
                   <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>
                     {editingId ? 'Edit Evaluation' : 'New Evaluation'}
                   </h2>
-                  <p style={{ color: '#94a3b8', fontSize: '0.85rem', margin: '0.35rem 0 0 0' }}>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.35rem 0 0 0' }}>
                     {editingId ? 'Update scores and result.' : 'Record a new trial period result.'}
                   </p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><X size={24} /></button>
+                <button onClick={() => setIsModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}><X size={24} /></button>
               </div>
 
               <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem' }}>
@@ -494,11 +494,11 @@ export default function ProbationPage() {
                 </div>
 
                 {/* Calculated average */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: '#f0f4ff', borderRadius: '12px', border: '1px solid #e0e7ff' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, color: '#4f46e5' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: 'var(--blue-50)', borderRadius: '12px', border: '1px solid var(--blue-100)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, color: 'var(--primary)' }}>
                     <Star size={16} /> Calculated Average
                   </div>
-                  <span style={{ fontSize: '1.3rem', fontWeight: 900, color: '#4f46e5' }}>{avgScore} / 5.0</span>
+                  <span style={{ fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)' }}>{avgScore} / 5.0</span>
                 </div>
 
                 {/* Result */}
@@ -529,7 +529,7 @@ export default function ProbationPage() {
                 <button
                   type="submit"
                   disabled={!editingId && !formData.employeeId}
-                  style={{ width: '100%', padding: '0.9rem', background: (!editingId && !formData.employeeId) ? '#cbd5e1' : '#4f46e5', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (!editingId && !formData.employeeId) ? 'not-allowed' : 'pointer', fontSize: '1rem', transition: 'background 0.2s' }}
+                  style={{ width: '100%', padding: '0.9rem', background: (!editingId && !formData.employeeId) ? 'var(--gray-300)' : 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: (!editingId && !formData.employeeId) ? 'not-allowed' : 'pointer', fontSize: '1rem', transition: 'background 0.2s' }}
                 >
                   {editingId ? 'Save Changes' : 'Submit Evaluation'}
                 </button>

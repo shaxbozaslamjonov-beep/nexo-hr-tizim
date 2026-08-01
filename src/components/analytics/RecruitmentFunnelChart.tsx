@@ -56,15 +56,22 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
       const data = payload[0].payload;
       const rate = total > 0 ? ((data.value / total) * 100).toFixed(1) : '0.0';
       return (
-        <div style={{ background: 'rgba(255, 255, 255, 0.98)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.12)', padding: '1rem', border: '1px solid #e2e8f0', minWidth: '180px' }}>
+        <div style={{ 
+          background: 'var(--surface)', 
+          borderRadius: '16px', 
+          boxShadow: 'var(--card-shadow)', 
+          padding: '1rem', 
+          border: '1px solid var(--border)', 
+          minWidth: '180px' 
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#000000', textTransform: 'uppercase' }}>{data.localName}</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase' }}>{data.localName}</span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: '#5a6372' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
             <span>Nomzodlar:</span>
-            <span style={{ color: '#000000', fontWeight: 900 }}>{data.value} ta</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 900 }}>{data.value} ta</span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: '#2563eb', marginTop: '0.25rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary)', marginTop: '0.25rem' }}>
             <span>Konversiya:</span>
             <span style={{ fontWeight: 900 }}>{rate}%</span>
           </div>
@@ -76,10 +83,10 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '24px',
-      border: '1px solid #e2e8f0',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+      border: '1px solid var(--border)',
+      boxShadow: 'var(--card-shadow)',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
@@ -87,29 +94,29 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
       minHeight: '420px',
     }}>
       {/* Header */}
-      <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)' }}>
+          <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'var(--grad-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(46, 86, 230, 0.25)' }}>
             <Users size={22} color="white" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', margin: 0, lineHeight: 1.2 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
               {t('recruitmentFunnel') || 'Воронка рекрутмента'}
             </h3>
-            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
+            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
               Process Efficiency
             </p>
           </div>
         </div>
-        <div style={{ padding: '0.4rem', borderRadius: '10px', background: '#dcfce7', display: 'flex' }}>
-          <TrendingUp size={18} color="#16a34a" />
+        <div style={{ padding: '0.4rem', borderRadius: '10px', background: 'var(--emerald-50)', display: 'flex' }}>
+          <TrendingUp size={18} color="var(--emerald-600)" />
         </div>
       </div>
 
       {/* Chart Body */}
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '300px' }}>
         {!hasData ? (
-          <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600 }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600 }}>
             {t('analytics.noData') || 'Ma\'lumotlar mavjud emas'}
           </div>
         ) : (
@@ -122,24 +129,24 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
             >
               <defs>
                 <linearGradient id="colorApp" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#06b6d4" />
-                  <stop offset="100%" stopColor="#22d3ee" />
+                  <stop offset="0%" stopColor="var(--blue-600)" />
+                  <stop offset="100%" stopColor="var(--turquoise-500)" />
                 </linearGradient>
                 <linearGradient id="colorScr" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#4f46e5" />
-                  <stop offset="100%" stopColor="#6366f1" />
+                  <stop offset="0%" stopColor="var(--blue-700)" />
+                  <stop offset="100%" stopColor="var(--blue-500)" />
                 </linearGradient>
                 <linearGradient id="colorInt" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#8b5cf6" />
-                  <stop offset="100%" stopColor="#a78bfa" />
+                  <stop offset="0%" stopColor="var(--amber-600)" />
+                  <stop offset="100%" stopColor="var(--amber-500)" />
                 </linearGradient>
                 <linearGradient id="colorTra" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#ec4899" />
-                  <stop offset="100%" stopColor="#f472b6" />
+                  <stop offset="0%" stopColor="var(--turquoise-600)" />
+                  <stop offset="100%" stopColor="var(--turquoise-300)" />
                 </linearGradient>
                 <linearGradient id="colorHir" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#10b981" />
-                  <stop offset="100%" stopColor="#34d399" />
+                  <stop offset="0%" stopColor="var(--emerald-600)" />
+                  <stop offset="100%" stopColor="var(--emerald-500)" />
                 </linearGradient>
               </defs>
               <XAxis type="number" hide />
@@ -148,7 +155,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
                 type="category" 
                 axisLine={false} 
                 tickLine={false}
-                tick={{ fill: '#475569', fontSize: 12, fontWeight: 700 }}
+                tick={{ fill: 'var(--text-secondary)', fontSize: 12, fontWeight: 700 }}
                 width={120}
               />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
@@ -156,7 +163,7 @@ export function RecruitmentFunnelChart({ data }: RecruitmentFunnelChartProps) {
                 {formattedData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}
-                <LabelList dataKey="value" position="right" fill="#000000" fontSize={13} fontWeight={900} offset={12} />
+                <LabelList dataKey="value" position="right" fill="var(--text-primary)" fontSize={13} fontWeight={900} offset={12} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>

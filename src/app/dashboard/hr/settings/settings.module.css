@@ -6,7 +6,7 @@
 }
 
 .heroBanner {
-  background: linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%);
+  background: var(--grad-hero-network), linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-600) 55%, var(--turquoise-500) 100%);
   border-radius: 24px;
   padding: 2.5rem 3rem;
   color: white;
@@ -21,7 +21,7 @@
   right: -10%;
   width: 350px;
   height: 350px;
-  background: rgba(65, 105, 201, 0.35);
+  background: rgba(46, 86, 230, 0.35);
   border-radius: 50%;
   filter: blur(80px);
   pointer-events: none;
@@ -40,7 +40,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #93c5fd;
+  color: var(--turquoise-300);
   margin-bottom: 0.75rem;
 }
 
@@ -72,11 +72,11 @@
 }
 
 .navSidebar {
-  background: white;
+  background: var(--surface);
   border-radius: 24px;
   border: 1px solid var(--border);
   padding: 1.25rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -94,22 +94,22 @@
   background: transparent;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #5a6372;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
 }
 
 .navTab:hover {
-  background: #f1f5f9;
-  color: #1e293b;
+  background: var(--bg-muted);
+  color: var(--text-primary);
   transform: translateX(4px);
 }
 
 .navTabActive {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  background: var(--primary);
   color: white !important;
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 20px rgba(46, 86, 230, 0.3);
 }
 
 .navTabActive:hover {
@@ -117,11 +117,11 @@
 }
 
 .tabContent {
-  background: white;
+  background: var(--surface);
   border-radius: 24px;
   border: 1px solid var(--border);
   padding: 2.25rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--card-shadow);
   min-height: 550px;
 }
 
@@ -131,18 +131,18 @@
   justify-content: space-between;
   margin-bottom: 2rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border);
 }
 
 .sectionTitle {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #000000;
+  color: var(--text-primary);
 }
 
 .sectionSub {
   font-size: 0.85rem;
-  color: #7a8391;
+  color: var(--text-secondary);
   margin-top: 0.25rem;
 }
 
@@ -156,19 +156,19 @@
   width: 100%;
   padding: 0.85rem 1rem 0.85rem 2.8rem;
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--border);
+  background: var(--bg-muted);
   font-size: 0.9rem;
   font-weight: 600;
-  color: #000000;
+  color: var(--text-primary);
   outline: none;
   transition: all 0.2s;
 }
 
 .searchInput:focus {
-  background: white;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  background: var(--surface);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(46, 86, 230, 0.15);
 }
 
 .searchIcon {
@@ -176,7 +176,7 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .tableWrapper {
@@ -193,20 +193,20 @@
   text-align: left;
   font-size: 0.75rem;
   font-weight: 800;
-  color: #7a8391;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 2px solid var(--border);
 }
 
 .customTable td {
   padding: 1.1rem 1rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
 
 .customTable tr:hover td {
-  background: #f8fafc;
+  background: var(--bg-muted);
 }
 
 .userCell {
@@ -219,25 +219,25 @@
   width: 42px;
   height: 42px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: var(--grad-primary);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
   font-size: 0.9rem;
-  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 4px 10px rgba(46, 86, 230, 0.25);
 }
 
 .userName {
   font-weight: 800;
   font-size: 0.95rem;
-  color: #000000;
+  color: var(--text-primary);
 }
 
 .userSub {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-family: monospace;
 }
 
@@ -248,8 +248,8 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--blue-50);
+  color: var(--blue-700);
 }
 
 .statusTagActive {
@@ -257,8 +257,8 @@
   border-radius: 8px;
   font-size: 0.7rem;
   font-weight: 800;
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--emerald-50);
+  color: var(--emerald-700);
 }
 
 .actionBtnGroup {
@@ -271,32 +271,32 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: white;
+  border: 1px solid var(--border);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #475569;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .actionBtn:hover {
-  background: #eff6ff;
-  color: #2563eb;
-  border-color: #bfdbfe;
+  background: var(--blue-50);
+  color: var(--primary);
+  border-color: var(--blue-100);
 }
 
 .btnPrimary {
   padding: 0.75rem 1.75rem;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 14px;
   font-weight: 800;
   font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 14px rgba(46, 86, 230, 0.3);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -305,14 +305,15 @@
 
 .btnPrimary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: var(--card-hover-shadow);
+  background: var(--blue-700);
 }
 
 .btnSecondary {
   padding: 0.75rem 1.5rem;
-  background: white;
-  color: #334155;
-  border: 1px solid #cbd5e1;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
   border-radius: 14px;
   font-weight: 700;
   font-size: 0.9rem;
@@ -321,8 +322,8 @@
 }
 
 .btnSecondary:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
+  background: var(--bg-muted);
+  border-color: var(--gray-400);
 }
 
 /* Form Styles */
@@ -347,7 +348,7 @@
 .formLabel {
   font-size: 0.75rem;
   font-weight: 800;
-  color: #64748b;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -356,19 +357,19 @@
   width: 100%;
   padding: 0.8rem 1.1rem;
   border-radius: 14px;
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
+  border: 1px solid var(--border);
+  background: var(--bg-muted);
   font-size: 0.9rem;
   font-weight: 600;
-  color: #000000;
+  color: var(--text-primary);
   outline: none;
   transition: all 0.2s;
 }
 
 .formInput:focus {
-  background: white;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  background: var(--surface);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(46, 86, 230, 0.15);
 }
 
 /* Modal Overlay */
@@ -386,10 +387,10 @@
 }
 
 .modalCard {
-  background: white;
+  background: var(--surface);
   border-radius: 28px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
   width: 100%;
   max-width: 750px;
   overflow: hidden;
@@ -400,11 +401,11 @@
 
 .modalHeader {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f8fafc;
+  background: var(--bg-muted);
 }
 
 .modalTitle {
@@ -412,13 +413,13 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #000000;
+  color: var(--text-primary);
 }
 
 .modalClose {
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 10px;
@@ -426,8 +427,8 @@
 }
 
 .modalClose:hover {
-  background: #e2e8f0;
-  color: #000000;
+  background: var(--border);
+  color: var(--text-primary);
 }
 
 .modalBody {

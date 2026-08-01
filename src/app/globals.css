@@ -286,7 +286,7 @@ input, button, textarea, select {
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 15px rgba(46, 86, 230, 0.4);
 }
 
 .badge {
@@ -345,7 +345,7 @@ input, button, textarea, select {
 .bg-card { background-color: var(--surface); }
 .bg-muted { background-color: var(--bg-muted); }
 .bg-primary { background-color: var(--primary); }
-.bg-primary\/60 { background-color: rgba(99, 102, 241, 0.6); }
+.bg-primary\/60 { background-color: rgba(46, 86, 230, 0.6); }
 
 .text-sm { font-size: 0.875rem; }
 .text-xs { font-size: 0.75rem; }
@@ -361,7 +361,7 @@ input, button, textarea, select {
 
 .text-primary { color: var(--primary); }
 .text-muted-foreground { color: var(--text-secondary); }
-.text-slate-900 { color: #0f172a; }
+.text-slate-900 { color: var(--text-primary); }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; }
 .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }

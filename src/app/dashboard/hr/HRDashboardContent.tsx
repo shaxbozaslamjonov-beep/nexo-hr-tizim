@@ -148,9 +148,9 @@ export function HRDashboardContent() {
         const pending = allInterviews.filter(i => i.result === 'pending' || (i.status === 'completed' && !i.result)).length;
         
         setInterviewStats([
-          { name: (t('interviews.result.passed') as string) || 'Passed', value: passed, color: '#10b981' },
-          { name: (t('interviews.result.failed') as string) || 'Failed', value: failed, color: '#ef4444' },
-          { name: (t('interviews.result.pending') as string) || 'Pending', value: pending, color: '#f59e0b' }
+          { name: (t('interviews.result.passed') as string) || 'Passed', value: passed, color: 'var(--success)' },
+          { name: (t('interviews.result.failed') as string) || 'Failed', value: failed, color: 'var(--error)' },
+          { name: (t('interviews.result.pending') as string) || 'Pending', value: pending, color: 'var(--warning)' }
         ]);
 
         const resList = await reserveService.getReserveList();
@@ -173,11 +173,11 @@ export function HRDashboardContent() {
   };
 
   const funnelData = [
-    { name: (t('funnel.stages.applications') as string) || 'Arizalar', value: applications.length, color: '#6366f1' },
-    { name: (t('funnel.stages.screening') as string) || 'Screening', value: candidates.filter(c => c.status === 'SCREENING').length, color: '#4f46e5' },
-    { name: (t('funnel.stages.interviews') as string) || 'Suhbatlar', value: interviews.length, color: '#8b5cf6' },
-    { name: (t('funnel.stages.training') as string) || 'Trening', value: trainingPaths.reduce((acc, obj) => acc + (obj.assignedTo?.length || 0), 0), color: '#f97316' },
-    { name: (t('funnel.stages.hired') as string) || 'Ishga qabul qilingan', value: candidates.filter(c => c.status === 'HIRED').length, color: '#10b981' },
+    { name: (t('funnel.stages.applications') as string) || 'Arizalar', value: applications.length, color: 'var(--blue-500)' },
+    { name: (t('funnel.stages.screening') as string) || 'Screening', value: candidates.filter(c => c.status === 'SCREENING').length, color: 'var(--primary)' },
+    { name: (t('funnel.stages.interviews') as string) || 'Suhbatlar', value: interviews.length, color: 'var(--blue-700)' },
+    { name: (t('funnel.stages.training') as string) || 'Trening', value: trainingPaths.reduce((acc, obj) => acc + (obj.assignedTo?.length || 0), 0), color: 'var(--blue-800)' },
+    { name: (t('funnel.stages.hired') as string) || 'Ishga qabul qilingan', value: candidates.filter(c => c.status === 'HIRED').length, color: 'var(--success)' },
   ];
 
   return (
@@ -285,7 +285,7 @@ export function HRDashboardContent() {
           </div>
           
           {todayInterviews.length === 0 ? (
-            <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>
+            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                No interviews scheduled for today
             </div>
           ) : (
@@ -326,7 +326,7 @@ export function HRDashboardContent() {
           <div className={styles.chartContainer} style={{ height: '300px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={funnelData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
                 <XAxis type="number" hide />
                 <YAxis 
                   dataKey="name" 
@@ -334,10 +334,10 @@ export function HRDashboardContent() {
                   axisLine={false} 
                   tickLine={false} 
                   width={100}
-                  tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                  tick={{ fill: 'var(--text-secondary)', fontSize: 10, fontWeight: 600 }}
                 />
                 <Tooltip 
-                  cursor={{ fill: '#f8fafc' }}
+                  cursor={{ fill: 'var(--gray-50)' }}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: 'var(--shadow-lg)' }}
                 />
                 <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={30}>
@@ -438,7 +438,7 @@ export function HRDashboardContent() {
             <h2 className={styles.sectionTitle}>{t('recentCandidates')}</h2>
           </div>
           {candidates.length === 0 ? (
-            <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>
+            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               {t('noCandidates')}
             </div>
           ) : (
@@ -493,7 +493,7 @@ export function HRDashboardContent() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {trainingPaths.map(path => (
-              <div key={path.id} style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)', padding: '1.25rem', borderRadius: '20px', border: '1px solid var(--border)', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/training/${path.id}`)}>
+              <div key={path.id} style={{ background: 'linear-gradient(135deg, var(--gray-50) 0%, var(--border) 100%)', padding: '1.25rem', borderRadius: '20px', border: '1px solid var(--border)', cursor: 'pointer' }} onClick={() => router.push(`/dashboard/hr/training/${path.id}`)}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: 'var(--text-primary)' }}>{path.title}</span>
                   <span style={{ fontWeight: 900, color: 'var(--primary)', fontSize: '1.1rem' }}>
@@ -517,7 +517,7 @@ export function HRDashboardContent() {
             ))}
             
             {trainingPaths.length === 0 && (
-              <div style={{ padding: '1rem', textAlign: 'center', color: '#94a3b8' }}>
+              <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                 No active training paths
               </div>
             )}
@@ -539,7 +539,7 @@ export function HRDashboardContent() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
              {testResults.length === 0 ? (
-                <div style={{ padding: '1rem', textAlign: 'center', color: '#94a3b8' }}>
+                <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                   No recent test results
                 </div>
              ) : (
@@ -553,7 +553,7 @@ export function HRDashboardContent() {
                         </div>
                      </div>
                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontWeight: 800, color: res.status === 'passed' ? '#10b981' : '#ef4444' }}>{res.score}%</div>
+                        <div style={{ fontWeight: 800, color: res.status === 'passed' ? 'var(--success)' : 'var(--error)' }}>{res.score}%</div>
                         <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 800, opacity: 0.6 }}>{res.status}</div>
                      </div>
                   </div>
@@ -569,13 +569,13 @@ export function HRDashboardContent() {
           align-items: center;
           gap: 1rem;
           padding: 1rem;
-          background: #f8fafc;
+          background: var(--gray-50);
           border-radius: 16px;
           cursor: pointer;
           transition: all 0.2s;
         }
         .${styles.interviewListItem}:hover {
-          background: #f1f5f9;
+          background: var(--border);
           transform: translateX(5px);
         }
       `}</style>

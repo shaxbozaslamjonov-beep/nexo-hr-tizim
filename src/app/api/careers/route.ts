@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const levels = await prisma.careerLevel.findMany({
+      where: { companyId: session.companyId },
       orderBy: { order: 'asc' },
     });
     return NextResponse.json(levels);
@@ -14,6 +21,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { role, levelName, requirements, order } = await request.json();
 
@@ -27,6 +37,7 @@ export async function POST(request: Request) {
         levelName,
         requirements: requirements || '',
         order: parseInt(order) || 0,
+        companyId: session.companyId,
       },
     });
 
@@ -38,12 +49,20 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
       return NextResponse.json({ error: 'Level ID is required' }, { status: 400 });
+    }
+
+    const existing = await prisma.careerLevel.findUnique({ where: { id } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     await prisma.careerLevel.delete({
@@ -58,12 +77,20 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
       return NextResponse.json({ error: 'Level ID is required' }, { status: 400 });
+    }
+
+    const existing = await prisma.careerLevel.findUnique({ where: { id } });
+    if (!existing || existing.companyId !== session.companyId) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     const { role, levelName, requirements, order } = await request.json();

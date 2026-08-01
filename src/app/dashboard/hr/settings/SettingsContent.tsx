@@ -504,9 +504,9 @@ export function SettingsContent() {
                   </div>
 
                   {/* Telegram ulash */}
-                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9' }}>
+                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
                     <h3 className={styles.sectionTitle} style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                      <Send size={20} style={{ display: 'inline', marginRight: '0.5rem', color: '#2563eb' }} />
+                      <Send size={20} style={{ display: 'inline', marginRight: '0.5rem', color: 'var(--primary)' }} />
                       Telegram
                     </h3>
                     <p className={styles.sectionSub} style={{ marginBottom: '1.25rem' }}>
@@ -515,7 +515,7 @@ export function SettingsContent() {
 
                     {myTelegram?.telegramChatId ? (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 1rem', borderRadius: '999px', background: '#dcfce7', color: '#15803d', fontWeight: 700, fontSize: '0.85rem' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 1rem', borderRadius: '999px', background: 'var(--emerald-100)', color: 'var(--emerald-700)', fontWeight: 700, fontSize: '0.85rem' }}>
                           <CheckCircle2 size={16} /> Ulangan (Chat ID: {myTelegram.telegramChatId})
                         </span>
                         <button type="button" onClick={handleUnlinkTelegram} disabled={linkingTelegram} className={styles.btnSecondary}>
@@ -524,7 +524,7 @@ export function SettingsContent() {
                       </div>
                     ) : (
                       <div style={{ maxWidth: '480px' }}>
-                        <ol style={{ fontSize: '0.85rem', color: '#5a6372', paddingLeft: '1.1rem', marginBottom: '1rem', lineHeight: 1.7 }}>
+                        <ol style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', paddingLeft: '1.1rem', marginBottom: '1rem', lineHeight: 1.7 }}>
                           <li>Telegram'da botimizga <b>/start</b> yuboring va u sizga Chat ID'ingizni ko'rsatadi.</li>
                           <li>Chat ID'ni quyidagi maydonga kiriting va "Ulash" tugmasini bosing.</li>
                         </ol>
@@ -545,9 +545,9 @@ export function SettingsContent() {
                   </div>
 
                   {/* Parolni Yangilash */}
-                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9' }}>
+                  <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
                     <h3 className={styles.sectionTitle} style={{ fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                      <Key size={20} style={{ display: 'inline', marginRight: '0.5rem', color: '#2563eb' }} />
+                      <Key size={20} style={{ display: 'inline', marginRight: '0.5rem', color: 'var(--primary)' }} />
                       Parolni Yangilash
                     </h3>
                     <form onSubmit={handleSaveOwnPassword} style={{ maxWidth: '480px', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
@@ -649,7 +649,7 @@ export function SettingsContent() {
                                 </div>
                               </div>
                             </td>
-                            <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+                            <td style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.12)' }}>
                               {u.email}
                             </td>
                             <td>
@@ -672,7 +672,7 @@ export function SettingsContent() {
                                   type="button"
                                   onClick={() => setResetPasswordUserId(u.id)}
                                   className={styles.actionBtn}
-                                  style={{ color: '#d97706', borderColor: '#fde68a', background: '#fffbeb' }}
+                                  style={{ color: 'var(--amber-600)', borderColor: 'var(--amber-100)', background: 'var(--amber-50)' }}
                                   title="Parolni tiklash"
                                 >
                                   <Key size={18} />
@@ -699,9 +699,9 @@ export function SettingsContent() {
 
                   {/* Available Roles Pills Bar */}
                   <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>MAVJUD ROLLAR:</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>MAVJUD ROLLAR:</span>
                     {['ADMIN', 'HR_MANAGER', 'DIRECTOR', 'DEPARTMENT_HEAD', 'EMPLOYEE', 'CANDIDATE'].map((r, i) => (
-                      <span key={i} style={{ padding: '0.35rem 0.85rem', borderRadius: '12px', background: i === 0 ? '#1d4ed8' : '#f1f5f9', color: i === 0 ? 'white' : '#475569', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}>
+                      <span key={i} style={{ padding: '0.35rem 0.85rem', borderRadius: '12px', background: i === 0 ? 'var(--primary)' : 'var(--border)', color: i === 0 ? 'white' : 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}>
                         {r}
                       </span>
                     ))}
@@ -746,39 +746,39 @@ export function SettingsContent() {
                           ]},
                         ].map((group, gIdx) => (
                           <React.Fragment key={gIdx}>
-                            <tr style={{ background: '#f8fafc' }}>
-                              <td colSpan={6} style={{ fontWeight: 900, color: '#1e3a8a', fontSize: '0.85rem', padding: '0.75rem 1rem' }}>
+                            <tr style={{ background: 'var(--gray-50)' }}>
+                              <td colSpan={6} style={{ fontWeight: 900, color: 'var(--blue-800)', fontSize: '0.85rem', padding: '0.75rem 1rem' }}>
                                 {group.category}
                               </td>
                             </tr>
                             {group.permissions.map((p, pIdx) => (
                               <tr key={pIdx}>
-                                <td style={{ paddingLeft: '2rem', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+                                <td style={{ paddingLeft: '2rem', fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.12)' }}>
                                   {p.action}
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                   <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                                    {p.admin ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                    {p.admin ? <CheckCircle2 size={22} color="var(--emerald-600)" style={{ margin: '0 auto' }} /> : <X size={20} color="var(--gray-300)" style={{ margin: '0 auto' }} />}
                                   </button>
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                   <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                                    {p.hr ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                    {p.hr ? <CheckCircle2 size={22} color="var(--emerald-600)" style={{ margin: '0 auto' }} /> : <X size={20} color="var(--gray-300)" style={{ margin: '0 auto' }} />}
                                   </button>
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                   <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                                    {p.dir ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                    {p.dir ? <CheckCircle2 size={22} color="var(--emerald-600)" style={{ margin: '0 auto' }} /> : <X size={20} color="var(--gray-300)" style={{ margin: '0 auto' }} />}
                                   </button>
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                   <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                                    {p.head ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                    {p.head ? <CheckCircle2 size={22} color="var(--emerald-600)" style={{ margin: '0 auto' }} /> : <X size={20} color="var(--gray-300)" style={{ margin: '0 auto' }} />}
                                   </button>
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                   <button type="button" className="p-1" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                                    {p.emp ? <CheckCircle2 size={22} color="#16a34a" style={{ margin: '0 auto' }} /> : <X size={20} color="#cbd5e1" style={{ margin: '0 auto' }} />}
+                                    {p.emp ? <CheckCircle2 size={22} color="var(--emerald-600)" style={{ margin: '0 auto' }} /> : <X size={20} color="var(--gray-300)" style={{ margin: '0 auto' }} />}
                                   </button>
                                 </td>
                               </tr>
@@ -789,7 +789,7 @@ export function SettingsContent() {
                     </table>
                   </div>
 
-                  <p style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: '#94a3b8', fontStyle: 'italic', textAlign: 'center' }}>
+                  <p style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic', textAlign: 'center' }}>
                     * Barcha ruxsatnomalarning o'zgarishi avtomatik ravishda tizim Audit log jurnaliga yozib boriladi.
                   </p>
                 </div>
@@ -802,26 +802,26 @@ export function SettingsContent() {
                   <div className={styles.sectionHeader}>
                     <div>
                       <h2 className={styles.sectionTitle} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Send size={24} color="#0284c7" />
+                        <Send size={24} color="var(--primary)" />
                         Telegram Bot Integratsiyasi
                       </h2>
                       <p className={styles.sectionSub}>Avtomatik bildirishnomalar va Telegram Webhook boshqaruvi</p>
                     </div>
                   </div>
 
-                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f0f9ff', border: '1px solid #bae6fd', marginBottom: '2rem' }}>
+                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: 'var(--blue-50)', border: '1px solid var(--blue-100)', marginBottom: '2rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#0369a1' }}>Bot Token Holati</span>
-                      <span style={{ padding: '0.25rem 0.75rem', background: '#16a34a', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--blue-700)' }}>Bot Token Holati</span>
+                      <span style={{ padding: '0.25rem 0.75rem', background: 'var(--emerald-600)', color: 'white', fontWeight: 800, fontSize: '0.7rem', borderRadius: '20px' }}>FAOL (CONNECTED)</span>
                     </div>
-                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid #e0f2fe', fontSize: '0.85rem', fontFamily: 'monospace', color: '#0369a1', wordBreak: 'break-all', marginBottom: '1rem' }}>
+                    <code style={{ display: 'block', padding: '0.85rem', background: 'white', borderRadius: '12px', border: '1px solid var(--blue-50)', fontSize: '0.85rem', fontFamily: 'monospace', color: 'var(--blue-700)', wordBreak: 'break-all', marginBottom: '1rem' }}>
                       ●●●●●●●●●●:●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● (server .env da saqlanadi)
                     </code>
 
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid #bae6fd' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid var(--blue-100)' }}>
                       <div>
-                        <div style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.9rem' }}>Vercel Webhook URL:</div>
-                        <div style={{ fontSize: '0.8rem', color: '#0284c7', fontFamily: 'monospace' }}>https://nexo-hr-tizim.vercel.app/api/webhooks/telegram</div>
+                        <div style={{ fontWeight: 800, color: 'var(--blue-700)', fontSize: '0.9rem' }}>Vercel Webhook URL:</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--primary)', fontFamily: 'monospace' }}>https://nexo-hr-tizim.vercel.app/api/webhooks/telegram</div>
                       </div>
                       <button
                         type="button"
@@ -839,7 +839,7 @@ export function SettingsContent() {
                           }
                         }}
                         className={styles.btnPrimary}
-                        style={{ background: '#0284c7', fontSize: '0.8rem', padding: '0.5rem 1rem' }}
+                        style={{ background: 'var(--primary)', fontSize: '0.8rem', padding: '0.5rem 1rem' }}
                       >
                         ⚡ Webhook URLni Vercel Bilan Ulash
                       </button>
@@ -874,7 +874,7 @@ export function SettingsContent() {
                       onClick={handleSendTestTelegram}
                       disabled={sendingTest}
                       className={styles.btnPrimary}
-                      style={{ background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)', width: 'fit-content' }}
+                      style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--blue-700) 100%)', width: 'fit-content' }}
                     >
                       <Send size={18} />
                       {sendingTest ? 'Yuborilmoqda...' : 'Test Xabarini Yuborish'}
@@ -893,10 +893,10 @@ export function SettingsContent() {
                     </div>
                   </div>
                   
-                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ padding: '1.5rem', borderRadius: '16px', background: 'var(--gray-50)', border: '1px solid var(--gray-200)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
-                      <h4 style={{ fontWeight: 800, color: '#000000', fontSize: '0.95rem' }}>Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
-                      <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>Kirishda Telegram boti orqali tasdiqlash kodini yuborish</p>
+                      <h4 style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Telegram 2FA Ikki Bosqichli Tasdiqlash</h4>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>Kirishda Telegram boti orqali tasdiqlash kodini yuborish</p>
                     </div>
                     <input type="checkbox" style={{ width: '20px', height: '20px' }} defaultChecked />
                   </div>
@@ -916,32 +916,33 @@ export function SettingsContent() {
                   {companyData && (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
                       {/* PLAN CARD */}
-                      <div style={{ background: 'linear-gradient(135deg, #0B1120 0%, #16215A 100%)', borderRadius: '16px', padding: '1.5rem', color: '#fff' }}>
+                      <div style={{ background: 'linear-gradient(135deg, var(--navy-black) 0%, var(--navy-deep) 100%)', borderRadius: '16px', padding: '1.5rem', color: 'var(--brand-paper)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#38bdf8' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--primary-light)' }}>
                             Joriy Tarif Plani
                           </span>
-                          <span style={{ background: '#38bdf822', color: '#38bdf8', border: '1px solid #38bdf844', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                          <span style={{ background: 'rgba(143, 166, 245, 0.13)', color: 'var(--primary-light)', border: '1px solid rgba(143, 166, 245, 0.27)', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>
                             {companyData.plan}
                           </span>
                         </div>
                         <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem' }}>{companyData.limits?.name}</h3>
-                        <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                           {companyData.limits?.priceUzsMonth > 0
                             ? `${companyData.limits.priceUzsMonth.toLocaleString()} UZS / oy`
                             : 'Bepul Sinov Muddati'}
                         </p>
 
-                        <div style={{ borderTop: '1px solid #334155', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem' }}>
+                        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span style={{ color: '#94a3b8' }}>AI Assistent:</span>
-                            <span style={{ color: companyData.limits?.aiAssistant ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+                            <span style={{ color: 'var(--text-secondary)' }}>AI Assistent:</span>
+                            {/* #f87171 kept literal: var(--error) fails 4.5:1 on this dark navy gradient card, and no lighter red token exists yet */}
+                            <span style={{ color: companyData.limits?.aiAssistant ? 'var(--success)' : '#f87171', fontWeight: 700 }}>
                               {companyData.limits?.aiAssistant ? '✅ Faol' : '❌ Nofaol'}
                             </span>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span style={{ color: '#94a3b8' }}>Personal Brending:</span>
-                            <span style={{ color: companyData.limits?.customBranding ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+                            <span style={{ color: 'var(--text-secondary)' }}>Personal Brending:</span>
+                            <span style={{ color: companyData.limits?.customBranding ? 'var(--success)' : '#f87171', fontWeight: 700 }}>
                               {companyData.limits?.customBranding ? '✅ Faol' : '❌ Nofaol'}
                             </span>
                           </div>
@@ -949,24 +950,24 @@ export function SettingsContent() {
                       </div>
 
                       {/* USAGE LIMITS CARD */}
-                      <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-                        <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#000000', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <Building size={18} color="#0284c7" />
+                      <div style={{ background: 'var(--surface)', borderRadius: '16px', padding: '1.5rem', border: '1px solid var(--gray-200)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <Building size={18} color="var(--primary)" />
                           Resurslar Kvotasi
                         </h4>
 
                         {/* Vacancy Limit */}
                         <div style={{ marginBottom: '1.25rem' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
-                            <span style={{ color: '#475569' }}>Ochiq Vakansiyalar</span>
-                            <span style={{ color: '#000000' }}>{companyData.usage?.activeVacancies} / {companyData.limits?.maxActiveVacancies}</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>Ochiq Vakansiyalar</span>
+                            <span style={{ color: 'var(--text-primary)' }}>{companyData.usage?.activeVacancies} / {companyData.limits?.maxActiveVacancies}</span>
                           </div>
-                          <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                          <div style={{ height: '8px', background: 'var(--gray-200)', borderRadius: '999px', overflow: 'hidden' }}>
                             <div 
                               style={{ 
                                 height: '100%', 
                                 width: `${Math.min(100, (companyData.usage?.activeVacancies / companyData.limits?.maxActiveVacancies) * 100)}%`,
-                                background: companyData.canCreateVacancy ? '#0284c7' : '#ef4444' 
+                                background: companyData.canCreateVacancy ? 'var(--primary)' : 'var(--error)' 
                               }} 
                             />
                           </div>
@@ -975,15 +976,15 @@ export function SettingsContent() {
                         {/* Employee Limit */}
                         <div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>
-                            <span style={{ color: '#475569' }}>Xodimlar Soni</span>
-                            <span style={{ color: '#000000' }}>{companyData.usage?.employees} / {companyData.limits?.maxEmployees}</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>Xodimlar Soni</span>
+                            <span style={{ color: 'var(--text-primary)' }}>{companyData.usage?.employees} / {companyData.limits?.maxEmployees}</span>
                           </div>
-                          <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                          <div style={{ height: '8px', background: 'var(--gray-200)', borderRadius: '999px', overflow: 'hidden' }}>
                             <div 
                               style={{ 
                                 height: '100%', 
                                 width: `${Math.min(100, (companyData.usage?.employees / companyData.limits?.maxEmployees) * 100)}%`,
-                                background: companyData.canAddEmployee ? '#10b981' : '#ef4444' 
+                                background: companyData.canAddEmployee ? 'var(--success)' : 'var(--error)' 
                               }} 
                             />
                           </div>
@@ -1011,9 +1012,9 @@ export function SettingsContent() {
                         className={styles.formInput} 
                         value={companyData?.company?.slug || ''} 
                         disabled 
-                        style={{ background: '#f8fafc', color: '#64748b' }}
+                        style={{ background: 'var(--gray-50)', color: 'var(--text-secondary)' }}
                       />
-                      <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.25rem', display: 'block' }}>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem', display: 'block' }}>
                         Bot va vakansiya havolalari uchun unikal kalit so'z.
                       </span>
                     </div>
@@ -1053,28 +1054,28 @@ export function SettingsContent() {
                         {auditLogs.length > 0 ? (
                           auditLogs.map((log: any) => (
                             <tr key={log.id}>
-                              <td style={{ fontSize: '0.8rem', color: '#64748b', whiteSpace: 'nowrap' }}>
+                              <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
                                 {new Date(log.createdAt).toLocaleString('uz-UZ')}
                               </td>
-                              <td style={{ fontSize: '0.85rem', fontWeight: 600, color: '#000000' }}>
+                              <td style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                                 {log.userEmail || 'Tizim / Anonim'}
                               </td>
                               <td>
-                                <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '0.2rem 0.5rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                <span style={{ background: 'var(--blue-50)', color: 'var(--blue-700)', padding: '0.2rem 0.5rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
                                   {log.action}
                                 </span>
                               </td>
-                              <td style={{ fontSize: '0.85rem', color: '#475569' }}>
+                              <td style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                                 {log.entityType} {log.entityId ? `(#${log.entityId.substring(0, 6)})` : ''}
                               </td>
-                              <td style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 {log.details || '-'}
                               </td>
                             </tr>
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8' }}>
+                            <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
                               Hozircha audit jurnali bo'sh.
                             </td>
                           </tr>
@@ -1131,13 +1132,14 @@ export function SettingsContent() {
               </div>
 
               {/* Password Reset Action inside modal */}
-              <div style={{ padding: '1.25rem', borderRadius: '16px', background: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ padding: '1.25rem', borderRadius: '16px', background: 'var(--amber-50)', border: '1px solid var(--amber-100)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                {/* #92400e kept literal: var(--amber-600) only hits 3.07:1 on --amber-50 (pre-existing design-system gap, also present in .badge-pending) */}
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#92400e' }}>Foydalanuvchi Parolini Yangilash</span>
                 <button 
                   type="button"
                   onClick={() => setResetPasswordUserId(editingUser.id)}
                   className={styles.btnPrimary}
-                  style={{ background: '#d97706', padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}
+                  style={{ background: 'var(--amber-600)', padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}
                 >
                   <Key size={16} />
                   Parolni tiklash (Reset)
@@ -1191,8 +1193,8 @@ export function SettingsContent() {
               </div>
 
               {/* Telegram Integration */}
-              <div style={{ paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9' }}>
-                <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem' }}>Telegram Integratsiya Sozlamalari</h4>
+              <div style={{ paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
+                <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '1rem' }}>Telegram Integratsiya Sozlamalari</h4>
                 <div className={styles.formGrid}>
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Telegram ID (Raqamli ID)</label>
@@ -1217,7 +1219,7 @@ export function SettingsContent() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
                 <button type="button" onClick={() => setEditingUser(null)} className={styles.btnSecondary}>
                   Bekor Qilish
                 </button>
@@ -1242,7 +1244,7 @@ export function SettingsContent() {
               </button>
             </div>
             <div className={styles.modalBody}>
-              <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Ushbu foydalanuvchi uchun yangi parol belgilang.</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Ushbu foydalanuvchi uchun yangi parol belgilang.</p>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>Yangi Parol *</label>
                 <input 
@@ -1263,7 +1265,7 @@ export function SettingsContent() {
                   onClick={() => handleAdminResetPassword(resetPasswordUserId)} 
                   disabled={loading} 
                   className={styles.btnPrimary}
-                  style={{ background: '#d97706' }}
+                  style={{ background: 'var(--amber-600)' }}
                 >
                   {loading ? 'Saqlanmoqda...' : 'Parolni O\'zgartirish'}
                 </button>

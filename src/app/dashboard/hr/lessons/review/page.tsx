@@ -82,31 +82,31 @@ export default function AssignmentReviewPage() {
       value: assignments.length,
       trend: `So'nggi 7 kun: +${recentCount}`,
       icon: FileText,
-      iconBg: '#eff6ff',
-      iconColor: '#2563eb',
+      iconBg: 'var(--blue-50)',
+      iconColor: 'var(--blue-700)',
     },
     {
       label: 'Kutilmoqda',
       value: submittedCount,
       trend: submittedCount > 0 ? `${submittedCount} ta javob kutmoqda` : 'Hammasi ko\'rib chiqilgan',
       icon: Clock,
-      iconBg: '#fff7ed',
-      iconColor: '#ea580c',
+      iconBg: 'var(--amber-50)',
+      iconColor: 'var(--amber-600)',
     },
     {
       label: 'Tekshirilgan',
       value: checkedCount,
       trend: assignments.length > 0 ? `${Math.round((checkedCount / assignments.length) * 100)}% yakunlangan` : '—',
       icon: CheckCircle2,
-      iconBg: '#f0fdf4',
-      iconColor: '#16a34a',
+      iconBg: 'var(--emerald-50)',
+      iconColor: 'var(--emerald-700)',
     },
   ];
 
   const cardStyle: React.CSSProperties = {
     background: 'white',
     borderRadius: '20px',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--gray-200)',
     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
   };
 
@@ -114,24 +114,24 @@ export default function AssignmentReviewPage() {
     width: '100%',
     padding: '0.6rem 0.9rem',
     borderRadius: '12px',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--gray-200)',
     fontSize: '0.9rem',
     fontFamily: 'inherit',
-    color: '#000000',
+    color: 'var(--text-primary)',
   };
 
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
       {/* Header */}
-      <div className={fx.fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingBottom: '1.25rem', borderBottom: '1px solid #e2e8f0' }}>
-        <div style={{ width: '52px', height: '52px', borderRadius: '16px', background: 'linear-gradient(135deg, #0B1120 0%, #2E56E6 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px -8px rgba(15, 23, 42, 0.4)', flexShrink: 0 }}>
+      <div className={fx.fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--gray-200)' }}>
+        <div style={{ width: '52px', height: '52px', borderRadius: '16px', background: 'linear-gradient(135deg, var(--navy-black) 0%, var(--primary) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px -8px rgba(15, 23, 42, 0.4)', flexShrink: 0 }}>
           <ClipboardList size={26} color="white" />
         </div>
         <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#000000', margin: 0, letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
             Topshiriqlarni tekshirish
           </h1>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-secondary)', margin: '0.25rem 0 0 0', fontSize: '0.9rem' }}>
             Xodimlarning bajarilgan topshiriqlarini tekshiring va baholang
           </p>
         </div>
@@ -142,10 +142,10 @@ export default function AssignmentReviewPage() {
         {stats.map((stat, i) => (
           <div key={i} className={fx.hoverLift} style={{ ...cardStyle, padding: '1.5rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <div>
-              <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{stat.label}</p>
-              <h3 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: '0.5rem 0' }}>{stat.value}</h3>
-              <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0, display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}>
-                <TrendingUp size={12} color="#16a34a" /> {stat.trend}
+              <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{stat.label}</p>
+              <h3 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0.5rem 0' }}>{stat.value}</h3>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}>
+                <TrendingUp size={12} color="var(--emerald-700)" /> {stat.trend}
               </p>
             </div>
             <div style={{ padding: '0.75rem', borderRadius: '14px', background: stat.iconBg, color: stat.iconColor, display: 'flex' }}>
@@ -156,8 +156,8 @@ export default function AssignmentReviewPage() {
       </div>
 
       {/* Filters + Search */}
-      <div className={`${fx.fadeInUp} ${fx.delay2}`} style={{ ...cardStyle, background: '#f8fafc', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.35rem', padding: '0.3rem', background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+      <div className={`${fx.fadeInUp} ${fx.delay2}`} style={{ ...cardStyle, background: 'var(--gray-50)', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '0.35rem', padding: '0.3rem', background: 'white', borderRadius: '12px', border: '1px solid var(--gray-200)' }}>
           {[
             { id: 'ALL', label: 'Barchasi' },
             { id: 'SUBMITTED', label: 'Yangi' },
@@ -174,8 +174,8 @@ export default function AssignmentReviewPage() {
                 fontWeight: 700,
                 border: 'none',
                 cursor: 'pointer',
-                background: filter === s.id ? '#000000' : 'transparent',
-                color: filter === s.id ? 'white' : '#64748b',
+                background: filter === s.id ? 'var(--gray-900)' : 'transparent',
+                color: filter === s.id ? 'white' : 'var(--text-secondary)',
                 transition: 'all 0.2s',
               }}
             >
@@ -185,7 +185,7 @@ export default function AssignmentReviewPage() {
         </div>
 
         <div style={{ position: 'relative', width: '100%', maxWidth: '320px' }}>
-          <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)' }} />
+          <Search size={16} color="var(--text-secondary)" style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             placeholder="Xodim bo'yicha qidirish..."
             value={searchQuery}
@@ -199,16 +199,16 @@ export default function AssignmentReviewPage() {
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
           {[1, 2, 3].map((i) => (
-            <div key={i} style={{ ...cardStyle, height: '18rem', background: '#f1f5f9', border: 'none' }} />
+            <div key={i} style={{ ...cardStyle, height: '18rem', background: 'var(--border)', border: 'none' }} />
           ))}
         </div>
       ) : (
         <div className={`${fx.fadeInUp} ${fx.delay3}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
           {displayed.length === 0 ? (
-            <div style={{ gridColumn: '1 / -1', ...cardStyle, border: '1px dashed #cbd5e1', padding: '4rem 2rem', textAlign: 'center' }}>
-              <BookOpen size={48} color="#cbd5e1" style={{ margin: '0 auto 1rem' }} />
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#000000', margin: 0 }}>Hozircha topshiriqlar yo'q</h2>
-              <p style={{ color: '#94a3b8', marginTop: '0.5rem' }}>Sizda hali tekshirilishi kerak bo'lgan topshiriqlar mavjud emas.</p>
+            <div style={{ gridColumn: '1 / -1', ...cardStyle, border: '1px dashed var(--gray-300)', padding: '4rem 2rem', textAlign: 'center' }}>
+              <BookOpen size={48} color="var(--gray-300)" style={{ margin: '0 auto 1rem' }} />
+              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>Hozircha topshiriqlar yo'q</h2>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem' }}>Sizda hali tekshirilishi kerak bo'lgan topshiriqlar mavjud emas.</p>
             </div>
           ) : (
             displayed.map((a) => {
@@ -220,53 +220,53 @@ export default function AssignmentReviewPage() {
                   <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                        <div style={{ padding: '0.4rem', borderRadius: '8px', background: '#eff6ff', display: 'flex' }}>
-                          <BookOpen size={14} color="#2563eb" />
+                        <div style={{ padding: '0.4rem', borderRadius: '8px', background: 'var(--blue-50)', display: 'flex' }}>
+                          <BookOpen size={14} color="var(--blue-700)" />
                         </div>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8' }}>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
                           O'quv kursi topshirig'i
                         </span>
                       </div>
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#000000', margin: 0, lineHeight: 1.3, minHeight: '2.6rem' }}>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, lineHeight: 1.3, minHeight: '2.6rem' }}>
                         {lesson?.title?.[language] || lesson?.title?.['ru'] || 'Sarlavhasiz dars'}
                       </h3>
                     </div>
 
-                    <div style={{ borderRadius: '14px', border: '1px solid #f1f5f9', background: '#f8fafc', overflow: 'hidden' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Xodim</span>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', background: 'var(--gray-50)', overflow: 'hidden' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid var(--border)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Xodim</span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                          <div style={{ width: '20px', height: '20px', borderRadius: '999px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 800, color: '#2563eb' }}>
+                          <div style={{ width: '20px', height: '20px', borderRadius: '999px', background: 'var(--blue-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 800, color: 'var(--blue-700)' }}>
                             {(employee?.firstName || a.userId || '?')[0]}
                           </div>
-                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#000000' }}>
+                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                             {employee ? `${employee.firstName} ${employee.lastName}` : a.userId || 'ID: ---'}
                           </span>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Sana</span>
-                        <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#000000' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid var(--border)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Sana</span>
+                        <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                           {a.submittedAt ? new Date(a.submittedAt).toLocaleDateString() : '---'}
                         </span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid #f1f5f9' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Baho</span>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem', borderBottom: '1px solid var(--border)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Baho</span>
                         {isChecked ? (
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#000000' }}>{a.grade}/100</span>
-                            <div style={{ width: '48px', height: '5px', borderRadius: '999px', background: '#e2e8f0', overflow: 'hidden' }}>
-                              <div style={{ height: '100%', background: '#16a34a', width: `${a.grade}%` }} />
+                            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-primary)' }}>{a.grade}/100</span>
+                            <div style={{ width: '48px', height: '5px', borderRadius: '999px', background: 'var(--gray-200)', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', background: 'var(--success)', width: `${a.grade}%` }} />
                             </div>
                           </div>
                         ) : (
-                          <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '999px', background: '#ffedd5', color: '#c2410c' }}>
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '999px', background: 'var(--amber-50)', color: 'var(--amber-600)' }}>
                             Kutilmoqda
                           </span>
                         )}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.7rem 0.9rem' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Holat</span>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Holat</span>
                         <span
                           style={{
                             fontSize: '0.65rem',
@@ -274,8 +274,8 @@ export default function AssignmentReviewPage() {
                             padding: '0.2rem 0.6rem',
                             borderRadius: '999px',
                             textTransform: 'uppercase',
-                            background: isChecked ? '#dcfce7' : '#dbeafe',
-                            color: isChecked ? '#15803d' : '#1d4ed8',
+                            background: isChecked ? 'var(--emerald-100)' : 'var(--blue-100)',
+                            color: isChecked ? 'var(--emerald-700)' : 'var(--blue-700)',
                           }}
                         >
                           {isChecked ? '✓ Tekshirilgan' : '● Yangi'}
@@ -284,10 +284,10 @@ export default function AssignmentReviewPage() {
                     </div>
 
                     <div>
-                      <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.35rem', marginBottom: '0.5rem' }}>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.35rem', marginBottom: '0.5rem' }}>
                         <MessageSquare size={12} /> Xodim javobi
                       </span>
-                      <div style={{ padding: '0.75rem 0.9rem', borderRadius: '10px', borderLeft: '3px solid #bfdbfe', background: '#f8fafc', fontSize: '0.8rem', color: '#475569', fontStyle: 'italic', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any }}>
+                      <div style={{ padding: '0.75rem 0.9rem', borderRadius: '10px', borderLeft: '3px solid var(--blue-100)', background: 'var(--gray-50)', fontSize: '0.8rem', color: 'var(--text-secondary)', fontStyle: 'italic', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any }}>
                         "{a.submissionText || 'Javob matni mavjud emas'}"
                       </div>
                       {a.fileUrl && (
@@ -295,7 +295,7 @@ export default function AssignmentReviewPage() {
                           href={a.fileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ marginTop: '0.6rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: '#2563eb', textDecoration: 'none' }}
+                          style={{ marginTop: '0.6rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: 'var(--blue-700)', textDecoration: 'none' }}
                         >
                           <Paperclip size={13} /> Biriktirilgan faylni ochish
                         </a>
@@ -303,12 +303,12 @@ export default function AssignmentReviewPage() {
                     </div>
                   </div>
 
-                  <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid #f1f5f9', background: '#fbfdff' }}>
+                  <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--border)', background: 'var(--gray-50)' }}>
                     {a.status === 'SUBMITTED' ? (
                       gradingId === a.id ? (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                           <div>
-                            <label style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', color: '#94a3b8', display: 'block', marginBottom: '0.4rem' }}>
+                            <label style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.4rem' }}>
                               Ball belgilang (0-100)
                             </label>
                             <input
@@ -324,14 +324,14 @@ export default function AssignmentReviewPage() {
                             <button
                               type="button"
                               onClick={() => handleGrade(a.id)}
-                              style={{ flex: 1, padding: '0.65rem', borderRadius: '10px', border: 'none', background: '#000000', color: 'white', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                              style={{ flex: 1, padding: '0.65rem', borderRadius: '10px', border: 'none', background: 'var(--primary)', color: 'white', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
                             >
                               Saqlash
                             </button>
                             <button
                               type="button"
                               onClick={() => setGradingId(null)}
-                              style={{ padding: '0.65rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', background: 'white', color: '#64748b', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                              style={{ padding: '0.65rem 1rem', borderRadius: '10px', border: '1px solid var(--gray-200)', background: 'white', color: 'var(--text-secondary)', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
                             >
                               Bekor
                             </button>
@@ -351,9 +351,9 @@ export default function AssignmentReviewPage() {
                               gap: '0.4rem',
                               padding: '0.65rem',
                               borderRadius: '10px',
-                              border: '1px solid #e2e8f0',
+                              border: '1px solid var(--gray-200)',
                               background: 'white',
-                              color: a.fileUrl ? '#000000' : '#cbd5e1',
+                              color: a.fileUrl ? 'var(--text-primary)' : 'var(--gray-300)',
                               fontWeight: 700,
                               fontSize: '0.8rem',
                               textDecoration: 'none',
@@ -366,14 +366,14 @@ export default function AssignmentReviewPage() {
                           <button
                             type="button"
                             onClick={() => { setGradingId(a.id); setGrade(100); }}
-                            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: 'none', background: '#000000', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: 'none', background: 'var(--primary)', color: 'white', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
                           >
                             <Award size={14} /> Baholash
                           </button>
                         </div>
                       )
                     ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: '1px dashed #bbf7d0', background: '#f0fdf4', color: '#15803d', fontWeight: 700, fontSize: '0.8rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.65rem', borderRadius: '10px', border: '1px dashed var(--emerald-100)', background: 'var(--emerald-50)', color: 'var(--emerald-700)', fontWeight: 700, fontSize: '0.8rem' }}>
                         <CheckCircle2 size={15} /> Tekshirilgan
                       </div>
                     )}

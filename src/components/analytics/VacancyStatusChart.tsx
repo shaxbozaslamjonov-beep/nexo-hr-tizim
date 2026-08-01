@@ -20,7 +20,7 @@ interface VacancyStatusChartProps {
   }[];
 }
 
-const COLORS = ['#10b981', '#f59e0b', '#64748b']; // Green (Open), Amber (Pending), Slate (Closed)
+const COLORS = ['var(--emerald-500)', 'var(--amber-500)', 'var(--gray-400)'];
 
 export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   const { t } = useLanguage();
@@ -42,9 +42,9 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '0.85rem' }}>
-          <p style={{ fontSize: '0.8rem', fontWeight: 800, color: '#000000', textTransform: 'uppercase', margin: '0 0 0.25rem 0' }}>{payload[0].payload.localName}</p>
-          <div style={{ fontSize: '0.9rem', fontWeight: 900, color: '#2563eb' }}>
+        <div style={{ background: 'var(--surface)', borderRadius: '14px', border: '1px solid var(--border)', boxShadow: 'var(--card-shadow)', padding: '0.85rem' }}>
+          <p style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', margin: '0 0 0.25rem 0' }}>{payload[0].payload.localName}</p>
+          <div style={{ fontSize: '0.9rem', fontWeight: 900, color: 'var(--primary)' }}>
             {payload[0].value} ta vakansiya
           </div>
         </div>
@@ -55,10 +55,10 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--surface)',
       borderRadius: '24px',
-      border: '1px solid #e2e8f0',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+      border: '1px solid var(--border)',
+      boxShadow: 'var(--card-shadow)',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
@@ -66,15 +66,15 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
       minHeight: '420px',
     }}>
       {/* Header */}
-      <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-        <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg, #10b981 0%, #047857 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)' }}>
+      <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg, var(--emerald-500) 0%, var(--emerald-700) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)' }}>
           <Filter size={22} color="white" />
         </div>
         <div>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', margin: 0, lineHeight: 1.2 }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
             {t('analytics.vacancyStatus.title') || 'Статус вакансий'}
           </h3>
-          <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
+          <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0.25rem 0 0 0' }}>
             Current Distribution
           </p>
         </div>
@@ -83,7 +83,7 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
       {/* Body */}
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '260px' }}>
         {!hasData ? (
-          <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600 }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600 }}>
             {t('analytics.noData') || 'Vakansiya holatlari mavjud emas'}
           </div>
         ) : (
@@ -106,15 +106,15 @@ export function VacancyStatusChart({ data }: VacancyStatusChartProps) {
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend verticalAlign="bottom" height={32} iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }} />
+              <Legend verticalAlign="bottom" height={32} iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }} />
             </PieChart>
           </ResponsiveContainer>
         )}
       </div>
 
       {/* Footer Button */}
-      <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem', borderTop: '1px solid #f1f5f9' }}>
-        <Link href="/dashboard/hr/vacancies" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '14px', fontSize: '0.85rem', fontWeight: 800, color: '#334155', textDecoration: 'none' }}>
+      <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem', borderTop: '1px solid var(--border)' }}>
+        <Link href="/dashboard/hr/vacancies" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: 'var(--bg-muted)', border: '1px solid var(--border)', borderRadius: '14px', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)', textDecoration: 'none' }}>
           {t('vacancies.viewApplications') || "Batafsil ko'rish"}
           <ArrowRight size={16} />
         </Link>

@@ -134,7 +134,7 @@ export function AnalyticsContent() {
 
       {/* Deep Navy Hero Banner with Premium Glass Header */}
       <div className={fx.fadeInUp} style={{
-        background: 'linear-gradient(135deg, #0B1120 0%, #2E56E6 55%, #5CE1E6 100%)',
+        background: 'linear-gradient(135deg, var(--navy-black) 0%, var(--primary) 55%, var(--secondary) 100%)',
         padding: '2.25rem 2.75rem',
         borderRadius: '24px',
         color: 'white',
@@ -177,13 +177,13 @@ export function AnalyticsContent() {
             fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '0.1em',
-            color: '#93c5fd',
+            color: 'var(--primary-light)',
             marginBottom: '0.75rem',
           }}>
-            <Sparkles size={14} color="#fbbf24" />
+            <Sparkles size={14} color="var(--warning)" />
             ANALYTICS ENGINE V2.0
           </div>
-          <h1 style={{ fontSize: '2.25rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '0.5rem', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em', marginBottom: '0.5rem', lineHeight: 1.2 }}>
             {t('analytics.title') || 'Аналитика найма'}
           </h1>
           <p style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: 1.5, margin: 0 }}>
@@ -215,30 +215,30 @@ export function AnalyticsContent() {
 
       {/* Candidates Overview Table/Metrics */}
       <div className={`${fx.fadeInUp} ${fx.delay3}`}>
-        <div className={fx.hoverLiftSm} style={{ background: 'white', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
-          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#000000', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
-              <div style={{ padding: '0.5rem', background: '#eff6ff', borderRadius: '12px', color: '#2563eb', display: 'flex' }}>
+        <div className={fx.hoverLiftSm} style={{ background: 'white', borderRadius: '24px', border: '1px solid var(--gray-200)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
+          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border)', background: 'var(--gray-50)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
+              <div style={{ padding: '0.5rem', background: 'var(--blue-50)', borderRadius: '12px', color: 'var(--primary)', display: 'flex' }}>
                 <Users size={20} />
               </div>
               {t('metricsTitle') || "Nomzodlar statistikasi"}
             </h3>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Jonli ma'lumotlar</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Jonli ma'lumotlar</span>
           </div>
 
           <div style={{ padding: '1.5rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
               {/* Stat 1: Total Candidates */}
-              <div style={{ padding: '1.25rem', borderRadius: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              <div style={{ padding: '1.25rem', borderRadius: '20px', background: 'var(--gray-50)', border: '1px solid var(--gray-200)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
                   {t('analytics.stats.totalCandidates') || 'Всего кандидатов'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
-                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
+                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1 }}>
                     {stats.candidates}
                   </h4>
                   {trends.candidates != null && (
-                    <span style={{ padding: '0.25rem 0.65rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, background: trends.candidates >= 0 ? '#dcfce7' : '#fee2e2', color: trends.candidates >= 0 ? '#15803d' : '#b91c1c' }}>
+                    <span style={{ padding: '0.25rem 0.65rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, background: trends.candidates >= 0 ? 'var(--emerald-100)' : 'var(--red-100)', color: trends.candidates >= 0 ? 'var(--emerald-700)' : 'var(--red-700)' }}>
                       {trends.candidates >= 0 ? '+' : ''}{trends.candidates}%
                     </span>
                   )}
@@ -246,17 +246,17 @@ export function AnalyticsContent() {
               </div>
 
               {/* Stat 2: Avg Time to Fill */}
-              <div style={{ padding: '1.25rem', borderRadius: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              <div style={{ padding: '1.25rem', borderRadius: '20px', background: 'var(--gray-50)', border: '1px solid var(--gray-200)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
                   {t('analytics.stats.avgTime') || 'Среднее время закрытия'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
                   {extra.avgDaysToFill != null ? (
-                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
-                      {extra.avgDaysToFill} <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 700 }}>{t('analytics.stats.days') || 'дней'}</span>
+                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1 }}>
+                      {extra.avgDaysToFill} <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 700 }}>{t('analytics.stats.days') || 'дней'}</span>
                     </h4>
                   ) : (
-                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#94a3b8', fontStyle: 'italic', margin: 0 }}>
+                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
                       {t('analytics.stats.noData') || 'Нет данных'}
                     </h4>
                   )}
@@ -264,17 +264,17 @@ export function AnalyticsContent() {
               </div>
 
               {/* Stat 3: Offer Acceptance Rate */}
-              <div style={{ padding: '1.25rem', borderRadius: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              <div style={{ padding: '1.25rem', borderRadius: '20px', background: 'var(--gray-50)', border: '1px solid var(--gray-200)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
                   {t('analytics.stats.offerAcceptance') || 'Принятие офферов'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
                   {extra.offerAcceptanceRate != null ? (
-                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
+                    <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1 }}>
                       {extra.offerAcceptanceRate}%
                     </h4>
                   ) : (
-                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#94a3b8', fontStyle: 'italic', margin: 0 }}>
+                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
                       {t('analytics.stats.noData') || 'Нет данных'}
                     </h4>
                   )}
@@ -282,13 +282,13 @@ export function AnalyticsContent() {
               </div>
 
               {/* Stat 4: Positions Filled */}
-              <div style={{ padding: '1.25rem', borderRadius: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              <div style={{ padding: '1.25rem', borderRadius: '20px', background: 'var(--gray-50)', border: '1px solid var(--gray-200)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
                   {t('analytics.stats.positionsFilled') || 'Закрытые позиции'}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', width: '100%' }}>
-                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#000000', margin: 0, lineHeight: 1 }}>
-                    {extra.positionsFilled} <span style={{ fontSize: '1.1rem', color: '#94a3b8', fontWeight: 700 }}>/{extra.positionsTotal}</span>
+                  <h4 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1 }}>
+                    {extra.positionsFilled} <span style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', fontWeight: 700 }}>/{extra.positionsTotal}</span>
                   </h4>
                 </div>
               </div>
@@ -309,14 +309,14 @@ export function AnalyticsContent() {
       {/* Decorative footer element */}
       <div style={{
         paddingTop: '2.5rem',
-        borderTop: '1px solid #e2e8f0',
+        borderTop: '1px solid var(--gray-200)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         fontSize: '0.75rem',
         fontWeight: 800,
         letterSpacing: '0.15em',
-        color: '#94a3b8',
+        color: 'var(--text-secondary)',
         textTransform: 'uppercase'
       }}>
         <span>Nexo HR Analytics Engine v2.0</span>
