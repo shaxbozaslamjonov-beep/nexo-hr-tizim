@@ -191,7 +191,7 @@ export default function ApplicationsPage() {
                         <Eye size={20} />
                       </button>
                     </Link>
-                    <button onClick={() => handleDelete(app.id)} style={{ ...actionButtonStyle, color: '#ef4444' }} title="Delete">
+                    <button onClick={() => handleDelete(app.id)} style={{ ...actionButtonStyle, color: 'var(--error)' }} title="Delete">
                       <Trash2 size={20} />
                     </button>
                   </div>

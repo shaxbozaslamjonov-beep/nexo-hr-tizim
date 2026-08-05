@@ -47,13 +47,13 @@ export default async function EmployeeKPIPage() {
                   background: entry.value >= entry.kpi.targetValue ? 'var(--success)' : 'var(--warning)'
                 }} />
               </div>
-              <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: '#94a3b8' }}>
+              <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                 Period: {new Date(entry.periodDate).toLocaleDateString()}
               </div>
             </div>
           ))}
           {!profile?.kpis.length && (
-            <div style={{ textAlign: 'center', gridColumn: '1/-1', padding: '4rem', color: '#94a3b8' }}>
+            <div style={{ textAlign: 'center', gridColumn: '1/-1', padding: '4rem', color: 'var(--text-secondary)' }}>
               No KPI data available yet.
             </div>
           )}

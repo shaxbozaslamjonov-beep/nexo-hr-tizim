@@ -148,11 +148,11 @@ export function PositionFormModal({ isOpen, onClose, onSave, initialData, title 
             }}
           >
             {/* Header */}
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{title}</h2>
               <button 
                 onClick={onClose}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', borderRadius: '50%', color: '#94a3b8' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', borderRadius: '50%', color: 'var(--text-secondary)' }}
               >
                 <X size={20} />
               </button>
@@ -219,7 +219,7 @@ export function PositionFormModal({ isOpen, onClose, onSave, initialData, title 
                   </select>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRadius: '8px', background: '#f0f9ff', border: '1px solid #bae6fd' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRadius: '8px', background: 'var(--blue-50)', border: '1px solid var(--blue-100)' }}>
                   <input
                     type="checkbox"
                     id="isCritical"
@@ -227,7 +227,7 @@ export function PositionFormModal({ isOpen, onClose, onSave, initialData, title 
                     checked={formData.isCritical}
                     onChange={(e) => setFormData({ ...formData, isCritical: e.target.checked })}
                   />
-                  <label htmlFor="isCritical" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0369a1', cursor: 'pointer' }}>
+                  <label htmlFor="isCritical" style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--blue-700)', cursor: 'pointer' }}>
                     KRITIK LAVOZIM (SUCCESSION PLANNING UCHUN)
                   </label>
                 </div>

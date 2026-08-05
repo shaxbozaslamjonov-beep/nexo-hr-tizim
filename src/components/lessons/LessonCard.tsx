@@ -85,7 +85,7 @@ export function LessonCard({ lesson }: LessonCardProps) {
       {isPreviewOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'var(--surface)', borderRadius: '16px', width: '90%', maxWidth: '800px', maxHeight: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <div style={{ padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0' }}>
+            <div style={{ padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--gray-200)' }}>
               <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700 }}>{title} - Preview</h3>
               <button onClick={() => setIsPreviewOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}>
                 <X size={24} />
@@ -94,7 +94,7 @@ export function LessonCard({ lesson }: LessonCardProps) {
             
             <div style={{ padding: '2rem', flex: 1, overflowY: 'auto' }}>
               {loadingPreview ? (
-                <div style={{ textAlign: 'center', color: '#94a3b8' }}>Loading content...</div>
+                <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>Loading content...</div>
               ) : previewContent ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {previewContent.type === 'video' ? (
@@ -110,7 +110,7 @@ export function LessonCard({ lesson }: LessonCardProps) {
                   )}
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
+                <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
                   Kontent mavjud emas
                 </div>
               )}

@@ -115,7 +115,7 @@ export default function EmployeeProfilePage() {
     }
   };
 
-  if (loading) return <div style={{ color: 'white', textAlign: 'center', padding: '5rem' }}>Loading employee profile...</div>;
+  if (loading) return <div style={{ color: 'var(--text-primary)', textAlign: 'center', padding: '5rem' }}>Loading employee profile...</div>;
   if (!employee) return null;
 
   const getAssignmentForLesson = (lessonId: string) => {
@@ -137,7 +137,7 @@ export default function EmployeeProfilePage() {
                 alignItems: 'center', 
                 gap: '0.5rem', 
                 padding: '0.6rem 1.2rem',
-                background: 'linear-gradient(135deg, #4F46E5, #8B5CF6)',
+                background: 'var(--grad-primary)',
                 border: 'none',
                 borderRadius: '10px',
                 color: 'white',
@@ -151,7 +151,7 @@ export default function EmployeeProfilePage() {
         </div>
 
         {isEditing ? (
-          <form onSubmit={handleSubmit} className={styles.formContainer} style={{ background: 'rgba(255, 255, 255, 0.05)', maxWidth: '900px', margin: '2rem auto' }}>
+          <form onSubmit={handleSubmit} className={styles.formContainer} style={{ background: 'var(--surface)', border: '1px solid var(--border)', maxWidth: '900px', margin: '2rem auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
               <h2 className={styles.formTitle}>{t('edit')} {t('profile')}</h2>
               <div style={{ display: 'flex', gap: '1rem' }}>
@@ -181,11 +181,11 @@ export default function EmployeeProfilePage() {
                   value={formData.positionId || ''} 
                   onChange={handleInputChange} 
                   required
-                  style={{ background: 'rgba(255,255,255,0.05)', color: 'white' }}
+                  style={{ background: 'var(--gray-50)', color: 'var(--text-primary)' }}
                 >
                   <option value="">Select position…</option>
                   {positions.map(pos => (
-                    <option key={pos.id} value={pos.id} style={{ background: '#1e1b4b' }}>{pos.title}</option>
+                    <option key={pos.id} value={pos.id} style={{ background: 'var(--surface)', color: 'var(--text-primary)' }}>{pos.title}</option>
                   ))}
                 </select>
               </div>
@@ -202,33 +202,33 @@ export default function EmployeeProfilePage() {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '2rem' }}>
             {/* Left Column - User Info */}
-            <div className={styles.formContainer} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2rem', height: 'fit-content' }}>
+            <div className={styles.formContainer} style={{ background: 'var(--surface)', border: '1px solid var(--border)', padding: '2rem', height: 'fit-content' }}>
               <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: 'var(--text-primary)', fontWeight: 800 }}>
-                  {employee.user.firstName[0]}{employee.user.lastName[0]}
+                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'var(--grad-primary)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: 'var(--text-primary)', fontWeight: 800 }}>
+                  {employee.firstName[0]}{employee.lastName[0]}
                 </div>
-                <h1 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
-                  {employee.user.firstName} {employee.user.lastName}
+                <h1 style={{ color: 'var(--text-primary)', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                  {employee.firstName} {employee.lastName}
                 </h1>
-                <div style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                <div style={{ color: 'var(--text-secondary)' }}>
                   {(employee as any).positionRef?.title || employee.position || 'No Position'}
                 </div>
               </div>
 
               <div style={{ display: 'grid', gap: '1.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-secondary)' }}>
                   <Mail size={18} />
                   <span style={{ wordBreak: 'break-all' }}>{employee.user.email}</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-secondary)' }}>
                   <Briefcase size={18} />
                   <span>{employee.department}</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-secondary)' }}>
                   <Calendar size={18} />
                   <span>Joined: {new Date(employee.joinedAt).toLocaleDateString()}</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-secondary)' }}>
                   <Clock size={18} />
                   <span>Probation ends: {employee.probationEnd ? new Date(employee.probationEnd).toLocaleDateString() : 'N/A'}</span>
                 </div>
@@ -236,10 +236,10 @@ export default function EmployeeProfilePage() {
             </div>
 
             {/* Right Column - Learning History */}
-            <div className={styles.formContainer} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2rem' }}>
+            <div className={styles.formContainer} style={{ background: 'var(--surface)', border: '1px solid var(--border)', padding: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <h2 style={{ color: 'white', fontSize: '1.5rem', margin: 0, display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <BookOpen size={24} color="#8EC5FC" />
+                <h2 style={{ color: 'var(--text-primary)', fontSize: '1.5rem', margin: 0, display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <BookOpen size={24} color="var(--primary)" />
                   {t('learningProgress')}
                 </h2>
                 
@@ -247,13 +247,13 @@ export default function EmployeeProfilePage() {
                   <select 
                     id="lessonSelect"
                     className={styles.input} 
-                    style={{ width: 'auto', minWidth: '200px', height: '40px', background: 'rgba(255,255,255,0.05)', color: 'white', padding: '0 1rem' }}
+                    style={{ width: 'auto', minWidth: '200px', height: '40px', background: 'var(--gray-50)', color: 'var(--text-primary)', padding: '0 1rem' }}
                   >
-                    <option value="" style={{ background: '#1e1b4b' }}>-- {t('assignLesson')} --</option>
+                    <option value="" style={{ background: 'var(--surface)', color: 'var(--text-primary)' }}>-- {t('assignLesson')} --</option>
                     {lessons
                       .filter(l => !employee.assignedLessons?.includes(l.id))
                       .map(l => (
-                        <option key={l.id} value={l.id} style={{ background: '#1e1b4b' }}>
+                        <option key={l.id} value={l.id} style={{ background: 'var(--surface)', color: 'var(--text-primary)' }}>
                           {l.title[language] || l.title['ru']}
                         </option>
                       ))
@@ -287,27 +287,27 @@ export default function EmployeeProfilePage() {
                       key={lesson.id} 
                       style={{ 
                         padding: '1.5rem', 
-                        background: 'rgba(255, 255, 255, 0.03)', 
+                        background: 'var(--gray-50)', 
                         borderRadius: '1rem', 
                         display: 'flex', 
                         justifyContent: 'space-between', 
                         alignItems: 'center',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                        border: '1px solid var(--border)'
                       }}
                     >
                       <div>
-                        <h3 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '0.25rem' }}>{lesson.title[language] || lesson.title['ru']}</h3>
+                        <h3 style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginBottom: '0.25rem' }}>{lesson.title[language] || lesson.title['ru']}</h3>
                         <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem' }}>
                           {assignment ? (
-                            <span style={{ color: assignment.status === 'CHECKED' ? '#4ade80' : '#fbbf24', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                            <span style={{ color: assignment.status === 'CHECKED' ? 'var(--success)' : 'var(--warning)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                               {assignment.status === 'CHECKED' ? <CheckCircle2 size={14} /> : <Clock size={14} />}
                               {assignment.status}
                             </span>
                           ) : (
-                            <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>Not started</span>
+                            <span style={{ color: 'var(--text-light)' }}>Not started</span>
                           )}
                           {assignment?.submittedAt && (
-                            <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                            <span style={{ color: 'var(--text-light)' }}>
                               {new Date(assignment.submittedAt).toLocaleDateString()}
                             </span>
                           )}
@@ -317,8 +317,8 @@ export default function EmployeeProfilePage() {
                       <div style={{ textAlign: 'right' }}>
                         {assignment?.status === 'CHECKED' && (
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#8EC5FC' }}>{assignment.grade}/100</span>
-                            <Award size={20} color="#fbbf24" />
+                            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{assignment.grade}/100</span>
+                            <Award size={20} color="var(--warning)" />
                           </div>
                         )}
                         {assignment?.status === 'SUBMITTED' && (

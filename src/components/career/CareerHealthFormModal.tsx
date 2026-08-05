@@ -128,13 +128,13 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
               flexDirection: 'column',
             }}
           >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                 {t('careerMaps.careerHealth.editTitle') || 'Karyera holatini tahrirlash'}
               </h2>
               <button 
                 onClick={onClose}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', borderRadius: '50%', color: '#94a3b8' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', borderRadius: '50%', color: 'var(--text-secondary)' }}
               >
                 <X size={20} />
               </button>
@@ -144,7 +144,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                 {/* Main Metrics */}
                 <div style={{ gridColumn: 'span 2' }}>
-                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#2E56E6', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
+                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>
                      ASOSIY METRIKALAR
                    </h3>
                 </div>
@@ -214,7 +214,7 @@ export function CareerHealthFormModal({ isOpen, onClose, onSave, initialData }: 
 
                 {/* Readiness Levels */}
                 <div style={{ gridColumn: 'span 2', marginTop: '1rem' }}>
-                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#2E56E6', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>
+                   <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>
                      TAYYORLIK DARAJALARI
                    </h3>
                 </div>

@@ -272,7 +272,7 @@ export default function VacanciesPage() {
                             gap: '0.75rem', 
                             padding: '0.75rem',
                             borderRadius: '8px',
-                            color: '#ef4444',
+                            color: 'var(--error)',
                             fontSize: '0.85rem',
                             width: '100%',
                             border: 'none',
@@ -337,8 +337,8 @@ export default function VacanciesPage() {
         .group:hover .dropdown-menu {
           display: block !important;
         }
-        .hover\:bg-slate-50:hover { background-color: #f8fafc; }
-        .hover\:bg-red-50:hover { background-color: #fef2f2; }
+        .hover\:bg-slate-50:hover { background-color: var(--gray-50); }
+        .hover\:bg-red-50:hover { background-color: var(--red-50); }
       `}</style>
     </div>
   );

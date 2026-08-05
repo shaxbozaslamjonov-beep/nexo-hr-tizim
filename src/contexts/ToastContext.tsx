@@ -79,10 +79,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                {toast.type === 'success' && <CheckCircle2 size={22} color="#4ade80" />}
-                {toast.type === 'error' && <AlertCircle size={22} color="#ef4444" />}
-                {toast.type === 'info' && <Info size={22} color="#3b82f6" />}
-                {toast.type === 'accent' && <Zap size={22} color="#f59e0b" />}
+                {toast.type === 'success' && <CheckCircle2 size={22} color="var(--success)" />}
+                {toast.type === 'error' && <AlertCircle size={22} color="var(--error)" />}
+                {toast.type === 'info' && <Info size={22} color="var(--primary)" />}
+                {toast.type === 'accent' && <Zap size={22} color="var(--warning)" />}
               </div>
               
               <div style={{ flex: 1, fontSize: '0.9rem', fontWeight: 600, letterSpacing: '-0.01em' }}>

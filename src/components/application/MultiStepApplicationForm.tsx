@@ -246,11 +246,11 @@ export default function MultiStepApplicationForm({ vacancyId, onSuccess, onCance
                   </label>
                 ))}
               </div>
-              <div style={{ marginTop: '1rem', padding: '1rem', background: '#fffbeb', borderRadius: '12px', border: '1px solid #fef3c7', display: 'flex', gap: '0.75rem' }}>
-                <AlertCircle size={20} color="#d97706" />
+              <div style={{ marginTop: '1rem', padding: '1rem', background: 'var(--amber-50)', borderRadius: '12px', border: '1px solid var(--amber-100)', display: 'flex', gap: '0.75rem' }}>
+                <AlertCircle size={20} color="var(--amber-600)" />
                 <label style={{ cursor: 'pointer' }}>
                   <input type="checkbox" style={{ marginRight: '8px' }} required />
-                  <span style={{ fontSize: '0.85rem', color: '#92400e' }}>{t('applications.form.consent')}</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--amber-600)' }}>{t('applications.form.consent')}</span>
                 </label>
               </div>
             </div>

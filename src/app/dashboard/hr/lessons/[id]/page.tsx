@@ -110,7 +110,7 @@ export default function LessonDetailPage() {
         {lesson.assignmentText && (
           <div className={styles.assignmentSection}>
             <h2 className={styles.assignmentTitle}>
-              <FileText size={24} color="#C850C0" />
+              <FileText size={24} color="var(--secondary)" />
               {t('assignment')}
             </h2>
             

@@ -136,7 +136,7 @@ export default function CandidateDetailPage() {
 
   if (loading) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: '1rem' }}>
-       <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} style={{ width: '40px', height: '40px', border: '4px solid rgba(46, 86, 230, 0.2)', borderTopColor: '#2E56E6', borderRadius: '50%' }} />
+       <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} style={{ width: '40px', height: '40px', border: '4px solid var(--blue-100)', borderTopColor: 'var(--primary)', borderRadius: '50%' }} />
        <p style={{ color: 'var(--text-light)', fontWeight: 600 }}>{t('loading')}</p>
     </div>
   );
@@ -275,7 +275,7 @@ export default function CandidateDetailPage() {
                 <div style={{ margin: '3rem 0', height: '1px', background: 'var(--bg-muted)' }} />
 
                 <h3 className={styles.sectionTitle}>
-                  <Briefcase size={22} color="#8b5cf6" />
+                  <Briefcase size={22} color="var(--primary)" />
                   {t('candidatesModule.profile.professionalInfo')}
                 </h3>
                 <div className={styles.infoGrid}>
@@ -306,7 +306,7 @@ export default function CandidateDetailPage() {
                 className={styles.infoSection}
               >
                 <h3 className={styles.sectionTitle}>
-                  <History size={22} color="#3b82f6" />
+                  <History size={22} color="var(--blue-700)" />
                   {t('candidatesModule.profile.interviews')}
                 </h3>
                 
@@ -368,7 +368,7 @@ export default function CandidateDetailPage() {
                 className={styles.infoSection}
               >
                  <h3 className={styles.sectionTitle}>
-                  <ShieldCheck size={22} color="#10b981" />
+                  <ShieldCheck size={22} color="var(--success)" />
                   {t('candidatesModule.profile.documentsCheck')}
                 </h3>
                 
@@ -394,13 +394,13 @@ export default function CandidateDetailPage() {
                 className={styles.infoSection}
               >
                  <h3 className={styles.sectionTitle}>
-                  <FolderHeart size={22} color="#f43f5e" />
+                  <FolderHeart size={22} color="var(--turquoise-600)" />
                   {t('candidatesModule.profile.reserve')}
                 </h3>
 
                 {reserveInfo ? (
-                   <div style={{ background: 'rgba(244, 63, 94, 0.05)', border: '1px solid rgba(244, 63, 94, 0.2)', padding: '2rem', borderRadius: '20px', textAlign: 'center' }}>
-                      <CheckCircle2 size={48} color="#f43f5e" style={{ margin: '0 auto 1.5rem' }} />
+                   <div style={{ background: 'rgba(52, 197, 203, 0.08)', border: '1px solid rgba(52, 197, 203, 0.25)', padding: '2rem', borderRadius: '20px', textAlign: 'center' }}>
+                      <CheckCircle2 size={48} color="var(--turquoise-600)" style={{ margin: '0 auto 1.5rem' }} />
                       <h4 style={{ fontWeight: 800, marginBottom: '0.5rem' }}>{t('candidatesModule.profile.inReserve')}</h4>
                       <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                          Candidate added on {new Date(reserveInfo.addedAt).toLocaleDateString()} by {reserveInfo.addedBy}
@@ -417,7 +417,7 @@ export default function CandidateDetailPage() {
                       </button>
                    </div>
                 ) : (
-                   <div style={{ textAlign: 'center', padding: '4rem 2rem', border: '2px dashed #f1f5f9', borderRadius: '24px' }}>
+                   <div style={{ textAlign: 'center', padding: '4rem 2rem', border: '2px dashed var(--border)', borderRadius: '24px' }}>
                       <p style={{ color: 'var(--text-light)', marginBottom: '1.5rem' }}>This candidate is not in the reserve pool.</p>
                       <button className={styles.actionBtnPrimary} style={{ margin: '0 auto', width: 'auto' }} onClick={handleAddToReserve}>
                          <Plus size={18} /> {t('reserve.addToReserve')}

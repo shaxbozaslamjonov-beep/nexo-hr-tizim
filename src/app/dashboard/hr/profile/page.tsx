@@ -21,18 +21,18 @@ export default function ProfilePage() {
               SA
             </div>
             <button style={{ position: 'absolute', bottom: '0', right: '0', width: '36px', height: '36px', borderRadius: '50%', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-              <Camera size={18} color="#64748b" />
+              <Camera size={18} color="var(--text-secondary)" />
             </button>
           </div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Super Admin</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>HR Lead Specialist</p>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.9rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <Mail size={18} />
               admin@nexohr.uz
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.9rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <Shield size={18} />
               Full System Access
             </div>
@@ -61,15 +61,15 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.5rem', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.5rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Key size={18} />
             Безопасность
           </h3>
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               Сменить пароль
             </button>
-            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#334155' }}>
+            <button style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               Двухфакторная аутентификация
             </button>
           </div>

@@ -74,7 +74,7 @@ export default async function EmployeeTrainingPage() {
             </div>
           ))}
           {!assignments.length && (
-            <div style={{ textAlign: 'center', padding: '4rem', color: '#94a3b8' }}>
+            <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-secondary)' }}>
               No training modules assigned yet.
             </div>
           )}

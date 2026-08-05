@@ -42,7 +42,7 @@ export function ReserveContent() {
       {loading ? (
         <p>Loading reserve pool…</p>
       ) : reserves.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem', color: '#94a3b8' }}>
+        <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-secondary)' }}>
           No candidates in the reserve pool. Candidates are added here automatically after passing screening but before hiring.
         </div>
       ) : (
@@ -73,7 +73,7 @@ export function ReserveContent() {
                 <div style={{ height: '8px', background: 'var(--bg-muted)', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ width: `${r.readiness}%`, height: '100%', background: 'var(--success)' }} />
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.25rem', fontSize: '0.75rem', color: '#94a3b8' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.25rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                   <span>Learning Progress</span>
                   <span>{r.readiness}%</span>
                 </div>

@@ -125,7 +125,7 @@ export function TrainingContent() {
       </div>
 
       {loading ? (
-        <p style={{ color: '#94a3b8' }}>{t('loading')}</p>
+        <p style={{ color: 'var(--text-secondary)' }}>{t('loading')}</p>
       ) : lessons.length === 0 ? (
         <div className={styles.emptyState}>
           <div className={styles.emptyIcon}>🎓</div>
@@ -186,7 +186,7 @@ export function TrainingContent() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                 {/* Russian Content */}
                 <div>
-                  <h4 style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Русский язык</h4>
+                  <h4 style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Русский язык</h4>
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Название *</label>
                     <input
@@ -219,7 +219,7 @@ export function TrainingContent() {
 
                 {/* Uzbek Content */}
                 <div>
-                  <h4 style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '0.5rem', textTransform: 'uppercase' }}>O'zbek tili</h4>
+                  <h4 style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>O'zbek tili</h4>
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Sarlavha *</label>
                     <input

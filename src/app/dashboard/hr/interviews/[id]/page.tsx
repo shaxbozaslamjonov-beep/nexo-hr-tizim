@@ -257,7 +257,7 @@ export default function InterviewDetailPage() {
       <style jsx>{`
         .tab-switch-compact {
           display: flex;
-          background: #f1f5f9;
+          background: var(--gray-100);
           padding: 0.25rem;
           border-radius: 10px;
           gap: 0.25rem;
@@ -272,7 +272,7 @@ export default function InterviewDetailPage() {
           border-radius: 8px;
           border: none;
           background: transparent;
-          color: #64748b;
+          color: var(--text-secondary);
           font-size: 0.875rem;
           font-weight: 600;
           cursor: pointer;

@@ -129,7 +129,7 @@ export default function AdvancedCareerMapPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-            <div style={{ padding: '0.6rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(102,126,234,0.3)' }}>
+            <div style={{ padding: '0.6rem', background: 'var(--grad-primary)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(46, 86, 230, 0.3)' }}>
               <Map size={24} color="white" />
             </div>
             <h1 style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>{t('careerMaps.pageTitle')}</h1>
@@ -152,13 +152,13 @@ export default function AdvancedCareerMapPage() {
       <div style={{ 
         background: 'var(--surface)', 
         borderRadius: '20px', 
-        border: '1px solid #f1f5f9', 
+        border: '1px solid var(--border)', 
         padding: '1rem',
         marginBottom: '1.5rem',
         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)'
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.4rem', padding: '0.35rem', background: 'var(--background)', borderRadius: '14px', border: '1px solid #f1f5f9' }}>
+          <div style={{ display: 'flex', gap: '0.4rem', padding: '0.35rem', background: 'var(--background)', borderRadius: '14px', border: '1px solid var(--border)' }}>
             {filters.map((filter) => (
               <button
                 key={filter.id}
@@ -167,7 +167,7 @@ export default function AdvancedCareerMapPage() {
                   padding: '0.6rem 1.25rem', borderRadius: '11px', border: 'none', cursor: 'pointer',
                   fontSize: '0.85rem', fontWeight: 700, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   background: activeFilter === filter.id ? 'white' : 'transparent',
-                  color: activeFilter === filter.id ? '#2E56E6' : '#94a3b8',
+                  color: activeFilter === filter.id ? 'var(--primary)' : 'var(--text-secondary)',
                   boxShadow: activeFilter === filter.id ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
                 }}
               >
@@ -176,7 +176,7 @@ export default function AdvancedCareerMapPage() {
                   <span style={{
                     marginLeft: '0.5rem', fontSize: '0.7rem', fontWeight: 900,
                     padding: '0.15rem 0.5rem', borderRadius: '20px',
-                    background: '#2E56E6', color: 'white',
+                    background: 'var(--primary)', color: 'white',
                   }}>
                     {filteredPositions.length}
                   </span>
@@ -187,20 +187,20 @@ export default function AdvancedCareerMapPage() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexGrow: 1, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
             <div style={{ position: 'relative', width: '280px' }}>
-              <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+              <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
               <input
                 placeholder={t('careerMaps.filters.search') || "Lavozimlar bo'yicha qidirish..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
                   width: '100%', padding: '0.7rem 1rem 0.7rem 2.75rem',
-                  borderRadius: '12px', border: '1px solid #edf2f7', fontSize: '0.85rem',
+                  borderRadius: '12px', border: '1px solid var(--border)', fontSize: '0.85rem',
                   outline: 'none', background: 'var(--surface)', fontFamily: 'inherit',
                   boxShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.02)',
                   transition: 'border-color 0.2s',
                 }}
-                onFocus={(e) => e.currentTarget.style.borderColor = '#2E56E6'}
-                onBlur={(e) => e.currentTarget.style.borderColor = '#edf2f7'}
+                onFocus={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
+                onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
               />
             </div>
             
@@ -208,7 +208,7 @@ export default function AdvancedCareerMapPage() {
               onClick={handleCreatePosition}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.7rem 1.25rem', background: 'var(--primary, #2E56E6)', color: 'white',
+                padding: '0.7rem 1.25rem', background: 'var(--primary)', color: 'white',
                 border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(99,102,241,0.3)', fontSize: '0.85rem',
                 transition: 'all 0.2s',
@@ -234,19 +234,19 @@ export default function AdvancedCareerMapPage() {
           {loading ? (
             <div style={{ gridColumn: '1 / -1', padding: '8rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
               <div className="relative">
-                <Loader2 className="animate-spin" size={48} color="#2E56E6" />
+                <Loader2 className="animate-spin" size={48} color="var(--primary)" />
                 <div className="absolute inset-0 blur-2xl bg-primary/20 animate-pulse" />
               </div>
-              <p style={{ color: '#94a3b8', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.01em' }}>Ma'lumotlar yuklanmoqda...</p>
+              <p style={{ color: 'var(--text-secondary)', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.01em' }}>Ma'lumotlar yuklanmoqda...</p>
             </div>
           ) : filteredPositions.length === 0 ? (
             <div style={{
               gridColumn: '1 / -1', padding: '6rem', textAlign: 'center',
-              background: 'var(--surface)', borderRadius: '32px', border: '2px dashed #e2e8f0',
+              background: 'var(--surface)', borderRadius: '32px', border: '2px dashed var(--gray-200)',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem',
               boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
             }}>
-              <div style={{ padding: '1.5rem', borderRadius: '24px', background: 'var(--background)', color: '#cbd5e1' }}>
+              <div style={{ padding: '1.5rem', borderRadius: '24px', background: 'var(--background)', color: 'var(--gray-300)' }}>
                 <Search size={48} />
               </div>
               <div>
@@ -258,7 +258,7 @@ export default function AdvancedCareerMapPage() {
               <button 
                 onClick={handleCreatePosition}
                 style={{ 
-                  marginTop: '0.5rem', padding: '0.8rem 2rem', background: '#2E56E6', 
+                  marginTop: '0.5rem', padding: '0.8rem 2rem', background: 'var(--primary)', 
                   border: 'none', borderRadius: '14px', color: 'white', fontWeight: 800, 
                   cursor: 'pointer', boxShadow: '0 10px 15px -3px rgba(99,102,241,0.2)',
                   transition: 'all 0.2s'

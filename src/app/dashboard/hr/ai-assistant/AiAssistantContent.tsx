@@ -109,7 +109,7 @@ export function AiAssistantContent() {
           <div ref={bottomRef} />
         </div>
 
-        {error && <div style={{ padding: '0.5rem 1.5rem', color: '#dc2626', fontSize: '0.85rem' }}>{error}</div>}
+        {error && <div style={{ padding: '0.5rem 1.5rem', color: 'var(--error)', fontSize: '0.85rem' }}>{error}</div>}
 
         <div style={{ padding: '1rem 1.25rem', borderTop: '1px solid var(--border)', display: 'flex', gap: '0.75rem' }}>
           <input

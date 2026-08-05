@@ -24,7 +24,7 @@ export default async function EmployeeProfilePage() {
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '2rem' }}>Information Portal</h1>
         
         <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)', overflow: 'hidden' }}>
-          <div style={{ height: '120px', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }} />
+          <div style={{ height: '120px', background: 'var(--grad-primary)' }} />
           <div style={{ padding: '2rem', position: 'relative' }}>
             <div style={{ 
               position: 'absolute', 
@@ -58,7 +58,7 @@ export default async function EmployeeProfilePage() {
                 ['Salary Plan', 'Standard Performance'],
               ].map(([label, value]) => (
                 <div key={label}>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.025em', marginBottom: '0.25rem' }}>{label}</p>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em', marginBottom: '0.25rem' }}>{label}</p>
                   <p style={{ fontWeight: 600, color: 'var(--foreground)' }}>{value}</p>
                 </div>
               ))}

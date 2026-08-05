@@ -126,7 +126,7 @@ export default function TestEditPage() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Edit Test</h1>
-        <button onClick={handleSubmit(handleSaveAll)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#2E56E6', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px rgba(46, 86, 230, 0.3)' }}>
+        <button onClick={handleSubmit(handleSaveAll)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px rgba(46, 86, 230, 0.3)' }}>
           <Save size={18} /> Save Changes
         </button>
       </div>
@@ -135,15 +135,15 @@ export default function TestEditPage() {
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', color: 'var(--text-primary)' }}>Test Details</h2>
         <div style={{ display: 'grid', gap: '1.5rem' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>Title</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Title</label>
             <input type="text" value={testTitle} onChange={e => setTestTitle(e.target.value)} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none' }} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem' }}>Description</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Description</label>
             <textarea value={testDescription} onChange={e => setTestDescription(e.target.value)} rows={3} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none' }} />
           </div>
           <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 600, color: '#475569' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 600, color: 'var(--text-secondary)' }}>
               <input type="checkbox" checked={testActive} onChange={e => setTestActive(e.target.checked)} style={{ width: '18px', height: '18px' }} />
               Active Status
             </label>
@@ -161,7 +161,7 @@ export default function TestEditPage() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {fields.map((field, index) => (
           <div key={field.id} style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border)', position: 'relative' }}>
-            <button type="button" onClick={() => deleteQuestion(index, field.id)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: '#fef2f2', border: 'none', color: '#ef4444', padding: '0.5rem', borderRadius: '8px', cursor: 'pointer' }}>
+            <button type="button" onClick={() => deleteQuestion(index, field.id)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'var(--red-50)', border: 'none', color: 'var(--error)', padding: '0.5rem', borderRadius: '8px', cursor: 'pointer' }}>
               <Trash2 size={16} />
             </button>
             <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '1rem' }}>Question {index + 1}</h3>
@@ -187,12 +187,12 @@ export default function TestEditPage() {
                     const opts = e.target.value.split(',').map(s => s.trim());
                     update(index, { ...field, options: opts });
                   }} 
-                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid var(--gray-300)', outline: 'none' }}
                 />
               </div>
 
-              <div style={{ padding: '1rem', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-                <p style={{ fontSize: '0.85rem', fontWeight: 700, color: '#166534', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><CheckCircle size={14} /> Correct Index (e.g. 0 for first option)</p>
+              <div style={{ padding: '1rem', background: 'var(--emerald-50)', borderRadius: '8px', border: '1px solid var(--emerald-100)' }}>
+                <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--emerald-800)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><CheckCircle size={14} /> Correct Index (e.g. 0 for first option)</p>
                 <input 
                   type="text" 
                   placeholder="0 or 0,1"
@@ -201,14 +201,14 @@ export default function TestEditPage() {
                     const idxs = e.target.value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
                     update(index, { ...field, correctIdx: idxs });
                   }} 
-                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #86efac', outline: 'none' }} 
+                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid var(--emerald-100)', outline: 'none' }} 
                 />
               </div>
             </div>
           </div>
         ))}
         {fields.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8', background: 'var(--surface)', borderRadius: '16px', border: '2px dashed #e2e8f0' }}>
+          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)', background: 'var(--surface)', borderRadius: '16px', border: '2px dashed var(--gray-200)' }}>
             No questions added yet. Click "Add Question" to start.
           </div>
         )}

@@ -97,7 +97,7 @@ export default function LessonsPage() {
                 className={styles.emptyState}
               >
                 <div style={{ width: '80px', height: '80px', background: 'var(--background)', borderRadius: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <BookOpen size={40} color="#94a3b8" />
+                  <BookOpen size={40} color="var(--text-secondary)" />
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No lessons found</h3>

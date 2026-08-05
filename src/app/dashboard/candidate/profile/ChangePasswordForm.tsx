@@ -34,7 +34,7 @@ export function ChangePasswordForm() {
     <form onSubmit={submit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '1.5rem', marginTop: '1.5rem' }}>
       <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem' }}>Parolni almashtirish</h2>
       {message && (
-        <div style={{ marginBottom: '1rem', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', background: message.type === 'success' ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)', color: message.type === 'success' ? '#059669' : '#dc2626' }}>
+        <div style={{ marginBottom: '1rem', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', background: message.type === 'success' ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)', color: message.type === 'success' ? 'var(--emerald-600)' : 'var(--error)' }}>
           {message.text}
         </div>
       )}

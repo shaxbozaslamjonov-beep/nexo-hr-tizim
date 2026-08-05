@@ -302,7 +302,7 @@ export function LandingPage() {
           <span className={styles.sectionTick} />
           <h2 className={styles.sectionTitle}>{t('landing.contact.title')}</h2>
         </div>
-        <p className={styles.aboutLead} style={{ color: '#5B6472' }}>{t('landing.contact.lead')}</p>
+        <p className={styles.aboutLead} style={{ color: 'var(--text-secondary)' }}>{t('landing.contact.lead')}</p>
 
         <form className={styles.contactForm} onSubmit={handleContactSubmit}>
           <div className={styles.formRow}>

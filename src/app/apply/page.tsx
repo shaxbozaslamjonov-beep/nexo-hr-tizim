@@ -262,7 +262,7 @@ function ApplyForm() {
                   </div>
                   <div className={styles.formGroup}>
                     <label className={styles.label}>
-                      {t('apply.resume.title')} <span style={{ color: '#94a3b8', fontWeight: 500 }}>{t('apply.resume.optional')}</span>
+                      {t('apply.resume.title')} <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>{t('apply.resume.optional')}</span>
                     </label>
                     {cvFileName ? (
                       <div className={styles.fileRow}>
@@ -398,7 +398,7 @@ function ApplyForm() {
                       </div>
                     ))}
                   </div>
-                  <p style={{ fontSize: '0.875rem', color: '#94a3b8', textAlign: 'center' }}>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
                     {t('apply.confirm.disclaimer')}
                   </p>
                 </>

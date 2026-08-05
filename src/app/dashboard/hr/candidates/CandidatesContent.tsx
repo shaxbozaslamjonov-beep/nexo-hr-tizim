@@ -542,7 +542,7 @@ function KanbanColumn({ id, title, candidates, onAction }: { id: string; title: 
             ))}
           </SortableContext>
           {candidates.length === 0 && (
-            <div style={{ padding: '2rem', border: '2px dashed rgba(0,0,0,0.05)', borderRadius: '16px', textAlign: 'center', fontSize: '0.7rem', color: '#94a3b8' }}>
+            <div style={{ padding: '2rem', border: '2px dashed var(--border)', borderRadius: '16px', textAlign: 'center', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
                Drop here
             </div>
           )}

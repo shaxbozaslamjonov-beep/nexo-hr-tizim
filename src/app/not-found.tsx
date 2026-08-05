@@ -38,7 +38,7 @@ export default function NotFound() {
           justifyContent: 'center',
           margin: '0 auto 2rem'
         }}>
-          <AlertCircle size={40} color="#ef4444" />
+          <AlertCircle size={40} color="var(--error)" />
         </div>
 
         <h1 style={{

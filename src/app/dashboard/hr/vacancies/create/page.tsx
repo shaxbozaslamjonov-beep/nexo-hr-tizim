@@ -302,7 +302,7 @@ export default function CreateVacancyPage() {
               {aiLoading ? <Loader2 size={16} /> : <Sparkles size={16} />}
               {aiLoading ? t('vacancies.form.aiGenerating') : t('vacancies.form.aiGenerate')}
             </button>
-            {aiError && <span style={{ color: '#dc2626', fontSize: '0.85rem' }}>{aiError}</span>}
+            {aiError && <span style={{ color: 'var(--error)', fontSize: '0.85rem' }}>{aiError}</span>}
           </div>
 
           {/* Description */}

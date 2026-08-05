@@ -164,7 +164,7 @@ export function ReservePoolContent() {
                     </div>
 
                     {colReserve.length === 0 ? (
-                      <div style={{ textAlign: 'center', padding: '2rem', border: '2px dashed rgba(0,0,0,0.05)', borderRadius: '16px', color: '#94a3b8', fontSize: '0.875rem' }}>
+                      <div style={{ textAlign: 'center', padding: '2rem', border: '2px dashed var(--border)', borderRadius: '16px', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
                         Empty
                       </div>
                     ) : colReserve.map(r => (

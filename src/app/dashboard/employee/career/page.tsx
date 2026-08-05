@@ -62,7 +62,7 @@ export default async function EmployeeCareerPage() {
             </div>
           ))}
           {!levels.length && (
-            <div style={{ color: '#94a3b8' }}>Career path information not defined for your role.</div>
+            <div style={{ color: 'var(--text-secondary)' }}>Career path information not defined for your role.</div>
           )}
         </div>
       </div>

@@ -45,11 +45,11 @@ export function TabsNavigation({ handleAction, children }: { handleAction: () =>
       <style>{`
         .tab-button[data-state="active"] {
           background-color: rgba(46, 86, 230, 0.1) !important;
-          border-color: #2E56E6 !important;
-          color: #2E56E6 !important;
+          border-color: var(--primary) !important;
+          color: var(--primary) !important;
         }
         .tab-button[data-state="active"] svg {
-          color: #2E56E6 !important;
+          color: var(--primary) !important;
         }
         .tab-button:hover {
           background-color: rgba(46, 86, 230, 0.05) !important;
